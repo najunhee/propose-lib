@@ -29,7 +29,6 @@ public class MainActivity extends Activity{
 		bg1.post(new Runnable() {
 			@Override
 			public void run() {
-				
 				text.setVisibility(View.GONE);
 				jwm = new JwMotion(MainActivity.this);
 				float height = lyt.getHeight()-50*jwm.density;
