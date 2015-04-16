@@ -14,14 +14,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#33333333"
-            android:src="@drawable/bg_blur2" />
+            android:src="@drawable/bg_blur" />
 
         <ImageView
             android:id="@+id/bg1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#382347"
-            android:src="@drawable/bg2" />
+            android:background="#39AED8"
+            android:src="@drawable/bg" />
 
     </FrameLayout>
 
