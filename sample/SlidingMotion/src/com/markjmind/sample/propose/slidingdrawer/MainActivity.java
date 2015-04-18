@@ -1,4 +1,4 @@
-package com.markjmind.sample.propose.slidingmotion;
+package com.markjmind.sample.propose.slidingdrawer;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
