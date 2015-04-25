@@ -2,12 +2,19 @@ package com.markjmind.sample.propose.estory;
 
 import java.util.ArrayList;
 
+import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 
+import com.markjmind.propose.JwAnimatorListener;
 import com.markjmind.propose.JwMotion;
 import com.markjmind.propose.JwMotionListener;
 import com.markjmind.propose.JwMotionSet;
@@ -18,11 +25,11 @@ public class MainActivity extends Activity {
 
 	public static int NONE=0,LEFT=-1,RIGHT = 1;
 	public int DIRECTION = 0;
-	private FrameLayout left_lyt,right_lyt,left_paper,right_paper;
+	private FrameLayout left_lyt,right_lyt,left_paper,right_paper,banner_lyt;
 	private ArrayList<Page> pageList = new ArrayList<Page>();
 	private int currPage = 0;
 	
-	JwMotion leftMotion,rightMotion;
+	JwMotion scaleMotion,leftMotion,rightMotion;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,144 +40,234 @@ public class MainActivity extends Activity {
         right_lyt = (FrameLayout)findViewById(R.id.right_lyt);
         left_paper = (FrameLayout)findViewById(R.id.left_paper);
         right_paper = (FrameLayout)findViewById(R.id.right_paper);
+        banner_lyt = (FrameLayout)findViewById(R.id.banner_lyt);
         
+        scaleMotion = new JwMotion(this);
+        leftMotion = new JwMotion(this);
+        rightMotion = new JwMotion(this);
         initPage();
-        currPage = 2;
-        setPage(left_lyt,3);
-        left_lyt.post(new Runnable() {
+        currPage = 0;
+        setPage2(right_lyt,0);
+        right_lyt.post(new Runnable() {
 			@Override
 			public void run() {
 				initAnimation();
+				
+				final int point = (int)banner_lyt.getX();
+				final int point_width = banner_lyt.getWidth();
+				ValueAnimator rightAnimator = ValueAnimator.ofInt(0,scaleMotion.getWindowWidth()/2-banner_lyt.getWidth());
+				rightAnimator.addUpdateListener(new AnimatorUpdateListener() {
+					@Override
+					public void onAnimationUpdate(ValueAnimator animation) {
+						int value = (Integer)animation.getAnimatedValue();
+						banner_lyt.getLayoutParams().width = point_width+value;
+						banner_lyt.setLayoutParams(banner_lyt.getLayoutParams());
+						banner_lyt.invalidate();
+					}
+				});
+				rightAnimator.setDuration(1000);
+				rightAnimator.setInterpolator(null);
+				scaleMotion.motionRight.play(banner_lyt, rightAnimator,scaleMotion.getWindowWidth()/2-banner_lyt.getWidth());
+				banner_lyt.setOnTouchListener(scaleMotion);
+				scaleMotion.setOnMotionListener(new JwMotionListener() {
+					@Override
+					public void onStart() {
+						leftMotion.enableMotion(false);
+						rightMotion.enableMotion(false);
+					}
+					@Override
+					public void onScroll(int Direction, long currDuration, long totalDuration) {
+					}
+					@Override
+					public void onEnd() {
+						right_lyt.post(new Runnable() {
+							@Override
+							public void run() {
+								leftMotion.enableMotion(true);
+								rightMotion.enableMotion(true);
+								initAnimation();
+							}
+						});
+					}
+				});
 			}
 		});
         
-        
     }
     
-    public void setPage(FrameLayout lyt, int index){
+    public void setPage2(FrameLayout lyt, int index){
     	FrameLayout page = getPage(lyt);
     	page.removeAllViews();
     	page.addView(pageList.get(index).getPageView());
-    }
-    public void setPage(FrameLayout lyt, View view){
-    	FrameLayout page = getPage(lyt);
-    	page.addView(view);
+    	Log.i("as","page size:"+page.getChildCount());
     }
     
     public void initAnimation(){
-    	leftMotion = new JwMotion(this);
-        rightMotion = new JwMotion(this);
     	initAnimation(LEFT);
     	initAnimation(RIGHT);
     }
+    
     
     private void initAnimation(int direction){
         final int dir = direction;
         final JwMotion motion;
         final JwMotionSet motionSet;
-        final FrameLayout firstLayout;
-        final FrameLayout lastLayout;
         final FrameLayout paperLayout;
-        
+        final FrameLayout pageLayout1;
+        final FrameLayout pageLayout2;
         if(direction==RIGHT){
         	motion = rightMotion;
         	motionSet = motion.motionLeft;
-        	firstLayout = right_lyt;
-        	lastLayout = left_lyt;
+        	pageLayout1 = getPage(right_lyt);
+        	pageLayout2 = getPage(left_lyt);
         	paperLayout = right_paper;
         	
         }else if(direction==LEFT){
         	motion = leftMotion;
         	motionSet = motion.motionRight;
-        	firstLayout = left_lyt;
-        	lastLayout = right_lyt;
+        	pageLayout1 = getPage(left_lyt);
+        	pageLayout2 = getPage(right_lyt);
         	paperLayout = left_paper;
         }else{
         	return;
         }
-        
+        motionSet.enableReverse(false);
         final FrameLayout paper1 = getPaper1(paperLayout);
 		final FrameLayout paper2 = getPaper2(paperLayout);
-		final FrameLayout paper_anim = (FrameLayout)paperLayout.findViewById(R.id.paper_anim);
 		paper1.removeAllViews();
 		paper2.removeAllViews();
 		paperLayout.setRotationY(0);
 		paperLayout.setCameraDistance(10000f);
-		paper_anim.setOnTouchListener(null);
+		paper1.setOnTouchListener(null);
 		
-////		paperLayout.post(new Runnable() {
-//				@Override
-//				public void run() {
-					if((dir==RIGHT && pageList.size()>currPage*2+dir) || (dir==LEFT && 0<=currPage*2+dir)){
-						final View movePage = getPage(firstLayout).getChildAt(0);
-						paper_anim.getLayoutParams().width = movePage.getWidth();
-						paper_anim.getLayoutParams().height = movePage.getHeight();
-						ObjectAnimator anim1;
-						ObjectAnimator anim2;
-						if(dir==RIGHT){
-							anim1 = ObjectAnimator.ofFloat(paperLayout, View.ROTATION_Y, 0,-90);
-							anim2 = ObjectAnimator.ofFloat(paperLayout, View.ROTATION_Y, -90,-180);
-							anim1.setFloatValues(0,-90);
-							anim2.setFloatValues(-90,-180);
-							paperLayout.setPivotX(0f);
-						}else{
-							anim1 = ObjectAnimator.ofFloat(paperLayout, View.ROTATION_Y, 0,90);
-							anim2 = ObjectAnimator.ofFloat(paperLayout, View.ROTATION_Y, 90,180);
-							anim1.setFloatValues(0,90);
-							anim2.setFloatValues(90,180);
-							paperLayout.setPivotX(paperLayout.getWidth());
-						}
-						anim1.setDuration(500);
-						anim2.setDuration(500);
-						motionSet.play(anim1,movePage.getWidth()*2).next(anim2);
-						
-						
-						motion.setOnMotionListener(new JwMotionListener() {
-							@Override
-							public void onStart() {
-								getPage(firstLayout).removeAllViews();
-								paper1.addView(movePage);
-								if(dir==LEFT){
-									paper2.addView(pageList.get(currPage*2-2).getPageView());
-									if(0<=currPage*2-3){
-										setPage(firstLayout,currPage*2-3);
-									}
-								}else{
-									paper2.addView(pageList.get(currPage*2+dir).getPageView());
-									if(pageList.size()>currPage*2+2*dir){
-										setPage(firstLayout,currPage*2+2*dir);
-									}
-									
-								}
-								
-							}
-							@Override
-							public void onScroll(int Direction, long currDuration, long totalDuration) {
-							}
-							@Override
-							public void onEnd() {
-								if(JwMotionSet.STATUS.end.equals(motionSet.getStatus())){
-									currPage+=dir;
-									View view = paper2.getChildAt(0);
-									paper2.removeAllViews();
-									setPage(lastLayout,view);
-								}else{
-									if(dir==LEFT){
-										setPage(firstLayout,currPage*2-1);										
-									}else{
-										setPage(firstLayout,currPage*2);	
-									}
-								}
-								leftMotion = null;
-						        rightMotion = null;
-								initAnimation();
-							}
-						});
-						paper_anim.setOnTouchListener(motion.getOnTouchListener());
+		if((dir==RIGHT && pageList.size()>currPage*2+dir) || (dir==LEFT && 0<=currPage*2+dir)){
+			View movePage = pageLayout1.getChildAt(0);
+			final int paper_width = paperLayout.getWidth();
+			final float paper_x = paperLayout.getX();
+			
+			paper1.getLayoutParams().width = movePage.getWidth();
+			paper1.getLayoutParams().height = movePage.getHeight();
+			paper1.setLayoutParams(paper1.getLayoutParams());
+			ObjectAnimator anim1 = ObjectAnimator.ofFloat(paperLayout, View.ROTATION_Y, 0,-90*dir);
+			ObjectAnimator anim2 = ObjectAnimator.ofFloat(paperLayout, View.ROTATION_Y, 90*dir,0);
+			if(dir==RIGHT){
+				paperLayout.setPivotX(0);
+				Log.e("ssd","paper_width:"+paper_width+" paper_x:"+paper_x);
+			}else{
+				paperLayout.setPivotX(paper_width);
+			}
+			paperLayout.setPivotY(paperLayout.getHeight()/2);
+			anim1.setDuration(500);
+			anim2.setDuration(500);
+			motionSet.play(anim1,movePage.getWidth()*2).next(anim2);
+			
+			anim1.addListener(new JwAnimatorListener() {
+				@Override
+				public void onStart(Animator animation) {
+					
+				}
+				@Override
+				public void onReverseStart(Animator animation) {
+					paper1.setVisibility(View.VISIBLE);
+					paper2.setVisibility(View.GONE);
+					if(dir==RIGHT){
+						paperLayout.setX(paper_x);
+						paperLayout.setPivotX(0);
+					}else{
+						paperLayout.setX(paper_x);
+						paperLayout.setPivotX(paper_width);
 					}
 				}
-//			});
-//    }
+				@Override
+				public void onReverseEnd(Animator animation) {
+					
+				}
+				@Override
+				public void onEnd(Animator animation) {
+					paper1.setVisibility(View.GONE);
+					paper2.setVisibility(View.VISIBLE);
+					if(dir==RIGHT){
+						paperLayout.setX(paper_x-paper_width*dir);
+						paperLayout.setPivotX(paper_width);
+					}else{
+						paperLayout.setX(paper_x-paper_width*dir);
+						paperLayout.setPivotX(0);
+					}
+					
+					
+				}
+			});
+			
+			motion.setOnMotionListener(new JwMotionListener() {
+				@Override
+				public void onStart() {
+					Log.e("dsd","currPage:"+currPage+" dir:"+dir);
+					
+					paper2.setVisibility(View.GONE);
+					moveView(pageLayout1,paper1);
+					scaleMotion.enableMotion(false);
+					
+					if(dir==LEFT){
+						rightMotion.enableMotion(false);
+						changeLayout(paper2,pageList.get(currPage*2-2).getPageView());
+						if(0<=currPage*2-3){
+							changeLayout(pageLayout1,pageList.get(currPage*2-3).getPageView());
+						}
+					}else{
+						changeLayout(paper2,pageList.get(currPage*2+dir).getPageView());
+						if(pageList.size()>currPage*2+2*dir){
+							changeLayout(pageLayout1,pageList.get(currPage*2+2*dir).getPageView());
+							leftMotion.enableMotion(false);
+						}
+						
+					}
+					
+				}
+				@Override
+				public void onScroll(int Direction, long currDuration, long totalDuration) {
+				}
+				@Override
+				public void onEnd() {
+					scaleMotion.enableMotion(true);
+					rightMotion.enableMotion(true);
+					leftMotion.enableMotion(true);
+					if(JwMotionSet.STATUS.end.equals(motionSet.getStatus())){
+						currPage+=dir;
+						motionSet.reset();
+						paper1.removeAllViews();
+						moveView(paper2,pageLayout2);
+					}else{
+						paper2.removeAllViews();
+						moveView(paper1,pageLayout1);
+					}
+					paperLayout.setX(paper_x);
+					paper1.setVisibility(View.VISIBLE);
+					paper2.setVisibility(View.VISIBLE);
+					pageLayout1.post(new Runnable() {
+						@Override
+						public void run() {
+							initAnimation();
+						}
+					});
+				}
+			});
+			paper1.setOnTouchListener(motion);
+		}
+	}
+    
+    private void moveView(ViewGroup move, ViewGroup target){
+    	View view = move.getChildAt(0);
+    	move.removeAllViews();
+    	if(view!=null){
+    		changeLayout(target, view);
+    	}
+    	
+    	
+    }
+    private void changeLayout(ViewGroup parents, View view){
+    	parents.removeAllViews();
+    	parents.addView(view);
+    }
     
     
     private FrameLayout getPage(FrameLayout lyt){

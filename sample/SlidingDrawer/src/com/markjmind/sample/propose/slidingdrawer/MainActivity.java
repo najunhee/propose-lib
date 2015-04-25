@@ -1,6 +1,7 @@
 package com.markjmind.sample.propose.slidingdrawer;
 
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,10 +11,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.markjmind.propose.JwMotion;
 import com.markjmind.propose.JwMotionListener;
 
+@SuppressLint("NewApi")
 public class MainActivity extends Activity{
 	private FrameLayout lyt;
 	private TextView text;
@@ -35,7 +36,8 @@ public class MainActivity extends Activity{
 				ObjectAnimator rightAnimator = ObjectAnimator.ofFloat(lyt,View.TRANSLATION_Y, 0,height);
 				rightAnimator.setDuration(1000);
 				jwm.motionDown.play(rightAnimator,(int)height);
-				lyt.setOnTouchListener(jwm.getOnTouchListener());
+				lyt.setOnTouchListener(jwm);
+				 
 				jwm.setOnMotionListener(new JwMotionListener() {
 					@Override
 					public void onStart() {
