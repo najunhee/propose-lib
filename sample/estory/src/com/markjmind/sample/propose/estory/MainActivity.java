@@ -11,13 +11,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.markjmind.propose.JwAnimatorListener;
 import com.markjmind.propose.JwMotion;
-import com.markjmind.propose.JwMotionListener;
+import com.markjmind.propose.JwMotion.JwMotionListener;
 import com.markjmind.propose.JwMotionSet;
+import com.markjmind.propose.MotionInitor;
 import com.markjmind.sample.propose.estory.book.Page;
 
 
@@ -41,7 +42,6 @@ public class MainActivity extends Activity {
         left_paper = (FrameLayout)findViewById(R.id.left_paper);
         right_paper = (FrameLayout)findViewById(R.id.right_paper);
         banner_lyt = (FrameLayout)findViewById(R.id.banner_lyt);
-        
         scaleMotion = new JwMotion(this);
         leftMotion = new JwMotion(this);
         rightMotion = new JwMotion(this);
@@ -164,7 +164,6 @@ public class MainActivity extends Activity {
 			anim1.addListener(new JwAnimatorListener() {
 				@Override
 				public void onStart(Animator animation) {
-					
 				}
 				@Override
 				public void onReverseStart(Animator animation) {
@@ -214,10 +213,11 @@ public class MainActivity extends Activity {
 							changeLayout(pageLayout1,pageList.get(currPage*2-3).getPageView());
 						}
 					}else{
+						leftMotion.enableMotion(false);
 						changeLayout(paper2,pageList.get(currPage*2+dir).getPageView());
 						if(pageList.size()>currPage*2+2*dir){
 							changeLayout(pageLayout1,pageList.get(currPage*2+2*dir).getPageView());
-							leftMotion.enableMotion(false);
+							
 						}
 						
 					}
@@ -251,7 +251,7 @@ public class MainActivity extends Activity {
 					});
 				}
 			});
-			paper1.setOnTouchListener(motion);
+			pageLayout1.setOnTouchListener(motion);
 		}
 	}
     
@@ -269,6 +269,10 @@ public class MainActivity extends Activity {
     	parents.addView(view);
     }
     
+    public ViewGroup getPageView(int index){
+    	return pageList.get(index).getPageView();
+    	
+    }
     
     private FrameLayout getPage(FrameLayout lyt){
     	return (FrameLayout)lyt.findViewById(R.id.page);
@@ -285,25 +289,41 @@ public class MainActivity extends Activity {
     private void initPage(){
     	pageList.add(new Page(this,R.layout.page1) {
 			@Override
-			public void initAnimation() {
+			public void initAnimation(ViewGroup pageView) {
+				
 			}
 		});
 		
     	pageList.add(new Page(this,R.layout.page2) {
 			@Override
-			public void initAnimation() {
+			public void initAnimation(ViewGroup pageView) {
+				final ImageView door1 = (ImageView)pageView.findViewById(R.id.door1);
+				JwMotion motion_door1 = new JwMotion(pageView.getContext());
+				ObjectAnimator anim1 = ObjectAnimator.ofFloat(door1, View.ROTATION_Y, 0,-180);
+				door1.setPivotX(0f);
+				anim1.setDuration(700);
+				motion_door1.setMotionInitor(new MotionInitor() {
+					@Override
+					public void init(JwMotion jwm, View[] views) {
+						int distance = door1.getWidth()*2;
+						jwm.motionLeft.setMotionDistance(distance);
+						Log.e("sdsd","distance:"+distance);
+					}
+				});
+				motion_door1.motionLeft.play(anim1);
+				door1.setOnTouchListener(motion_door1);
 			}
 		});
 		
 		pageList.add(new Page(this,R.layout.page3) {
 			@Override
-			public void initAnimation() {
+			public void initAnimation(ViewGroup pageView) {
 			}
 		});
 		
 		pageList.add(new Page(this,R.layout.page4) {
 			@Override
-			public void initAnimation() {
+			public void initAnimation(ViewGroup pageView) {
 			}
 		});
     }

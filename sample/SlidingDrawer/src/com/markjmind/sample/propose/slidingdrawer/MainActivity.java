@@ -4,15 +4,14 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.markjmind.propose.JwMotion;
-import com.markjmind.propose.JwMotionListener;
+import com.markjmind.propose.JwMotion.JwMotionListener;
 
 @SuppressLint("NewApi")
 public class MainActivity extends Activity{

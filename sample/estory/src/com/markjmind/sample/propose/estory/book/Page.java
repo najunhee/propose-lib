@@ -22,8 +22,9 @@ public abstract class Page {
 	
 	public ViewGroup getPageView(){
 		page_view = (ViewGroup)((LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(layout_id, null);
+		initAnimation(page_view);
 		return page_view;
 	}
 	
-	public abstract void initAnimation();
+	public abstract void initAnimation(ViewGroup pageView);
 }
