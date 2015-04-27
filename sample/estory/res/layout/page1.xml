@@ -5,7 +5,7 @@
     android:orientation="vertical" >
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical" >
@@ -16,25 +16,10 @@
 
             <ImageView
                 android:id="@+id/imageView1"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:src="@drawable/page1_bg" />
-
-            <com.markjmind.sample.propose.estory.book.ScaleFrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:tag="1024,1536" >
-
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    android:background="#55555555"
-                    android:src="@drawable/door1"
-                    android:tag="255,377" />
-            </com.markjmind.sample.propose.estory.book.ScaleFrameLayout>
 
         </FrameLayout>
     

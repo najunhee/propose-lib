@@ -137,7 +137,7 @@ public class MainActivity extends Activity {
 		paper1.removeAllViews();
 		paper2.removeAllViews();
 		paperLayout.setRotationY(0);
-		paperLayout.setCameraDistance(10000f);
+		paperLayout.setCameraDistance(5000f*getResources().getDisplayMetrics().density);
 		paper1.setOnTouchListener(null);
 		
 		if((dir==RIGHT && pageList.size()>currPage*2+dir) || (dir==LEFT && 0<=currPage*2+dir)){
