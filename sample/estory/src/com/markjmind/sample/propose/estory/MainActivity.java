@@ -152,7 +152,6 @@ public class MainActivity extends Activity {
 			ObjectAnimator anim2 = ObjectAnimator.ofFloat(paperLayout, View.ROTATION_Y, 90*dir,0);
 			if(dir==RIGHT){
 				paperLayout.setPivotX(0);
-				Log.e("ssd","paper_width:"+paper_width+" paper_x:"+paper_x);
 			}else{
 				paperLayout.setPivotX(paper_width);
 			}
@@ -296,22 +295,47 @@ public class MainActivity extends Activity {
 		
     	pageList.add(new Page(this,R.layout.page2) {
 			@Override
-			public void initAnimation(ViewGroup pageView) {
+			public void initAnimation(ViewGroup page) {
+				final ViewGroup pageView = (ViewGroup)page.findViewById(R.id.scale_layout);
 				final ImageView door1 = (ImageView)pageView.findViewById(R.id.door1);
 				JwMotion motion_door1 = new JwMotion(pageView.getContext());
-				ObjectAnimator anim1 = ObjectAnimator.ofFloat(door1, View.ROTATION_Y, 0,-180);
+				final ImageView frog = (ImageView)pageView.findViewById(R.id.frog);
+				JwMotion motion_frog = new JwMotion(pageView.getContext());
+				
+				ObjectAnimator door_anim = ObjectAnimator.ofFloat(door1, View.ROTATION_Y, 0,-180);
 				door1.setPivotX(0f);
-				anim1.setDuration(700);
+				door_anim.setDuration(700);
 				motion_door1.setMotionInitor(new MotionInitor() {
 					@Override
 					public void init(JwMotion jwm, View[] views) {
 						int distance = door1.getWidth()*2;
 						jwm.motionLeft.setMotionDistance(distance);
-						Log.e("sdsd","distance:"+distance);
 					}
 				});
-				motion_door1.motionLeft.play(anim1);
+				motion_door1.motionLeft.play(door_anim);
 				door1.setOnTouchListener(motion_door1);
+				
+				final ObjectAnimator frog_anim = ObjectAnimator.ofFloat(frog, View.TRANSLATION_Y, 0,500);
+				frog_anim.setDuration(700);
+				frog_anim.setInterpolator(null);
+				motion_frog.setMotionInitor(new MotionInitor() {
+					int pageWidth=0;
+					int pageHeight=0;
+					@Override
+					public void init(JwMotion jwm, View[] views) {
+						if(pageWidth!=pageView.getWidth() && pageHeight!=pageView.getHeight()){
+							pageWidth = pageView.getWidth();
+							pageHeight = pageView.getHeight();
+							float distance = pageHeight-frog.getY()-frog.getHeight();
+							Log.e("sdsd","frog.getHeight():"+frog.getHeight()+" pageHeight:"+pageHeight+" frog.getY():"+frog.getY());
+							frog_anim.setFloatValues(frog.getY(),pageHeight-frog.getHeight());
+							jwm.motionDown.setMotionDistance(distance);
+						}
+					}
+				});
+				motion_frog.motionDown.play(frog_anim);
+				motion_frog.motionDown.enableFling(false).enableTabUp(false);
+				frog.setOnTouchListener(motion_frog);
 			}
 		});
 		
