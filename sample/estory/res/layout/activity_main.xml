@@ -13,24 +13,27 @@
 	    android:background="#7739AED8" >
 
     </FrameLayout>
+
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" >
 
         <LinearLayout
+            android:id="@+id/page_lyt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp" >
+            android:background="#ffffff"
+            android:gravity="center" >
 
             <FrameLayout
                 android:id="@+id/left_lyt"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1" >
+                android:layout_weight="1"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp" >
 
                 <FrameLayout
                     android:id="@+id/page"
@@ -45,7 +48,10 @@
                 android:id="@+id/right_lyt"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1" >
+                android:layout_weight="1"
+                android:background="#55ff0000"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp" >
 
                 <FrameLayout
                     android:id="@id/page"
@@ -58,7 +64,15 @@
 
         </LinearLayout>
 
+        <FrameLayout
+            android:id="@+id/anim_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+        </FrameLayout>
+
         <LinearLayout
+            android:id="@+id/paper_lyt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center" >
@@ -94,6 +108,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="#5500ff00"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp" >
 

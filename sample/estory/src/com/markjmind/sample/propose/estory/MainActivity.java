@@ -20,31 +20,57 @@ import com.markjmind.propose.JwMotion.JwMotionListener;
 import com.markjmind.propose.JwMotionSet;
 import com.markjmind.propose.MotionInitor;
 import com.markjmind.sample.propose.estory.book.Page;
+import com.markjmind.sample.propose.estory.book.ScaleFrameLayout;
 
 
 public class MainActivity extends Activity {
 
 	public static int NONE=0,LEFT=-1,RIGHT = 1;
 	public int DIRECTION = 0;
-	private FrameLayout left_lyt,right_lyt,left_paper,right_paper,banner_lyt;
+	private ViewGroup page_lyt,paper_lyt;
+	private FrameLayout left_lyt,right_lyt,left_paper,right_paper,left_page,right_page,banner_lyt;
 	private ArrayList<Page> pageList = new ArrayList<Page>();
 	private int currPage = 0;
 	
 	JwMotion scaleMotion,leftMotion,rightMotion;
-	
+	private float cameraDistance;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        cameraDistance = 10000*JwMotion.getDensity(this);
         DIRECTION = NONE;
+		page_lyt = (ViewGroup)findViewById(R.id.page_lyt);
+		paper_lyt = (ViewGroup)findViewById(R.id.paper_lyt);
         left_lyt = (FrameLayout)findViewById(R.id.left_lyt);
         right_lyt = (FrameLayout)findViewById(R.id.right_lyt);
+        left_page = (FrameLayout)left_lyt.findViewById(R.id.page);
+        right_page = (FrameLayout)right_lyt.findViewById(R.id.page);
         left_paper = (FrameLayout)findViewById(R.id.left_paper);
         right_paper = (FrameLayout)findViewById(R.id.right_paper);
         banner_lyt = (FrameLayout)findViewById(R.id.banner_lyt);
         scaleMotion = new JwMotion(this);
         leftMotion = new JwMotion(this);
         rightMotion = new JwMotion(this);
+        
+        ObjectAnimator left_paper_UpDown = ObjectAnimator.ofFloat(left_paper, View.ROTATION_X, -50,50);
+        left_paper_UpDown.setDuration(700);
+		ObjectAnimator right_paperUpDown = left_paper_UpDown.clone();
+		right_paperUpDown.setTarget(right_paper);
+		ObjectAnimator left_page_UpDown = left_paper_UpDown.clone();
+		left_page_UpDown.setTarget(left_lyt);
+		ObjectAnimator right_page_UpDown = left_paper_UpDown.clone();
+		right_page_UpDown.setTarget(right_lyt);
+		left_paper.setCameraDistance(cameraDistance);
+		right_paper.setCameraDistance(cameraDistance);
+		left_lyt.setCameraDistance(cameraDistance);
+		right_lyt.setCameraDistance(cameraDistance);
+		
+		rightMotion.motionUp.play(left_paper_UpDown,(int)(500*rightMotion.density)).with(right_paperUpDown).with(left_page_UpDown).with(right_page_UpDown);
+		rightMotion.motionUp.enableFling(false).enableTabUp(false).enableSingleTabUp(false).move((int)(250*rightMotion.density));
+		leftMotion.motionUp.play(left_paper_UpDown.clone(),(int)(500*rightMotion.density)).with(right_paperUpDown.clone()).with(left_page_UpDown.clone()).with(right_page_UpDown.clone());
+		leftMotion.motionUp.enableFling(false).enableTabUp(false).enableSingleTabUp(false).move((int)(250*rightMotion.density));
+        
         initPage();
         currPage = 0;
         setPage2(right_lyt,0);
@@ -109,6 +135,7 @@ public class MainActivity extends Activity {
     
     
     private void initAnimation(int direction){
+    	
         final int dir = direction;
         final JwMotion motion;
         final JwMotionSet motionSet;
@@ -137,7 +164,6 @@ public class MainActivity extends Activity {
 		paper1.removeAllViews();
 		paper2.removeAllViews();
 		paperLayout.setRotationY(0);
-		paperLayout.setCameraDistance(5000f*getResources().getDisplayMetrics().density);
 		paper1.setOnTouchListener(null);
 		
 		if((dir==RIGHT && pageList.size()>currPage*2+dir) || (dir==LEFT && 0<=currPage*2+dir)){
@@ -155,6 +181,8 @@ public class MainActivity extends Activity {
 			}else{
 				paperLayout.setPivotX(paper_width);
 			}
+			right_lyt.setPivotX(0);
+			left_lyt.setPivotX(paper_width);
 			paperLayout.setPivotY(paperLayout.getHeight()/2);
 			anim1.setDuration(500);
 			anim2.setDuration(500);
@@ -296,11 +324,11 @@ public class MainActivity extends Activity {
     	pageList.add(new Page(this,R.layout.page2) {
 			@Override
 			public void initAnimation(ViewGroup page) {
-				final ViewGroup pageView = (ViewGroup)page.findViewById(R.id.scale_layout);
-				final ImageView door1 = (ImageView)pageView.findViewById(R.id.door1);
-				JwMotion motion_door1 = new JwMotion(pageView.getContext());
-				final ImageView frog = (ImageView)pageView.findViewById(R.id.frog);
-				JwMotion motion_frog = new JwMotion(pageView.getContext());
+				final ScaleFrameLayout scale_layout = (ScaleFrameLayout)page.findViewById(R.id.scale_layout);
+				final ImageView door1 = (ImageView)scale_layout.findViewById(R.id.door1);
+				JwMotion motion_door1 = new JwMotion(scale_layout.getContext());
+				final ImageView frog = (ImageView)scale_layout.findViewById(R.id.frog);
+				JwMotion motion_frog = new JwMotion(scale_layout.getContext());
 				
 				ObjectAnimator door_anim = ObjectAnimator.ofFloat(door1, View.ROTATION_Y, 0,-180);
 				door1.setPivotX(0f);
@@ -323,13 +351,12 @@ public class MainActivity extends Activity {
 					int pageHeight=0;
 					@Override
 					public void init(JwMotion jwm, View[] views) {
-						if(pageWidth!=pageView.getWidth() && pageHeight!=pageView.getHeight()){
-							pageWidth = pageView.getWidth();
-							pageHeight = pageView.getHeight();
-							float distance = pageHeight-frog.getY()-frog.getHeight();
-							Log.e("sdsd","frog.getHeight():"+frog.getHeight()+" pageHeight:"+pageHeight+" frog.getY():"+frog.getY());
-							frog_anim.setFloatValues(frog.getY(),pageHeight-frog.getHeight());
-							jwm.motionDown.setMotionDistance(distance);
+						if(pageWidth!=scale_layout.getWidth() || pageHeight!=scale_layout.getHeight()){
+							pageWidth = scale_layout.getWidth();
+							pageHeight = scale_layout.getHeight();
+							float startY = ScaleFrameLayout.getChildPoint(frog)[1]*scale_layout.getFractionY();
+							frog_anim.setFloatValues(startY,pageHeight-frog.getHeight());
+							jwm.motionDown.setMotionDistance(pageHeight-startY-frog.getHeight());
 						}
 					}
 				});
