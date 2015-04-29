@@ -27,7 +27,7 @@
 
             </LinearLayout>
 
-            <com.markjmind.sample.propose.estory.book.ScaleFrameLayout
+            <com.markjmind.sample.propose.estory.book.RatioFrameLayout
                 android:id="@+id/scale_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -48,7 +48,7 @@
                     android:src="@drawable/door1"
                     android:tag="255,377,722,377" />
 
-            </com.markjmind.sample.propose.estory.book.ScaleFrameLayout>
+            </com.markjmind.sample.propose.estory.book.RatioFrameLayout>
 
         </FrameLayout>
 

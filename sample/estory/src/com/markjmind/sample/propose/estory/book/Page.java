@@ -5,6 +5,13 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+/**
+ * 
+ * @author 오재웅
+ * @phone 010-2898-7850
+ * @email markjmind@gmail.com
+ * @date 2015. 4. 29.
+ */
 public abstract class Page {
 	private Context context;
 	private int layout_id;
