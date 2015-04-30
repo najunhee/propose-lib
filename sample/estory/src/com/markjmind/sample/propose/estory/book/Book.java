@@ -64,7 +64,8 @@ public class Book {
 		
 	}
 
-	public void addPage(Page page){
+	public synchronized void addPage(Page page){
+		page.index = pageList.size();
 		pageList.add(page);
 	}
 	
@@ -83,39 +84,34 @@ public class Book {
 		left_lyt.setCameraDistance(cameraDistance);
 		right_lyt.setCameraDistance(cameraDistance);
 		
-//		rightMotion.motionUp.play(left_paper_UpDown, (int) (500 * rightMotion.density)).with(right_paperUpDown)
-//		.with(left_page_UpDown).with(right_page_UpDown);
-//		rightMotion.motionUp.enableFling(false).enableTabUp(false).enableSingleTabUp(false)
-//				.move((int) (250 * rightMotion.density));
-//		leftMotion.motionUp.play(left_paper_UpDown.clone(), (int) (500 * rightMotion.density)).with(right_paperUpDown.clone())
-//				.with(left_page_UpDown.clone()).with(right_page_UpDown.clone());
-//		leftMotion.motionUp.enableFling(false).enableTabUp(false).enableSingleTabUp(false)
-//				.move((int) (250 * rightMotion.density));
-		
-		upDownMotoin.motionUp.play(left_paper_UpDown, (int) (500 * rightMotion.density)).with(right_paperUpDown)
+		upDownMotoin.motionUp.play(left_paper_UpDown, (int) (700 * rightMotion.density)).with(right_paperUpDown)
 		.with(left_page_UpDown).with(right_page_UpDown);
 		upDownMotoin.motionUp.enableFling(false).enableTabUp(false).enableSingleTabUp(false)
-				.move((int) (250 * rightMotion.density));
+				.move((int) (350 * rightMotion.density));
 	}
 
 	public void setFolio(int folio){
 		left_page.removeAllViews();
 		right_page.removeAllViews();
+		Page leftPage=null,rightPage=null;
 		if(folio>0){
-			left_page.addView(pageList.get(folio*2-1).getPageView());
+			leftPage = pageList.get(folio*2-1);
 		}
 		if(folio*2<pageList.size()){
-			right_page.addView(pageList.get(folio*2).getPageView());
+			rightPage = pageList.get(folio*2);
+		}
+		if(leftPage!=null){
+			left_page.addView(leftPage.makeView());
+			leftPage.initAnimation(leftPage.getIndex(), leftPage.makeView(), leftPage, rightPage);
+		}
+		if(rightPage.makeView()!=null){
+			right_page.addView(rightPage.makeView());
+			rightPage.initAnimation(rightPage.getIndex(), rightPage.makeView(), leftPage, rightPage);
 		}
 		currFolio = folio;
 	}
 	
 	
-	public void setPage2(FrameLayout lyt, int index) {
-		FrameLayout page = getPage(lyt);
-		page.removeAllViews();
-		page.addView(pageList.get(index).getPageView());
-	}
 
 	public void reloadBook(){
 		initAnimation(LEFT);
@@ -132,7 +128,6 @@ public class Book {
 	}
 
 	private void initAnimation(int direction) {
-
 		final int dir = direction;
 		final JwMotion motion;
 		final JwMotionSet motionSet;
@@ -142,15 +137,15 @@ public class Book {
 		if (direction == RIGHT) {
 			motion = rightMotion;
 			motionSet = motion.motionLeft;
-			pageLayout1 = getPage(right_lyt);
-			pageLayout2 = getPage(left_lyt);
+			pageLayout1 = right_page;;
+			pageLayout2 = left_page;
 			paperLayout = right_paper;
 
 		} else if (direction == LEFT) {
 			motion = leftMotion;
 			motionSet = motion.motionRight;
-			pageLayout1 = getPage(left_lyt);
-			pageLayout2 = getPage(right_lyt);
+			pageLayout1 = left_page;
+			pageLayout2 = right_page;
 			paperLayout = left_paper;
 		} else {
 			return;
@@ -184,6 +179,7 @@ public class Book {
 			anim1.setDuration(500);
 			anim2.setDuration(500);
 			motionSet.play(anim1, movePage.getWidth() * 2).next(anim2);
+			motionSet.enableSingleTabUp(false);
 
 			anim1.addListener(new JwAnimatorListener() {
 				@Override
@@ -205,7 +201,6 @@ public class Book {
 
 				@Override
 				public void onReverseEnd(Animator animation) {
-
 				}
 
 				@Override
@@ -231,23 +226,39 @@ public class Book {
 					paper2.setVisibility(View.GONE);
 					moveView(pageLayout1, paper1);
 					enableBlcok(false);
-
+					Page backPage=null,newPage=null;
 					if (dir == LEFT) {
 						rightMotion.enableMotion(false);
-						changeLayout(paper2, pageList.get(currFolio * 2 - 2).getPageView());
+						backPage = pageList.get(currFolio * 2 - 2);
+						changeLayout(paper2, backPage.makeView());
 						if (0 <= currFolio * 2 - 3) {
-							changeLayout(pageLayout1, pageList.get(currFolio * 2 - 3).getPageView());
+							newPage =  pageList.get(currFolio * 2 - 3);
+							changeLayout(pageLayout1,newPage.makeView());
 						}
 					} else {
-						enableBlcok(false);
-						changeLayout(paper2, pageList.get(currFolio * 2 + dir).getPageView());
+						leftMotion.enableMotion(false);
+						backPage = pageList.get(currFolio * 2 + dir);
+						changeLayout(paper2, backPage.makeView());
 						if (pageList.size() > currFolio * 2 + 2 * dir) {
-							changeLayout(pageLayout1, pageList.get(currFolio * 2 + 2 * dir).getPageView());
-
+							newPage =  pageList.get(currFolio * 2 + 2 * dir);
+							changeLayout(pageLayout1,newPage.makeView());
 						}
-
 					}
-
+					//페이지의 애니메이션 초기화
+					if(backPage!=null){
+						if(dir == LEFT){
+							backPage.initAnimation(backPage.getIndex(), backPage.getView(), newPage, backPage);
+						}else{
+							backPage.initAnimation(backPage.getIndex(), backPage.getView(), backPage,newPage);
+						}
+					}
+					if(newPage!=null){
+						if(dir == LEFT){
+							newPage.initAnimation(newPage.getIndex(), newPage.getView(), newPage, backPage);
+						}else{
+							newPage.initAnimation(newPage.getIndex(),newPage.getView(), backPage, newPage);
+						}
+					}
 				}
 
 				@Override
@@ -256,9 +267,6 @@ public class Book {
 
 				@Override
 				public void onEnd() {
-					enableBlcok(true);
-					rightMotion.enableMotion(true);
-					leftMotion.enableMotion(true);
 					if (JwMotionSet.STATUS.end.equals(motionSet.getStatus())) {
 						currFolio += dir;
 						motionSet.reset();
@@ -271,12 +279,10 @@ public class Book {
 					paperLayout.setX(paper_x);
 					paper1.setVisibility(View.VISIBLE);
 					paper2.setVisibility(View.VISIBLE);
-					pageLayout1.post(new Runnable() {
-						@Override
-						public void run() {
-							reloadBook();
-						}
-					});
+					reloadBook();
+					enableBlcok(true);
+					rightMotion.enableMotion(true);
+					leftMotion.enableMotion(true);
 				}
 			});
 			
@@ -314,15 +320,6 @@ public class Book {
 	private void changeLayout(ViewGroup parents, View view) {
 		parents.removeAllViews();
 		parents.addView(view);
-	}
-
-	public ViewGroup getPageView(int index) {
-		return pageList.get(index).getPageView();
-
-	}
-
-	private FrameLayout getPage(FrameLayout lyt) {
-		return (FrameLayout) lyt.findViewById(R.id.page);
 	}
 
 	private FrameLayout getPaper1(FrameLayout lyt) {

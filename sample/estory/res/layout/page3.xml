@@ -7,14 +7,52 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical" >
 
-        <ImageView
-            android:id="@+id/imageView1"
+        <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:src="@drawable/page3_bg" />
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:src="@drawable/page3_bg" />
+
+            <com.markjmind.sample.propose.estory.book.RatioFrameLayout
+                android:id="@+id/scale_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:tag="1024,1536" >
+
+                <ImageView
+                    android:id="@id/frog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/frog"
+                    android:tag="247,215,-302,480" />
+
+                <ImageView
+                    android:id="@+id/door2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="255"
+                    android:src="@drawable/door2"
+                    android:tag="255,377,586,377" />
+
+                <ImageView
+                    android:id="@id/car"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/car"
+                    android:tag="440,300,584,910" />
+
+            </com.markjmind.sample.propose.estory.book.RatioFrameLayout>
+
+        </FrameLayout>
 
     </LinearLayout>
 

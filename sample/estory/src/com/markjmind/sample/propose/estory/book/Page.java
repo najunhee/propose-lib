@@ -17,6 +17,7 @@ public abstract class Page {
 	private int layout_id;
 	private FrameLayout lyt;
 	private ViewGroup page_view;
+	protected int index;
 	
 	public Page(Context context, int layout_id){
 		this.context = context;
@@ -27,11 +28,19 @@ public abstract class Page {
 		lyt.removeView(page_view);
 	}
 	
-	public ViewGroup getPageView(){
+	public ViewGroup makeView(){
 		page_view = (ViewGroup)((LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(layout_id, null);
-		initAnimation(page_view);
 		return page_view;
 	}
 	
-	public abstract void initAnimation(ViewGroup pageView);
+	public ViewGroup getView(){
+		return page_view;
+	}
+	
+	
+	public int getIndex() {
+		return index;
+	}
+	
+	public abstract void initAnimation(int index, ViewGroup pageView, Page page1, Page page2);
 }
