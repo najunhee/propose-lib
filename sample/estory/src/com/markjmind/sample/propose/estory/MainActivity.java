@@ -3,6 +3,7 @@ package com.markjmind.sample.propose.estory;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -108,9 +109,18 @@ public class MainActivity extends Activity {
 								startX = parents[0].getWidth()*-1;
 								endX = parents[1].getWidth()-frog.getWidth();
 							}
-							anims[1].setFloatValues(startX,endX);
-							motion.motionRight.move();
-							motion.motionRight.setMotionDistance(Math.abs(endX-startX));
+							if(index==0){
+							Log.e("test","전에 getX:"+getViews("frog")[0].getX());
+							anims[1].setFloatValues(startX,endX);							
+							motion.motionRight.setMotionDistance(parents[0].getWidth()*2);
+							motion.motionRight.move(parents[0].getWidth());
+//							motion.motionRight.move(RatioFrameLayout.getTagChildXY(getViews("frog")[0])[0] * ((RatioFrameLayout)parents[index]).getFractionX());
+							Log.e("test","distance:"+motion.motionRight.getMotionDistance());
+							Log.e("test","tag:"+(1024*2* ((RatioFrameLayout)parents[index]).getFractionX()));
+							Log.e("test","mFx:"+RatioFrameLayout.getTagChildXY(getViews("frog")[0])[0]+" mFract:"+((RatioFrameLayout)parents[index]).getFractionX()+" ,="+RatioFrameLayout.getTagChildXY(getViews("frog")[0])[0] * ((RatioFrameLayout)parents[index]).getFractionX());
+							Log.e("test","getX:"+getViews("frog")[0].getX());
+							}
+							
 						}
 					}
 					

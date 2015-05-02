@@ -3,12 +3,13 @@ package com.markjmind.sample.propose.estory.book;
 
 import java.util.HashMap;
 
-import android.R;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+
+import com.markjmind.sample.propose.estory.R;
 
 /**
  * @author 오재웅
@@ -98,14 +99,18 @@ public class RatioFrameLayout extends FrameLayout{
 						view.setX((float)xy[0]*temp_scale_width);
 						view.setY((float)xy[1]*temp_scale_height);
 						view.setPivotX(getPivotX()*temp_scale_width);
-//						view.setPivotY(getPivotY()*temp_scale_height);
+						view.setPivotY(getPivotY()*temp_scale_height);
+						if(view.getId() == R.id.frog){
+//							Log.e("test", "fX:"+xy[0]+" ,fract:"+temp_scale_width+" ,=:"+((float)xy[0]*temp_scale_width));
+//							Log.e("test", "getX:"+view.getX());
+						}
 					}else{
 						view.setX(view.getX()*temp_scale_width/scale_width);
 						view.setY(view.getY()*temp_scale_height/scale_height);
 						view.setPivotX(getPivotX()*temp_scale_width/scale_width);
-//						view.setPivotY(getPivotY()*temp_scale_height/scale_height);
+						view.setPivotY(getPivotY()*temp_scale_height/scale_height);
 					}
-					Log.e("test","drawScale "+"X:"+view.getX()+" Y:"+view.getY());
+					
 				}
 			}
 			scale_width = temp_scale_width;
