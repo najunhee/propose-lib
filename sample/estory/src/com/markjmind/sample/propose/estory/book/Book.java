@@ -111,6 +111,22 @@ public class Book {
 		currFolio = folio;
 	}
 	
+	public void resetFolioInitor(){	
+		Page leftPage=null;
+		Page rightPage=null;
+		if(currFolio*2-1>0){
+			leftPage = pageList.get(currFolio*2-1);
+		}
+		if(currFolio*2<pageList.size()){
+			rightPage = pageList.get(currFolio*2);
+		}
+		if(leftPage!=null){
+			leftPage.resetInitor();
+		}
+		if(rightPage!=null){
+			rightPage.resetInitor();
+		}
+	}
 	
 
 	public void reloadBook(){

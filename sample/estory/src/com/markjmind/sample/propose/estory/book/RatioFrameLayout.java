@@ -97,15 +97,15 @@ public class RatioFrameLayout extends FrameLayout{
 					if(isFirst){
 						view.setX((float)xy[0]*temp_scale_width);
 						view.setY((float)xy[1]*temp_scale_height);
-						view.setPivotX(getPivotX()*temp_scale_width);
-//						view.setPivotY(getPivotY()*temp_scale_height);
+//						view.setPivotX(getPivotX()*temp_scale_width);
+//						view.setPivotY(getPivotY()*temp_scale_height/2);
 					}else{
 						view.setX(view.getX()*temp_scale_width/scale_width);
 						view.setY(view.getY()*temp_scale_height/scale_height);
-						view.setPivotX(getPivotX()*temp_scale_width/scale_width);
-//						view.setPivotY(getPivotY()*temp_scale_height/scale_height);
+//						view.setPivotX(getPivotX()*temp_scale_width/scale_width);
+//						view.setPivotY(getPivotY()*temp_scale_height/scale_height/2);
 					}
-					Log.e("test","drawScale "+"X:"+view.getX()+" Y:"+view.getY());
+//					Log.e("test","drawScale "+"X:"+view.getX()+" Y:"+view.getY());
 				}
 			}
 			scale_width = temp_scale_width;

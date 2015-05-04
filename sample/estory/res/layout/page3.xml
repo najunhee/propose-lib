@@ -27,13 +27,23 @@
                 android:layout_height="match_parent"
                 android:tag="1024,1536" >
 
-                <ImageView
-                    android:id="@id/frog"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/frog"
-                    android:tag="247,215,-302,480" />
+                <FrameLayout
+                    android:id="@+id/frog"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:tag="247,355,-302,340" >
 
+                    <ImageView
+                        android:id="@+id/anim_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/frog" />
+
+                </FrameLayout>
+                
                 <ImageView
                     android:id="@+id/door2"
                     android:layout_width="wrap_content"
@@ -49,6 +59,36 @@
                     android:adjustViewBounds="true"
                     android:src="@drawable/car"
                     android:tag="440,300,584,910" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/girl"
+                    android:tag="146,236,200,1200" />
+
+                <ImageView
+                    android:id="@id/boy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/boy"
+                    android:tag="275,357,-624,600" />
+
+                <FrameLayout
+                    android:id="@id/test"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#33333333"
+                    android:tag="275,457,-924,600" >
+
+                    <ImageView
+                        android:id="@id/boy_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/boy" />
+                </FrameLayout>
 
             </com.markjmind.sample.propose.estory.book.RatioFrameLayout>
 

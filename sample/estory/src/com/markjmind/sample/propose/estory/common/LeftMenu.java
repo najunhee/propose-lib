@@ -59,6 +59,7 @@ public class LeftMenu {
 			public void onScroll(int Direction, long currDuration, long totalDuration) {
 				right_lyt.setPivotX(0);
 				left_lyt.setPivotX(left_paper.getWidth());
+				book.resetFolioInitor();
 			}
 
 			@Override

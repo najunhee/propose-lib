@@ -17,7 +17,8 @@ public abstract class MultiMotionAnimator extends MotionInitor implements OnTouc
 	private JwMotion[] motion;
 	private ViewGroup[] layouts;
 	private HashMap<String, View[]> views; 
-	private HashMap<String, View> singleViews; 
+	private HashMap<String, View> singleViews;
+	private ArrayList<ObjectAnimator[]> animList = new ArrayList<ObjectAnimator[]>();
 	
 	public MultiMotionAnimator(ViewGroup... parents){
 		this.layouts = parents;
@@ -49,7 +50,6 @@ public abstract class MultiMotionAnimator extends MotionInitor implements OnTouc
 		return singleViews.get(key);
 	}
 	
-	ArrayList<ObjectAnimator[]> animList = new ArrayList<ObjectAnimator[]>();
 	public void loadOfFloat(String key, Property<View, Float>... property){
 		View[] vs = getViews(key);
 		if(vs!=null){
@@ -107,5 +107,9 @@ public abstract class MultiMotionAnimator extends MotionInitor implements OnTouc
 			motion[i].onTouch(v, event);
 		}
 		return true;
+	}
+	
+	public JwMotion[] getMotions(){
+		return motion;
 	}
 }
