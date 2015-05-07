@@ -79,6 +79,7 @@ public class MainActivity extends Activity {
 				putPageMotion(this,motion_door1,"door1");
 				door1.setOnTouchListener(motion_door1);
 				
+				
 				//개구리 애니메이션
 				Folio2Person frog = new Folio2Person(scale_layout1, scale_layout2);
 				frog.setAnimation("frog",R.id.frog, View.TRANSLATION_Y, View.TRANSLATION_X);
@@ -89,14 +90,6 @@ public class MainActivity extends Activity {
 				boy.setStartHeight(100);
 				boy.setAnimation("boy",R.id.boy, View.TRANSLATION_Y, View.TRANSLATION_X);
 				putPageMotion(this,boy.getMotions(),"boy");
-				
-				
-				//boy 애니메이션
-				Folio2Person test = new Folio2Person(scale_layout1, scale_layout2);
-				test.setStartHeight(100);
-				test.setAnimation("test",R.id.test, View.TRANSLATION_Y, View.TRANSLATION_X);
-				putPageMotion(this,test.getMotions(),"test");
-				
 				
 				//자동차 애니메이션
 				MultiMotionAnimator carAnim = new MultiMotionAnimator(scale_layout1,scale_layout2) {
@@ -256,7 +249,6 @@ public class MainActivity extends Activity {
 				anims[1].setFloatValues(startX,endX);
 				motion.motionRight.setMotionDistance(Math.abs(endX-startX));
 				if(firstStart){
-					Log.e("check","move:");
 					motion.motionRight.move(RatioFrameLayout.getTagChildXY(getViews(tag)[0])[0]*fraction);
 					if(startPoint>0){
 						motion.motionDown.move(heightMargin);
@@ -291,14 +283,15 @@ public class MainActivity extends Activity {
 			turnLeft2.setDuration(turnDuration);
 			turnRight2.setInterpolator(null);
 			turnLeft2.setInterpolator(null);
-			
 			loadOfFloat(tag, property);
 			setMultyOnTouch(tag);
+			
 		}
 		
 		public void setStartHeight(float point){
 			this.startPoint = point;
 		}
+		
     }
     
 }

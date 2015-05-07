@@ -128,7 +128,6 @@ public class Book {
 		}
 	}
 	
-
 	public void reloadBook(){
 		initAnimation(LEFT);
 		initAnimation(RIGHT);
