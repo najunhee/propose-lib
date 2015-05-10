@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
         View book_layout = findViewById(R.id.book_layout);
         book = new Book(findViewById(R.id.book_layout));
         initPage();
-        book.setFolio(0);
+        book.setFolio(1);
         book.loadBook();
         book_layout.post(new Runnable() {
 			@Override
@@ -42,7 +42,6 @@ public class MainActivity extends Activity {
 			}
 		});
         leftMenu = new LeftMenu(book, (ViewGroup)findViewById(R.id.banner_lyt));
-        
     }
     
     
@@ -70,15 +69,17 @@ public class MainActivity extends Activity {
 				door_anim.setDuration(700);
 				motion_door1.setMotionInitor(new MotionInitor() {
 					@Override
-					public void init(JwMotion jwm) {
+					public void touchDown(JwMotion jwm) {
 						int distance = door1.getWidth()*2;
 						jwm.motionLeft.setMotionDistance(distance);
+					}
+					@Override
+					public void touchUp(JwMotion jwm) {
 					}
 				});
 				motion_door1.motionLeft.play(door_anim);
 				putPageMotion(this,motion_door1,"door1");
 				door1.setOnTouchListener(motion_door1);
-				
 				
 				//개구리 애니메이션
 				Folio2Person frog = new Folio2Person(scale_layout1, scale_layout2);
@@ -120,7 +121,7 @@ public class MainActivity extends Activity {
 				carAnim.setMultyOnTouch("car");
 				putPageMotion(this,carAnim.getMotions(),"car");
 			}
-		});
+		}.addWaitAnimation(R.id.boy, R.anim.jump));
     	
     	/** page3 */
     	book.addPage(new Page(this,R.layout.page3) {
@@ -146,7 +147,9 @@ public class MainActivity extends Activity {
    	 
    }
     
-    
+    private interface MoveAnimation{
+    	public ObjectAnimator moveAnimation(View person);
+    }
     private class Folio2Person extends MultiMotionAnimator{
     	int[] pageWidth ={0,0};
 		int[] pageHeight ={0,0};
@@ -159,7 +162,6 @@ public class MainActivity extends Activity {
     	public Folio2Person(ViewGroup... parents){
     		super(parents);
     	}
-    	
 		@Override
 		public void play(JwMotion motion, ObjectAnimator[] anims) {
 			anims[0].setDuration(personDuration);
@@ -266,6 +268,8 @@ public class MainActivity extends Activity {
 				}
 			}
 		}
+		
+		
 		
 		public void setAnimation(String tag,int id, Property<View, Float>... property){
 			this.tag = tag;

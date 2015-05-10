@@ -14,7 +14,6 @@ import android.widget.FrameLayout;
 
 import com.markjmind.propose.JwMotion;
 import com.markjmind.propose.MotionInitor;
-import com.markjmind.sample.propose.estory.R;
 
 /**
  * 
@@ -26,10 +25,12 @@ import com.markjmind.sample.propose.estory.R;
 public abstract class Page {
 	private Context context;
 	private int layout_id;
-	private FrameLayout lyt;
 	private ViewGroup page_view;
 	protected int index;
 	private Hashtable<String,JwMotion> motionPool = new Hashtable<String,JwMotion>();
+	private ArrayList<ViewAnimationInfo> viewAnimList = new ArrayList<ViewAnimationInfo>();
+	
+	public abstract void initAnimation(int index, ViewGroup pageView, Page page1, Page page2);
 	
 	public Page(Context context, int layout_id){
 		this.context = context;
@@ -40,10 +41,6 @@ public abstract class Page {
 		return context;
 	}
 	
-	public void remove(){
-		lyt.removeView(page_view);
-	}
-	
 	public ViewGroup makeView(){
 		page_view = (ViewGroup)((LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(layout_id, null);
 		motionPool.clear();
@@ -52,6 +49,11 @@ public abstract class Page {
 	
 	public ViewGroup getView(){
 		return page_view;
+	}
+	
+	public void remove(){
+		motionPool.clear();
+		page_view = null;
 	}
 	
 	
@@ -73,18 +75,30 @@ public abstract class Page {
 			String key = em.nextElement();
 			MotionInitor mi = motionPool.get(key).getMotionInitor();
 			if(mi!=null){
-				mi.init(motionPool.get(key));
+				mi.touchDown(motionPool.get(key));
 			}
 		}
 	}
 	
-	public abstract void initAnimation(int index, ViewGroup pageView, Page page1, Page page2);
+	public Page addWaitAnimation(int viewId, int animId){
+		Animation anim = AnimationUtils.loadAnimation(context, animId);
+		viewAnimList.add(new ViewAnimationInfo(viewId,anim));
+		return this;
+	}
+	
+	public void startWaitAnimation(){
+		for(ViewAnimationInfo info : viewAnimList){
+			page_view.findViewById(info.id).startAnimation(info.anim);
+		}
+	}
+	
+	
 	
 	private class ViewAnimationInfo{
-		public View childView;
+		public int id;
 		public Animation anim;
-		public ViewAnimationInfo(View childView, Animation anim){
-			this.childView = childView;
+		public ViewAnimationInfo(int id, Animation anim){
+			this.id = id;
 			this.anim = anim;
 		}
 	}
