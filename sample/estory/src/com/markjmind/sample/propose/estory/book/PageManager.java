@@ -78,9 +78,6 @@ public class PageManager {
 		}
 	}
 	
-	
-	
-	
 	protected void flip(int direction){
 		Page front;
 		Page back;

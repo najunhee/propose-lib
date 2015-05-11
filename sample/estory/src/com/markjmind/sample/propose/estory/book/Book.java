@@ -31,7 +31,7 @@ public class Book {
 	private ViewGroup bookLayout;
 	private Context context;
 	public int DIRECTION = 0;
-	private FrameLayout left_lyt, right_lyt;// left_paper, right_paper left_page, right_page;
+	private FrameLayout left_lyt, right_lyt;
 	
 	private ArrayList<JwMotion> block = new ArrayList<JwMotion>();
 
@@ -59,6 +59,8 @@ public class Book {
 		FrameLayout right_paper = (FrameLayout) findViewById(R.id.right_paper);
 		
 		pm = new PageManager(left_page, right_page, left_paper, right_paper);
+		pm.lPaper.setCameraDistance(cameraDistance);
+		pm.rPaper.setCameraDistance(cameraDistance);
 		
 		leftMotion = new JwMotion(context);
 		rightMotion = new JwMotion(context);
@@ -71,6 +73,9 @@ public class Book {
 				Log.e("dfdf", "touchDown1");
 				pm.lPaper.initSize(pm.getPageView(LEFT));
 				leftMotion.motionRight.setMotionDistance(pm.getPageView(direct).getWidth() * 2);
+				/**메뉴 애니관련 pivot*/
+				right_lyt.setPivotX(0);
+				left_lyt.setPivotX(left_lyt.getWidth());
 			}
 		}.addParam("direction", LEFT));
 		rightMotion.setMotionInitor(new MotionInitor() {
@@ -79,9 +84,11 @@ public class Book {
 			@Override
 			public void touchDown(JwMotion jwm) {
 				int direct = (Integer)getParam("direction");
-				Log.e("dfdf", "touchDown2");
 				pm.rPaper.initSize(pm.getPageView(RIGHT));
 				rightMotion.motionLeft.setMotionDistance(pm.getPageView(direct).getWidth() * 2);
+				/**메뉴 애니관련 pivot*/
+				right_lyt.setPivotX(0);
+				left_lyt.setPivotX(left_lyt.getWidth());
 			}
 		}.addParam("direction", RIGHT));
 		initUpDownAnimation();
@@ -93,24 +100,21 @@ public class Book {
 	}
 	
 	private void initUpDownAnimation() {
-//		upDownMotoin = new JwMotion(context);
-//		ObjectAnimator left_paper_UpDown = ObjectAnimator.ofFloat(left_paper, View.ROTATION_X, -50, 50);
-//		left_paper_UpDown.setDuration(700);
-//		ObjectAnimator right_paperUpDown = left_paper_UpDown.clone();
-//		right_paperUpDown.setTarget(right_paper);
-//		ObjectAnimator left_page_UpDown = left_paper_UpDown.clone();
-//		left_page_UpDown.setTarget(left_lyt);
-//		ObjectAnimator right_page_UpDown = left_paper_UpDown.clone();
-//		right_page_UpDown.setTarget(right_lyt);
-//		left_paper.setCameraDistance(cameraDistance);
-//		right_paper.setCameraDistance(cameraDistance);
-//		left_lyt.setCameraDistance(cameraDistance);
-//		right_lyt.setCameraDistance(cameraDistance);
-//		
-//		upDownMotoin.motionUp.play(left_paper_UpDown, (int) (700 * rightMotion.density)).with(right_paperUpDown)
-//		.with(left_page_UpDown).with(right_page_UpDown);
-//		upDownMotoin.motionUp.enableFling(false).enableTabUp(false).enableSingleTabUp(false)
-//				.move((int) (350 * rightMotion.density));
+		upDownMotoin = new JwMotion(context);
+		ObjectAnimator left_paper_UpDown = ObjectAnimator.ofFloat(pm.lPaper.getPaperLayout(), View.ROTATION_X, -50, 50);
+		left_paper_UpDown.setDuration(700);
+		ObjectAnimator right_paperUpDown = left_paper_UpDown.clone();
+		right_paperUpDown.setTarget(pm.rPaper.getPaperLayout());
+		ObjectAnimator left_page_UpDown = left_paper_UpDown.clone();
+		left_page_UpDown.setTarget(left_lyt);
+		ObjectAnimator right_page_UpDown = left_paper_UpDown.clone();
+		right_page_UpDown.setTarget(right_lyt);
+		left_lyt.setCameraDistance(cameraDistance);
+		right_lyt.setCameraDistance(cameraDistance);
+		upDownMotoin.motionUp.play(left_paper_UpDown, (int) (500 * rightMotion.density)).with(right_paperUpDown)
+		.with(left_page_UpDown).with(right_page_UpDown);
+		upDownMotoin.motionUp.enableFling(false).enableTabUp(false).enableSingleTabUp(false)
+				.move((int) (250 * rightMotion.density));
 	}
 
 	public void setFolio(int folio){
@@ -121,18 +125,7 @@ public class Book {
 		pm.resetInitor();
 	}
 	
-//	public void reloadBook(){
-//		initAnimation(LEFT);
-//		initAnimation(RIGHT);
-//	}
-	
 	public void loadBook() {
-//		right_lyt.post(new Runnable() {
-//			@Override
-//			public void run() {
-//				reloadBook();
-//			}
-//		});
 		initAnimation(LEFT);
 		initAnimation(RIGHT);
 	}
@@ -142,119 +135,99 @@ public class Book {
 		final JwMotion motion;
 		final JwMotionSet motionSet;
 		
-//		final ViewGroup paperLayout;
-//		final ViewGroup paper1;
 		ViewGroup anim_paperLayout;
 		if (direction == RIGHT) {
 			motion = rightMotion;
 			motionSet = motion.motionLeft;
-//			paperLayout = pm.rPaper.getPaperLayout();
-//			paper1 = pm.rPaper.front;
 			anim_paperLayout = pm.rPaper.getPaperLayout();
 
 		} else if (direction == LEFT) {
 			motion = leftMotion;
 			motionSet = motion.motionRight;
-//			paperLayout = pm.lPaper.getPaperLayout();
-//			paper1 = pm.lPaper.front;
 			anim_paperLayout = pm.lPaper.getPaperLayout();
 		} else {
 			return;
 		}
 		
 		motionSet.enableReverse(false);
+		ObjectAnimator anim1 = ObjectAnimator.ofFloat(anim_paperLayout, View.ROTATION_Y, 0, -90 * dir);
+		ObjectAnimator anim2 = ObjectAnimator.ofFloat(anim_paperLayout, View.ROTATION_Y, 90 * dir, 0);
 		
-//		if ((dir == RIGHT && pm.isNextFolio()) || (dir == LEFT && pm.isBackFolio())) {
-			
-			ObjectAnimator anim1 = ObjectAnimator.ofFloat(anim_paperLayout, View.ROTATION_Y, 0, -90 * dir);
-			ObjectAnimator anim2 = ObjectAnimator.ofFloat(anim_paperLayout, View.ROTATION_Y, 90 * dir, 0);
-//			if (dir == LEFT) {
-//				pm.lPaper.initSize();
-//				
-//			} else {
-//				pm.rPaper.initSize();
-//			}
-			/**메뉴 애니*/
-//			right_lyt.setPivotX(0);
-//			left_lyt.setPivotX(paper_width);
-			
-			
-			anim1.setDuration(500);
-			anim2.setDuration(500);
-			motionSet.play(anim1).next(anim2);
-			motionSet.enableSingleTabUp(false);
+		anim1.setDuration(500);
+		anim2.setDuration(500);
+		motionSet.play(anim1).next(anim2);
+		motionSet.enableSingleTabUp(false);
 
-			anim1.addListener(new JwAnimatorListener() {
-				@Override
-				public void onStart(Animator animation) {
+		anim1.addListener(new JwAnimatorListener() {
+			@Override
+			public void onStart(Animator animation) {
+			}
+
+			@Override
+			public void onReverseStart(Animator animation) {
+				if(dir==LEFT){
+					pm.lPaper.showFront();
+				}else{
+					pm.rPaper.showFront();
+				}
+			}
+
+			@Override
+			public void onReverseEnd(Animator animation) {
+			}
+
+			@Override
+			public void onEnd(Animator animation) {
+				if(dir==LEFT){
+					pm.lPaper.showBack();
+				}else{
+					pm.rPaper.showBack();
 				}
 
-				@Override
-				public void onReverseStart(Animator animation) {
-					if(dir==LEFT){
-						pm.lPaper.showFront();
-					}else{
-						pm.rPaper.showFront();
-					}
-				}
+			}
+		});
 
-				@Override
-				public void onReverseEnd(Animator animation) {
+		motion.setOnMotionListener(new JwMotionListener() {
+			@Override
+			public void onStart() {
+				Log.e("dsd", "currPage:" + pm.currFolio + " dir:" + dir);
+				pm.flip(dir);
+				enableBlcok(false);
+				if (dir == LEFT) {
+					rightMotion.enableMotion(false);
+				}else{
+					leftMotion.enableMotion(false);
 				}
+			}
 
-				@Override
-				public void onEnd(Animator animation) {
-					if(dir==LEFT){
-						pm.lPaper.showBack();
-					}else{
-						pm.rPaper.showBack();
-					}
+			@Override
+			public void onScroll(int Direction, long currDuration, long totalDuration) {
+				
+			}
 
+			@Override
+			public void onEnd() {
+				if (JwMotionSet.STATUS.end.equals(motionSet.getStatus())) {
+					motionSet.reset();
+					pm.endFlip(dir, true);
+				} else {
+					pm.endFlip(dir, false);
 				}
-			});
-
-			motion.setOnMotionListener(new JwMotionListener() {
-				@Override
-				public void onStart() {
-					Log.e("dsd", "currPage:" + pm.currFolio + " dir:" + dir);
-					pm.flip(dir);
-					enableBlcok(false);
-					if (dir == LEFT) {
-						rightMotion.enableMotion(false);
-					}else{
-						leftMotion.enableMotion(false);
-					}
-				}
-
-				@Override
-				public void onScroll(int Direction, long currDuration, long totalDuration) {
-					
-				}
-
-				@Override
-				public void onEnd() {
-					if (JwMotionSet.STATUS.end.equals(motionSet.getStatus())) {
-						motionSet.reset();
-						pm.endFlip(dir, true);
-					} else {
-						pm.endFlip(dir, false);
-					}
-					
-					enableBlcok(true);
-					rightMotion.enableMotion(true);
-					leftMotion.enableMotion(true);
-				}
-			});
-			
-			pm.getPageLayout(dir).setOnTouchListener(new OnTouchListener() {
-				@Override
-				public boolean onTouch(View v, MotionEvent event) {
-					motion.onTouch(v, event);
-//					upDownMotoin.onTouch(v, event);
-					return true;
-				}
-			});
-//		}
+				
+				enableBlcok(true);
+				rightMotion.enableMotion(true);
+				leftMotion.enableMotion(true);
+			}
+		});
+		
+		pm.getPageLayout(dir).setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				motion.onTouch(v, event);
+				upDownMotoin.onTouch(v, event);
+				return true;
+			}
+		});
 	}
 
 	public void addBlockMotion(JwMotion blockMotion){

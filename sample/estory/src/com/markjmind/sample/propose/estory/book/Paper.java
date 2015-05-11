@@ -14,6 +14,7 @@ public class Paper {
 	private int direction;
 	private float paper_x;
 	private int paper_width;
+	private Float cameraDistance = null;
 	
 	protected Paper(ViewGroup paperLayout, View pageView, int direction){
 		this.paperLayout = paperLayout;
@@ -27,7 +28,6 @@ public class Paper {
 	
 	protected void initSize(View pageView){
 		if(pageView==null){
-			Log.e("sdf","pageView null :"+direction);
 			return;
 		}
 		front.getLayoutParams().width = pageView.getWidth();
@@ -96,11 +96,14 @@ public class Paper {
 		}
 	}
 	
-	
 	protected void clear(){
 		front.removeAllViews();
 		back.removeAllViews();
 		this.frontPage = null;
 		this.backPage = null;
+	}
+	
+	public void setCameraDistance(float distance){
+		paperLayout.setCameraDistance(distance);
 	}
 }
