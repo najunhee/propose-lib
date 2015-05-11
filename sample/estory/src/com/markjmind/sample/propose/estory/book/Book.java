@@ -70,7 +70,6 @@ public class Book {
 			@Override
 			public void touchDown(JwMotion jwm) {
 				int direct = (Integer)getParam("direction");
-				Log.e("dfdf", "touchDown1");
 				pm.lPaper.initSize(pm.getPageView(LEFT));
 				leftMotion.motionRight.setMotionDistance(pm.getPageView(direct).getWidth() * 2);
 				/**메뉴 애니관련 pivot*/
@@ -190,7 +189,6 @@ public class Book {
 		motion.setOnMotionListener(new JwMotionListener() {
 			@Override
 			public void onStart() {
-				Log.e("dsd", "currPage:" + pm.currFolio + " dir:" + dir);
 				pm.flip(dir);
 				enableBlcok(false);
 				if (dir == LEFT) {
@@ -202,7 +200,6 @@ public class Book {
 
 			@Override
 			public void onScroll(int Direction, long currDuration, long totalDuration) {
-				
 			}
 
 			@Override

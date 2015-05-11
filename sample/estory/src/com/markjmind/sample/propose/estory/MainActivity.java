@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
         View book_layout = findViewById(R.id.book_layout);
         book = new Book(findViewById(R.id.book_layout));
         initPage();
-        book.setFolio(1);
+        book.setFolio(0);
         book.loadBook();
         book_layout.post(new Runnable() {
 			@Override

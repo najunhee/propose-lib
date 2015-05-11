@@ -40,13 +40,9 @@ public class Paper {
 		if(direction==Book.LEFT){
 			paper_x = 0;
 			paperLayout.setPivotX(paper_width);
-			Log.e("sdf","LEFT paper_x:"+paper_x);
-			Log.e("sdf","LEFT paper_width:"+paper_width);
 		}else{
 			paper_x = parents.getWidth()/2;
 			paperLayout.setPivotX(0);
-			Log.e("sdf","RIGHT paper_x:"+paper_x);
-			Log.e("sdf","RIGHT paper_width:"+paper_width);
 		}
 		showFront();
 	}

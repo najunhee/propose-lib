@@ -30,7 +30,6 @@ public class PageManager {
 	
 	private void setLeftPage(Page page){
 		leftPageLayout.removeAllViews();
-		Log.e("test","remove Left1");
 		if(leftPage!=null){
 			leftPage.remove();
 		}
@@ -41,12 +40,10 @@ public class PageManager {
 			}else{
 				leftPageLayout.addView(leftPage.getView());
 			}
-			Log.e("test","addLeft PageLaytout");
 		}
 	}
 	
 	private void setRightPage(Page page){
-		Log.e("test","remove Right1");
 		rightPageLayout.removeAllViews();
 		if(rightPage!=null){
 			rightPage.remove();
@@ -58,7 +55,6 @@ public class PageManager {
 			}else{
 				rightPageLayout.addView(rightPage.getView());
 			}
-			Log.e("test","addRight PageLaytout");
 		}
 	}
 	
@@ -95,7 +91,6 @@ public class PageManager {
 				newPage.initAnimation(newPage.getIndex(), newPage.getView(), newPage, back);
 			}else{
 				leftPageLayout.removeAllViews();
-				Log.e("test","remove left2");
 			}
 			//페이지를 페이퍼로 이동
 			lPaper.flip(front, back);
@@ -113,7 +108,6 @@ public class PageManager {
 				newPage.initAnimation(newPage.getIndex(),newPage.getView(), back, newPage);
 			}else{
 				rightPageLayout.removeAllViews();
-				Log.e("test","remove Right2");
 			}
 			//페이지를 페이퍼로 이동
 			rPaper.flip(front, back);
