@@ -5,6 +5,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -18,7 +20,13 @@ public class MainActivity extends Activity{
 	private FrameLayout lyt;
 	private TextView text;
 	private ImageView bg1;
+	
+	private ViewGroup lyt1,lyt2;
+	private TextView test; 
+	int a =0;
 	JwMotion jwm;
+	Pm pm;
+	Paper paper;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -57,5 +65,46 @@ public class MainActivity extends Activity{
 				});
 			}
 		});
+		
+		lyt1 = (ViewGroup)findViewById(R.id.lyt1);
+		lyt2 = (ViewGroup)findViewById(R.id.lyt2);
+		test = (TextView)findViewById(R.id.test);
+		pm = new Pm();
+		pm.page = new Page(test);
+		paper = new Paper();
+		test.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				a++;
+				if(a%2==0){
+					pm.page = paper.page;
+					paper = null;
+					paper = new Paper();
+					lyt2.removeAllViews();
+					lyt1.addView(pm.page.tx);
+				}else{
+					paper.page = pm.page;
+					pm = null;
+					pm = new Pm();
+					lyt1.removeAllViews();
+					lyt2.addView(paper.page.tx);
+				}
+			}
+		});
+	}
+	
+	class Pm{
+		Page page;
+	}
+	
+	class Paper{
+		Page page;
+	}
+	
+	class Page{
+		public TextView tx=null;
+		public Page(TextView tx){
+			this.tx = tx;
+		}
 	}
 }
