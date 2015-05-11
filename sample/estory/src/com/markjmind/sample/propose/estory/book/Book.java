@@ -62,38 +62,28 @@ public class Book {
 		
 		leftMotion = new JwMotion(context);
 		rightMotion = new JwMotion(context);
-//		leftMotion.setMotionInitor(new MotionInitor() {
-//			@Override
-//			public void touchUp(JwMotion jwm) {}
-//			@Override
-//			public void touchDown(JwMotion jwm) {
-//				int direct = (Integer)getParam("direction");
-//				Log.e("dfdf", "touchDown1");
-////				if(direct==LEFT){
-//					pm.lPaper.initSize();
-//					leftMotion.motionRight.setMotionDistance(pm.getPageView(direct).getWidth() * 2);
-////				}else{
-//					pm.rPaper.initSize();
-//					rightMotion.motionLeft.setMotionDistance(pm.getPageView(direct).getWidth() * 2);
-////				}
-//			}
-//		}.addParam("direction", LEFT));
-//		rightMotion.setMotionInitor(new MotionInitor() {
-//			@Override
-//			public void touchUp(JwMotion jwm) {}
-//			@Override
-//			public void touchDown(JwMotion jwm) {
-//				int direct = (Integer)getParam("direction");
-//				Log.e("dfdf", "touchDown2");
-////				if(direct==LEFT){
-//					pm.lPaper.initSize();
-//					leftMotion.motionRight.setMotionDistance(pm.getPageView(direct).getWidth() * 2);
-////				}else{
-//					pm.rPaper.initSize();
-//					rightMotion.motionLeft.setMotionDistance(pm.getPageView(direct).getWidth() * 2);
-////				}
-//			}
-//		}.addParam("direction", RIGHT));
+		leftMotion.setMotionInitor(new MotionInitor() {
+			@Override
+			public void touchUp(JwMotion jwm) {}
+			@Override
+			public void touchDown(JwMotion jwm) {
+				int direct = (Integer)getParam("direction");
+				Log.e("dfdf", "touchDown1");
+				pm.lPaper.initSize(pm.getPageView(LEFT));
+				leftMotion.motionRight.setMotionDistance(pm.getPageView(direct).getWidth() * 2);
+			}
+		}.addParam("direction", LEFT));
+		rightMotion.setMotionInitor(new MotionInitor() {
+			@Override
+			public void touchUp(JwMotion jwm) {}
+			@Override
+			public void touchDown(JwMotion jwm) {
+				int direct = (Integer)getParam("direction");
+				Log.e("dfdf", "touchDown2");
+				pm.rPaper.initSize(pm.getPageView(RIGHT));
+				rightMotion.motionLeft.setMotionDistance(pm.getPageView(direct).getWidth() * 2);
+			}
+		}.addParam("direction", RIGHT));
 		initUpDownAnimation();
 		
 	}
@@ -131,18 +121,20 @@ public class Book {
 		pm.resetInitor();
 	}
 	
-	public void reloadBook(){
-		initAnimation(LEFT);
-		initAnimation(RIGHT);
-	}
+//	public void reloadBook(){
+//		initAnimation(LEFT);
+//		initAnimation(RIGHT);
+//	}
 	
 	public void loadBook() {
-		right_lyt.post(new Runnable() {
-			@Override
-			public void run() {
-				reloadBook();
-			}
-		});
+//		right_lyt.post(new Runnable() {
+//			@Override
+//			public void run() {
+//				reloadBook();
+//			}
+//		});
+		initAnimation(LEFT);
+		initAnimation(RIGHT);
 	}
 
 	private void initAnimation(int direction) {
@@ -150,48 +142,43 @@ public class Book {
 		final JwMotion motion;
 		final JwMotionSet motionSet;
 		
-		final ViewGroup paperLayout;
-		final ViewGroup paper1;
+//		final ViewGroup paperLayout;
+//		final ViewGroup paper1;
+		ViewGroup anim_paperLayout;
 		if (direction == RIGHT) {
 			motion = rightMotion;
 			motionSet = motion.motionLeft;
-			paperLayout = pm.rPaper.getPaperLayout();
-			paper1 = pm.rPaper.front;
+//			paperLayout = pm.rPaper.getPaperLayout();
+//			paper1 = pm.rPaper.front;
+			anim_paperLayout = pm.rPaper.getPaperLayout();
 
 		} else if (direction == LEFT) {
 			motion = leftMotion;
 			motionSet = motion.motionRight;
-			paperLayout = pm.lPaper.getPaperLayout();
-			paper1 = pm.lPaper.front;
+//			paperLayout = pm.lPaper.getPaperLayout();
+//			paper1 = pm.lPaper.front;
+			anim_paperLayout = pm.lPaper.getPaperLayout();
 		} else {
 			return;
 		}
 		
 		motionSet.enableReverse(false);
-		paperLayout.setRotationY(0);
-		if ((dir == RIGHT && pm.isNextFolio()) || (dir == LEFT && pm.isBackFolio())) {
-			View pageView = pm.getPageView(dir);
-			final int paper_width = paperLayout.getWidth();
-			final float paper_x = paperLayout.getX();
-
-			paper1.getLayoutParams().width = pageView.getWidth();
-			paper1.getLayoutParams().height = pageView.getHeight();
-			paper1.setLayoutParams(paper1.getLayoutParams());
-			ObjectAnimator anim1 = ObjectAnimator.ofFloat(paperLayout, View.ROTATION_Y, 0, -90 * dir);
-			ObjectAnimator anim2 = ObjectAnimator.ofFloat(paperLayout, View.ROTATION_Y, 90 * dir, 0);
-			if (dir == LEFT) {
-				pm.lPaper.initSize();
-				paperLayout.setPivotX(paper_width);
-				
-			} else {
-				pm.rPaper.initSize();
-				paperLayout.setPivotX(0);
-			}
-			/**메뉴 애니*/
-			right_lyt.setPivotX(0);
-			left_lyt.setPivotX(paper_width);
+		
+//		if ((dir == RIGHT && pm.isNextFolio()) || (dir == LEFT && pm.isBackFolio())) {
 			
-			paperLayout.setPivotY(paperLayout.getHeight() / 2);
+			ObjectAnimator anim1 = ObjectAnimator.ofFloat(anim_paperLayout, View.ROTATION_Y, 0, -90 * dir);
+			ObjectAnimator anim2 = ObjectAnimator.ofFloat(anim_paperLayout, View.ROTATION_Y, 90 * dir, 0);
+//			if (dir == LEFT) {
+//				pm.lPaper.initSize();
+//				
+//			} else {
+//				pm.rPaper.initSize();
+//			}
+			/**메뉴 애니*/
+//			right_lyt.setPivotX(0);
+//			left_lyt.setPivotX(paper_width);
+			
+			
 			anim1.setDuration(500);
 			anim2.setDuration(500);
 			motionSet.play(anim1).next(anim2);
@@ -209,16 +196,6 @@ public class Book {
 					}else{
 						pm.rPaper.showFront();
 					}
-					
-//					paper1.setVisibility(View.VISIBLE);
-//					paper2.setVisibility(View.GONE);
-//					if (dir == RIGHT) {
-//						paperLayout.setX(paper_x);
-//						paperLayout.setPivotX(0);
-//					} else {
-//						paperLayout.setX(paper_x);
-//						paperLayout.setPivotX(paper_width);
-//					}
 				}
 
 				@Override
@@ -232,17 +209,6 @@ public class Book {
 					}else{
 						pm.rPaper.showBack();
 					}
-					
-					
-//					paper1.setVisibility(View.GONE);
-//					paper2.setVisibility(View.VISIBLE);
-//					if (dir == RIGHT) {
-//						paperLayout.setX(paper_x - paper_width * dir);
-//						paperLayout.setPivotX(paper_width);
-//					} else {
-//						paperLayout.setX(paper_x - paper_width * dir);
-//						paperLayout.setPivotX(0);
-//					}
 
 				}
 			});
@@ -258,43 +224,6 @@ public class Book {
 					}else{
 						leftMotion.enableMotion(false);
 					}
-					
-//					paper2.setVisibility(View.GONE);
-//					pageMgm.movePage(dir, paper1);
-//					enableBlcok(false);
-//					Page backPage=null,newPage=null;
-//					if (dir == LEFT) {
-//						rightMotion.enableMotion(false);
-//						backPage = pageList.get(pageMgm.currFolio * 2 - 2);
-//						changeLayout(paper2, backPage.makeView());
-//						if (0 <= currFolio * 2 - 3) {
-//							newPage =  pageList.get(pageMgm.currFolio * 2 - 3);
-//							changeLayout(pageLayout1,newPage.makeView());
-//						}
-//					} else {
-//						leftMotion.enableMotion(false);
-//						backPage = pageList.get(pageMgm.currFolio * 2 + dir);
-//						changeLayout(paper2, backPage.makeView());
-//						if (pageList.size() > currFolio * 2 + 2 * dir) {
-//							newPage =  pageList.get(currFolio * 2 + 2 * dir);
-//							changeLayout(pageLayout1,newPage.makeView());
-//						}
-//					}
-//					//페이지의 애니메이션 초기화
-//					if(backPage!=null){
-//						if(dir == LEFT){
-//							backPage.initAnimation(backPage.getIndex(), backPage.getView(), newPage, backPage);
-//						}else{
-//							backPage.initAnimation(backPage.getIndex(), backPage.getView(), backPage,newPage);
-//						}
-//					}
-//					if(newPage!=null){
-//						if(dir == LEFT){
-//							newPage.initAnimation(newPage.getIndex(), newPage.getView(), newPage, backPage);
-//						}else{
-//							newPage.initAnimation(newPage.getIndex(),newPage.getView(), backPage, newPage);
-//						}
-//					}
 				}
 
 				@Override
@@ -305,20 +234,11 @@ public class Book {
 				@Override
 				public void onEnd() {
 					if (JwMotionSet.STATUS.end.equals(motionSet.getStatus())) {
-//						pageMgm.currFolio += dir;
 						motionSet.reset();
-//						paper1.removeAllViews();
-//						moveView(paper2, pageLayout2);
 						pm.endFlip(dir, true);
 					} else {
 						pm.endFlip(dir, false);
-//						paper2.removeAllViews();
-//						moveView(paper1, pageLayout1);
 					}
-//					paperLayout.setX(paper_x);
-//					paper1.setVisibility(View.VISIBLE);
-//					paper2.setVisibility(View.VISIBLE);
-					reloadBook();
 					
 					enableBlcok(true);
 					rightMotion.enableMotion(true);
@@ -334,7 +254,7 @@ public class Book {
 					return true;
 				}
 			});
-		}
+//		}
 	}
 
 	public void addBlockMotion(JwMotion blockMotion){

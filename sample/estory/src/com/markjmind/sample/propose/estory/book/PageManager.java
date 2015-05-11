@@ -16,8 +16,8 @@ public class PageManager {
 	protected PageManager(ViewGroup leftPageLayout, ViewGroup rightPageLayout, ViewGroup leftPaperLayout, ViewGroup rightPaperLayout){
 		this.leftPageLayout = leftPageLayout;
 		this.rightPageLayout = rightPageLayout;
-		lPaper = new Paper(leftPaperLayout, Book.LEFT);
-		rPaper = new Paper(rightPaperLayout, Book.RIGHT);
+		lPaper = new Paper(leftPaperLayout, getPageView(Book.LEFT), Book.LEFT);
+		rPaper = new Paper(rightPaperLayout, getPageView(Book.RIGHT), Book.RIGHT);
 	}
 	
 	protected ViewGroup getPageLayout(int direction){

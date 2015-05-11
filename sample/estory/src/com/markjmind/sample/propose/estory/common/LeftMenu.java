@@ -64,7 +64,7 @@ public class LeftMenu {
 
 			@Override
 			public void onEnd() {
-				book.reloadBook();
+//				book.reloadBook();
 				book.leftMotion.enableMotion(true);
 				book.rightMotion.enableMotion(true);
 			}

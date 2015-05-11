@@ -15,7 +15,7 @@ public class Paper {
 	private float paper_x;
 	private int paper_width;
 	
-	protected Paper(ViewGroup paperLayout, int direction){
+	protected Paper(ViewGroup paperLayout, View pageView, int direction){
 		this.paperLayout = paperLayout;
 		this.front = (ViewGroup)paperLayout.findViewById(R.id.paper1);
 		this.back = (ViewGroup)paperLayout.findViewById(R.id.paper2);
@@ -25,14 +25,30 @@ public class Paper {
 		this.parents = (ViewGroup)paperLayout.getParent();
 	}
 	
-	protected void initSize(){
+	protected void initSize(View pageView){
+		if(pageView==null){
+			Log.e("sdf","pageView null :"+direction);
+			return;
+		}
+		front.getLayoutParams().width = pageView.getWidth();
+		front.getLayoutParams().height = pageView.getHeight();
+		front.setLayoutParams(front.getLayoutParams());
+		
+		paperLayout.setRotationY(0);
+		paperLayout.setPivotY(paperLayout.getHeight() / 2);
+		paper_width = paperLayout.getWidth();
 		if(direction==Book.LEFT){
 			paper_x = 0;
+			paperLayout.setPivotX(paper_width);
+			Log.e("sdf","LEFT paper_x:"+paper_x);
+			Log.e("sdf","LEFT paper_width:"+paper_width);
 		}else{
 			paper_x = parents.getWidth()/2;
+			paperLayout.setPivotX(0);
+			Log.e("sdf","RIGHT paper_x:"+paper_x);
+			Log.e("sdf","RIGHT paper_width:"+paper_width);
 		}
-		
-		paper_width = paperLayout.getWidth();
+		showFront();
 	}
 	
 	protected ViewGroup getPaperLayout(){
@@ -58,12 +74,12 @@ public class Paper {
 		front.setVisibility(View.VISIBLE);
 		back.setVisibility(View.GONE);
 
-		if (direction == Book.RIGHT) {
-			paperLayout.setX(paper_x);
-			paperLayout.setPivotX(0);
-		} else {
+		if (direction == Book.LEFT) {
 			paperLayout.setX(paper_x);
 			paperLayout.setPivotX(paper_width);
+		} else {
+			paperLayout.setX(paper_x);
+			paperLayout.setPivotX(0);
 		}
 	}
 	
@@ -86,6 +102,5 @@ public class Paper {
 		back.removeAllViews();
 		this.frontPage = null;
 		this.backPage = null;
-		initSize();
 	}
 }
