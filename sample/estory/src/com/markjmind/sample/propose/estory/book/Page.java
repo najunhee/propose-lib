@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
+import android.animation.AnimatorSet;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.FrameLayout;
 
 import com.markjmind.propose.JwMotion;
 import com.markjmind.propose.MotionInitor;
+import com.markjmind.sample.propose.estory.common.UnitAnimation;
 
 /**
  * 
@@ -28,7 +30,6 @@ public abstract class Page {
 	private ViewGroup page_view;
 	protected int index;
 	private Hashtable<String,JwMotion> motionPool = new Hashtable<String,JwMotion>();
-	private ArrayList<ViewAnimationInfo> viewAnimList = new ArrayList<ViewAnimationInfo>();
 	
 	public abstract void initAnimation(int index, ViewGroup pageView, Page page1, Page page2);
 	
@@ -80,26 +81,16 @@ public abstract class Page {
 		}
 	}
 	
-	public Page addWaitAnimation(int viewId, int animId){
-		Animation anim = AnimationUtils.loadAnimation(context, animId);
-		viewAnimList.add(new ViewAnimationInfo(viewId,anim));
-		return this;
-	}
 	
-	public void startWaitAnimation(){
-		for(ViewAnimationInfo info : viewAnimList){
-			page_view.findViewById(info.id).startAnimation(info.anim);
-		}
-	}
-	
-	
-	
-	private class ViewAnimationInfo{
-		public int id;
-		public Animation anim;
-		public ViewAnimationInfo(int id, Animation anim){
-			this.id = id;
-			this.anim = anim;
-		}
-	}
+   protected void putPageMotion(Page page, JwMotion motion, String tag){
+   	 page.addInitorMotion(tag, motion);
+   }
+   
+   protected void putPageMotion(Page page, JwMotion motion[], String tag){
+   	for(int i=0;i<motion.length;i++){
+   		page.addInitorMotion(tag+i, motion[i]);
+   	}
+   }
+   
+   
 }

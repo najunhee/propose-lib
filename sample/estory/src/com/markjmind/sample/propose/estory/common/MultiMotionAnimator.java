@@ -83,17 +83,20 @@ public abstract class MultiMotionAnimator extends MotionInitor implements OnTouc
 		}
 	}
 	public abstract void play(JwMotion motion, ObjectAnimator[] anims);
-	public abstract void motionInitor(int index, ViewGroup[] parents, JwMotion motion, ObjectAnimator[] anims);
+	public abstract void touchDown(int index, ViewGroup[] parents, JwMotion motion, ObjectAnimator[] anims);
+	public abstract void touchUp(int index, ViewGroup[] parents, JwMotion motion, ObjectAnimator[] anims);
 	
 	@Override
 	public void touchDown(JwMotion jwm) {
 		for(int i=0;i<motion.length;i++){
-			motionInitor(i, layouts, motion[i], animList.get(i));
+			touchDown(i, layouts, motion[i], animList.get(i));
 		}
 	}
 	@Override
 	public void touchUp(JwMotion jwm) {
-		
+		for(int i=0;i<motion.length;i++){
+			touchUp(i, layouts, motion[i], animList.get(i));
+		}
 	}
 	
 	public void setMultyOnTouch(String key){
