@@ -75,6 +75,7 @@ public class Book {
 				/**메뉴 애니관련 pivot*/
 				right_lyt.setPivotX(0);
 				left_lyt.setPivotX(left_lyt.getWidth());
+				Log.e("sfdf","left touchDown");
 			}
 		}.addParam("direction", LEFT));
 		rightMotion.setMotionInitor(new MotionInitor() {
@@ -88,6 +89,7 @@ public class Book {
 				/**메뉴 애니관련 pivot*/
 				right_lyt.setPivotX(0);
 				left_lyt.setPivotX(left_lyt.getWidth());
+				Log.e("sfdf","right touchDown");
 			}
 		}.addParam("direction", RIGHT));
 		initUpDownAnimation();
@@ -210,6 +212,17 @@ public class Book {
 				} else {
 					pm.endFlip(dir, false);
 				}
+				if(pm.getPageView(LEFT)!=null){
+					pm.lPaper.initSize(pm.getPageView(LEFT));
+					leftMotion.motionRight.setMotionDistance(pm.getPageView(LEFT).getWidth() * 2);
+				}
+				if(pm.getPageView(RIGHT)!=null){
+					pm.rPaper.initSize(pm.getPageView(RIGHT));
+					rightMotion.motionLeft.setMotionDistance(pm.getPageView(RIGHT).getWidth() * 2);
+				}
+				/**메뉴 애니관련 pivot*/
+				right_lyt.setPivotX(0);
+				left_lyt.setPivotX(left_lyt.getWidth());
 				
 				enableBlcok(true);
 				rightMotion.enableMotion(true);
