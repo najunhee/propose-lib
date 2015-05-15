@@ -13,7 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 
-import com.markjmind.propose.JwMotion;
+import com.markjmind.propose.Propose;
 import com.markjmind.propose.MotionInitor;
 import com.markjmind.sample.propose.estory.common.UnitAnimation;
 
@@ -29,7 +29,7 @@ public abstract class Page {
 	private int layout_id;
 	private ViewGroup page_view;
 	protected int index;
-	private Hashtable<String,JwMotion> motionPool = new Hashtable<String,JwMotion>();
+	private Hashtable<String,Propose> motionPool = new Hashtable<String,Propose>();
 	
 	public abstract void initAnimation(int index, ViewGroup pageView, Page page1, Page page2);
 	
@@ -62,11 +62,11 @@ public abstract class Page {
 		return index;
 	}
 	
-	public void addInitorMotion(String key,JwMotion motion){
+	public void addInitorMotion(String key,Propose motion){
 		motionPool.put(key, motion);
 	}
 	
-	public JwMotion getInitorMotion(String key){
+	public Propose getInitorMotion(String key){
 		return motionPool.get(key);
 	}
 	
@@ -82,11 +82,11 @@ public abstract class Page {
 	}
 	
 	
-   protected void putPageMotion(Page page, JwMotion motion, String tag){
+   protected void putPageMotion(Page page, Propose motion, String tag){
    	 page.addInitorMotion(tag, motion);
    }
    
-   protected void putPageMotion(Page page, JwMotion motion[], String tag){
+   protected void putPageMotion(Page page, Propose motion[], String tag){
    	for(int i=0;i<motion.length;i++){
    		page.addInitorMotion(tag+i, motion[i]);
    	}

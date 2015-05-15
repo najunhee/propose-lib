@@ -10,11 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
 
-import com.markjmind.propose.JwMotion;
+import com.markjmind.propose.Propose;
 import com.markjmind.propose.MotionInitor;
 
 public abstract class MultiMotionAnimator extends MotionInitor implements OnTouchListener{
-	private JwMotion[] motion;
+	private Propose[] motion;
 	private ViewGroup[] layouts;
 	private HashMap<String, View[]> views; 
 	private HashMap<String, View> singleViews;
@@ -24,9 +24,9 @@ public abstract class MultiMotionAnimator extends MotionInitor implements OnTouc
 		this.layouts = parents;
 		views = new HashMap<String, View[]>();
 		singleViews = new HashMap<String, View>(); 
-		motion = new JwMotion[layouts.length];
+		motion = new Propose[layouts.length];
 		for(int i=0;i<layouts.length;i++){
-			motion[i] = new JwMotion(layouts[i].getContext());
+			motion[i] = new Propose(layouts[i].getContext());
 		}
 	}
 	
@@ -82,18 +82,18 @@ public abstract class MultiMotionAnimator extends MotionInitor implements OnTouc
 			play(motion[i],animList.get(i));
 		}
 	}
-	public abstract void play(JwMotion motion, ObjectAnimator[] anims);
-	public abstract void touchDown(int index, ViewGroup[] parents, JwMotion motion, ObjectAnimator[] anims);
-	public abstract void touchUp(int index, ViewGroup[] parents, JwMotion motion, ObjectAnimator[] anims);
+	public abstract void play(Propose motion, ObjectAnimator[] anims);
+	public abstract void touchDown(int index, ViewGroup[] parents, Propose motion, ObjectAnimator[] anims);
+	public abstract void touchUp(int index, ViewGroup[] parents, Propose motion, ObjectAnimator[] anims);
 	
 	@Override
-	public void touchDown(JwMotion jwm) {
+	public void touchDown(Propose jwm) {
 		for(int i=0;i<motion.length;i++){
 			touchDown(i, layouts, motion[i], animList.get(i));
 		}
 	}
 	@Override
-	public void touchUp(JwMotion jwm) {
+	public void touchUp(Propose jwm) {
 		for(int i=0;i<motion.length;i++){
 			touchUp(i, layouts, motion[i], animList.get(i));
 		}
@@ -116,7 +116,7 @@ public abstract class MultiMotionAnimator extends MotionInitor implements OnTouc
 		return true;
 	}
 	
-	public JwMotion[] getMotions(){
+	public Propose[] getMotions(){
 		return motion;
 	}
 }

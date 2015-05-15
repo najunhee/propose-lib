@@ -13,10 +13,10 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.markjmind.propose.JwAnimatorListener;
-import com.markjmind.propose.JwMotion;
-import com.markjmind.propose.MotionInitor;
-import com.markjmind.propose.JwMotion.JwMotionListener;
 import com.markjmind.propose.JwMotionSet;
+import com.markjmind.propose.MotionInitor;
+import com.markjmind.propose.Propose;
+import com.markjmind.propose.Propose.ProposeListener;
 import com.markjmind.sample.propose.estory.R;
 
 /**
@@ -33,9 +33,9 @@ public class Book {
 	public int DIRECTION = 0;
 	private FrameLayout left_lyt, right_lyt;
 	
-	private ArrayList<JwMotion> block = new ArrayList<JwMotion>();
+	private ArrayList<Propose> block = new ArrayList<Propose>();
 
-	public JwMotion leftMotion, rightMotion, upDownMotoin;
+	public Propose leftMotion, rightMotion, upDownMotoin;
 	private float cameraDistance;
 	PageManager pm=null;
 	
@@ -50,7 +50,7 @@ public class Book {
 	}
 
 	private void init() {
-		cameraDistance = 10000 * JwMotion.getDensity(context);
+		cameraDistance = 10000 * Propose.getDensity(context);
 		left_lyt = (FrameLayout) findViewById(R.id.left_lyt);
 		right_lyt = (FrameLayout) findViewById(R.id.right_lyt);
 		FrameLayout left_page = (FrameLayout) left_lyt.findViewById(R.id.page);
@@ -62,13 +62,13 @@ public class Book {
 		pm.lPaper.setCameraDistance(cameraDistance);
 		pm.rPaper.setCameraDistance(cameraDistance);
 		
-		leftMotion = new JwMotion(context);
-		rightMotion = new JwMotion(context);
+		leftMotion = new Propose(context);
+		rightMotion = new Propose(context);
 		leftMotion.setMotionInitor(new MotionInitor() {
 			@Override
-			public void touchUp(JwMotion jwm) {}
+			public void touchUp(Propose jwm) {}
 			@Override
-			public void touchDown(JwMotion jwm) {
+			public void touchDown(Propose jwm) {
 				int direct = (Integer)getParam("direction");
 				pm.lPaper.initSize(pm.getPageView(LEFT));
 				leftMotion.motionRight.setMotionDistance(pm.getPageView(direct).getWidth() * 2);
@@ -80,9 +80,9 @@ public class Book {
 		}.addParam("direction", LEFT));
 		rightMotion.setMotionInitor(new MotionInitor() {
 			@Override
-			public void touchUp(JwMotion jwm) {}
+			public void touchUp(Propose jwm) {}
 			@Override
-			public void touchDown(JwMotion jwm) {
+			public void touchDown(Propose jwm) {
 				int direct = (Integer)getParam("direction");
 				pm.rPaper.initSize(pm.getPageView(RIGHT));
 				rightMotion.motionLeft.setMotionDistance(pm.getPageView(direct).getWidth() * 2);
@@ -101,7 +101,7 @@ public class Book {
 	}
 	
 	private void initUpDownAnimation() {
-		upDownMotoin = new JwMotion(context);
+		upDownMotoin = new Propose(context);
 		ObjectAnimator left_paper_UpDown = ObjectAnimator.ofFloat(pm.lPaper.getPaperLayout(), View.ROTATION_X, -50, 50);
 		left_paper_UpDown.setDuration(700);
 		ObjectAnimator right_paperUpDown = left_paper_UpDown.clone();
@@ -133,7 +133,7 @@ public class Book {
 
 	private void initAnimation(int direction) {
 		final int dir = direction;
-		final JwMotion motion;
+		final Propose motion;
 		final JwMotionSet motionSet;
 		
 		ViewGroup anim_paperLayout;
@@ -188,7 +188,7 @@ public class Book {
 			}
 		});
 
-		motion.setOnMotionListener(new JwMotionListener() {
+		motion.setOnMotionListener(new ProposeListener() {
 			@Override
 			public void onStart() {
 				pm.flip(dir);
@@ -240,7 +240,7 @@ public class Book {
 		});
 	}
 
-	public void addBlockMotion(JwMotion blockMotion){
+	public void addBlockMotion(Propose blockMotion){
 		block.add(blockMotion);
 	}
 	

@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.markjmind.propose.JwMotion;
+import com.markjmind.propose.Propose;
 import com.markjmind.propose.MotionInitor;
 import com.markjmind.sample.propose.estory.R;
 import com.markjmind.sample.propose.estory.book.Page;
@@ -28,19 +28,19 @@ public class Page3 extends Page{
 	
 		//문 애니메이션
 		final ImageView door = (ImageView)scale_layout1.findViewById(R.id.door2);
-		JwMotion motion_door = new JwMotion(scale_layout1.getContext());
+		Propose motion_door = new Propose(scale_layout1.getContext());
 		ObjectAnimator door_anim = ObjectAnimator.ofFloat(door, View.ROTATION_Y, 0,-180);
 		door.setPivotX(0f);
-		door.setCameraDistance(3000 * JwMotion.getDensity(getContext()));
+		door.setCameraDistance(3000 * Propose.getDensity(getContext()));
 		door_anim.setDuration(700);
 		motion_door.setMotionInitor(new MotionInitor() {
 			@Override
-			public void touchDown(JwMotion jwm) {
+			public void touchDown(Propose jwm) {
 				int distance = door.getWidth()*2;
 				jwm.motionLeft.setMotionDistance(distance);
 			}
 			@Override
-			public void touchUp(JwMotion jwm) {
+			public void touchUp(Propose jwm) {
 			}
 		});
 		motion_door.motionLeft.play(door_anim);

@@ -5,8 +5,8 @@ import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.markjmind.propose.JwMotion;
-import com.markjmind.propose.JwMotion.JwMotionListener;
+import com.markjmind.propose.Propose;
+import com.markjmind.propose.Propose.ProposeListener;
 import com.markjmind.sample.propose.estory.R;
 import com.markjmind.sample.propose.estory.book.Book;
 
@@ -19,7 +19,7 @@ import com.markjmind.sample.propose.estory.book.Book;
  */
 public class LeftMenu {
 	private ViewGroup menu_lyt,left_lyt,right_lyt,left_paper;
-	private JwMotion leftMenuMotion;
+	private Propose leftMenuMotion;
 	private Book book;
 	
 	public LeftMenu(Book book, ViewGroup menu_lyt){
@@ -31,7 +31,7 @@ public class LeftMenu {
 	}
 	
 	public void initLeftMenu() {
-		leftMenuMotion = new JwMotion(menu_lyt.getContext());
+		leftMenuMotion = new Propose(menu_lyt.getContext());
 		book.addBlockMotion(leftMenuMotion);
 		final int point_width = menu_lyt.getWidth();
 		ValueAnimator rightAnimator = ValueAnimator.ofInt(0, leftMenuMotion.getWindowWidth() / 2 - menu_lyt.getWidth());
@@ -48,7 +48,7 @@ public class LeftMenu {
 		rightAnimator.setInterpolator(null);
 		leftMenuMotion.motionRight.play(menu_lyt, rightAnimator, leftMenuMotion.getWindowWidth() / 2 - menu_lyt.getWidth());
 		menu_lyt.setOnTouchListener(leftMenuMotion);
-		leftMenuMotion.setOnMotionListener(new JwMotionListener() {
+		leftMenuMotion.setOnMotionListener(new ProposeListener() {
 			@Override
 			public void onStart() {
 				book.leftMotion.enableMotion(false);

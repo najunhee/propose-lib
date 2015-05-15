@@ -9,8 +9,8 @@ import android.util.Property;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.markjmind.propose.JwMotion;
-import com.markjmind.propose.JwMotion.JwMotionListener;
+import com.markjmind.propose.Propose;
+import com.markjmind.propose.Propose.ProposeListener;
 import com.markjmind.sample.propose.estory.book.RatioFrameLayout;
 
 public class FolioUnit extends MultiMotionAnimator{
@@ -43,7 +43,7 @@ public class FolioUnit extends MultiMotionAnimator{
 	}
 	
 	@Override
-	public void touchDown(int index, ViewGroup[] parents, JwMotion motion, ObjectAnimator[] anims) {
+	public void touchDown(int index, ViewGroup[] parents, Propose motion, ObjectAnimator[] anims) {
 		if(pageWidth[index]!=parents[index].getWidth() || pageHeight[index]!=parents[index].getHeight()){
 			pageWidth[index] = parents[index].getWidth();
 			pageHeight[index] = parents[index].getHeight();
@@ -87,12 +87,12 @@ public class FolioUnit extends MultiMotionAnimator{
 	}
 	
 	@Override
-	public void touchUp(int index, ViewGroup[] parents, JwMotion motion, ObjectAnimator[] anims) {
+	public void touchUp(int index, ViewGroup[] parents, Propose motion, ObjectAnimator[] anims) {
 		
 	}
 	
 	@Override
-	public void play(JwMotion motion, ObjectAnimator[] anims) {
+	public void play(Propose motion, ObjectAnimator[] anims) {
 		anims[0].setDuration(personDuration);
 		anims[0].setInterpolator(null);
 		anims[1].setDuration(personDuration);
@@ -102,7 +102,7 @@ public class FolioUnit extends MultiMotionAnimator{
 		motion.motionRight.play(anims[1]);
 		motion.motionRight.enableFling(false).enableTabUp(false);
 		
-		motion.setOnMotionListener(new JwMotionListener() {
+		motion.setOnMotionListener(new ProposeListener() {
 			long tempDuration=0;
 			long checkDuration=0;
 			boolean isFirst = true;
@@ -119,7 +119,7 @@ public class FolioUnit extends MultiMotionAnimator{
 			
 			@Override
 			public void onScroll(int Direction, long currDuration, long totalDuration) {
-				if(Direction==JwMotion.DIRECTION_RIGHT){
+				if(Direction==Propose.DIRECTION_RIGHT){
 					if(!isFirst){
 						checkDuration = checkDuration+currDuration-tempDuration;
 						if(!forward && checkDuration>=5){
