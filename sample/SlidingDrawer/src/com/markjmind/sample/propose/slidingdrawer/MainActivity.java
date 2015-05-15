@@ -12,8 +12,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.markjmind.propose.JwMotion;
-import com.markjmind.propose.JwMotion.JwMotionListener;
+import com.markjmind.propose.Propose;
+import com.markjmind.propose.Propose.ProposeListener;
 
 @SuppressLint("NewApi")
 public class MainActivity extends Activity{
@@ -24,7 +24,7 @@ public class MainActivity extends Activity{
 	private ViewGroup lyt1,lyt2;
 	private TextView test; 
 	int a =0;
-	JwMotion jwm;
+	Propose jwm;
 	Pm pm;
 	Paper paper;
 	@Override
@@ -38,14 +38,14 @@ public class MainActivity extends Activity{
 			@Override
 			public void run() {
 				text.setVisibility(View.GONE);
-				jwm = new JwMotion(MainActivity.this);
+				jwm = new Propose(MainActivity.this);
 				float height = lyt.getHeight()-50*jwm.density;
 				ObjectAnimator rightAnimator = ObjectAnimator.ofFloat(lyt,View.TRANSLATION_Y, 0,height);
 				rightAnimator.setDuration(1000);
 				jwm.motionDown.play(rightAnimator,(int)height);
 				lyt.setOnTouchListener(jwm);
 				 
-				jwm.setOnMotionListener(new JwMotionListener() {
+				jwm.setOnMotionListener(new ProposeListener() {
 					@Override
 					public void onStart() {
 						text.setVisibility(View.VISIBLE);
