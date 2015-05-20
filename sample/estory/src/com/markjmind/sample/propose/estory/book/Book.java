@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.markjmind.propose.JwAnimatorListener;
-import com.markjmind.propose.JwMotionSet;
+import com.markjmind.propose.Motion;
 import com.markjmind.propose.MotionInitor;
 import com.markjmind.propose.Propose;
 import com.markjmind.propose.Propose.ProposeListener;
@@ -134,7 +134,7 @@ public class Book {
 	private void initAnimation(int direction) {
 		final int dir = direction;
 		final Propose motion;
-		final JwMotionSet motionSet;
+		final Motion motionSet;
 		
 		ViewGroup anim_paperLayout;
 		if (direction == RIGHT) {
@@ -206,7 +206,7 @@ public class Book {
 
 			@Override
 			public void onEnd() {
-				if (JwMotionSet.STATUS.end.equals(motionSet.getStatus())) {
+				if (Motion.STATUS.end.equals(motionSet.getStatus())) {
 					motionSet.reset();
 					pm.endFlip(dir, true);
 				} else {

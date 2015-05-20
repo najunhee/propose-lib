@@ -5,10 +5,11 @@ import android.view.ViewGroup;
 
 import com.markjmind.sample.propose.estory.book.Page;
 
-public class Page1 extends Page{
+public class Page6 extends Page{
 
-	public Page1(Context context, int layout_id) {
+	public Page6(Context context, int layout_id) {
 		super(context, layout_id);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
