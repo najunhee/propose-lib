@@ -27,16 +27,8 @@
                 <FrameLayout
                     android:id="@+id/page"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right|center_vertical" >
-                </FrameLayout>
-
-                <FrameLayout
-                    android:id="@+id/left_shadow"
-                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="right" >
-
                 </FrameLayout>
 
             </FrameLayout>
