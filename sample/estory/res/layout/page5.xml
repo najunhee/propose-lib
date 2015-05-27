@@ -14,11 +14,60 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:src="@drawable/page5_bg" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#33333333" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/sky1" />
+
+                <com.markjmind.sample.propose.estory.book.RatioFrameLayout
+                    android:id="@+id/scale_cloud"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:tag="1024,1536" >
+
+                    <ImageView
+                        android:id="@+id/ImageView01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/cloud1"
+                        android:tag="185,95,800,50" />
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/cloud2"
+                        android:tag="269,112,300,50" />
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/cloud3"
+                        android:tag="290,166,400,50" />
+
+                    <ImageView
+                        android:id="@+id/imageView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/cloud1"
+                        android:tag="185,95,100,100" />
+
+                </com.markjmind.sample.propose.estory.book.RatioFrameLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/page5_bg" />
+
+            </FrameLayout>
 
             <com.markjmind.sample.propose.estory.book.RatioFrameLayout
                 android:id="@+id/scale_layout"
