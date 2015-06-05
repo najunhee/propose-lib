@@ -185,4 +185,5 @@ public class PageManager {
 			rightPage.initAnimation(rightPage.getIndex(), rightPage.getView(), leftPage, rightPage);
 		}
 	}
+	
 }

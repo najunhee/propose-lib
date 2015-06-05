@@ -53,6 +53,7 @@ public abstract class Page {
 	}
 	
 	public void remove(){
+		dispose();
 		motionPool.clear();
 		page_view = null;
 	}
@@ -92,5 +93,7 @@ public abstract class Page {
    	}
    }
    
-   
+   public void dispose(){
+	   
+   }
 }

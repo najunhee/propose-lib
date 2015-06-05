@@ -250,4 +250,9 @@ public class Book {
 		}
 	}
 
+	public void disposeAll(){
+		for(int i=0; i<pm.pageList.size();i++){
+			pm.pageList.get(i).dispose();
+		}
+	}
 }

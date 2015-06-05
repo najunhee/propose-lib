@@ -57,12 +57,25 @@ public class MainActivity extends Activity {
     	
     	/** page6 */
     	book.addPage(new Page6(this,R.layout.page6));
-    
-    
    	 
    }
-    
    
+    @Override
+    protected void onStop() {
+    	book.disposeAll();
+    	super.onStop();
+    }
+    
+    @Override
+    public void onBackPressed() {
+    	super.onBackPressed();
+    }
+    
+    @Override
+    protected void onDestroy() {
+    	book.disposeAll();
+    	super.onDestroy();
+    }
     
     
 }

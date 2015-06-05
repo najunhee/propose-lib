@@ -123,7 +123,7 @@ public class Page2 extends Page{
 			@Override
 			public void play(Propose motion, ObjectAnimator[] anims) {
 				motion.motionLeft.play(anims[0]);
-				motion.motionLeft.enableSingleTabUp(false).enableTabUp(false);
+				motion.motionLeft.enableTabUp(false);
 			}
 			@Override
 			public void touchDown(int index, ViewGroup[] parents, Propose motion, ObjectAnimator[] anims) {
