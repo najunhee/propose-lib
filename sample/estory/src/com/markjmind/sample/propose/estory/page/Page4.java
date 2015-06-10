@@ -157,8 +157,10 @@ public class Page4 extends Page{
 	
 	@Override
 	public void dispose() {
-		for(int i=0;i<clouds.length;i++){
-			clouds[i].dispose();
+		if(clouds!=null){
+			for(int i=0;i<clouds.length;i++){
+				clouds[i].dispose();
+			}
 		}
 	}
 }

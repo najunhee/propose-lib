@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.util.Log;
 import android.util.Property;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,7 @@ public class FolioUnit extends MultiMotionAnimator{
 	int[] pageHeight ={0,0};
 	String tag;
 	ObjectAnimator turnRight,turnLeft,turnRight2,turnLeft2;
-	long personDuration = 1500;
+	long personDuration = 3000;
 	long turnDuration = 300;
 	float startPoint = 0f;
 	boolean firstStart = true;
@@ -42,6 +43,10 @@ public class FolioUnit extends MultiMotionAnimator{
 		this.moveAnim = moveAnim;
 	}
 	
+	public void setDuration(long duration){
+		personDuration = duration;
+	}
+	
 	@Override
 	public void touchDown(int index, ViewGroup[] parents, Propose motion, ObjectAnimator[] anims) {
 		if(pageWidth[index]!=parents[index].getWidth() || pageHeight[index]!=parents[index].getHeight()){
@@ -62,19 +67,41 @@ public class FolioUnit extends MultiMotionAnimator{
 			fraction = ((RatioFrameLayout)parents[0]).getFractionX();
 			float startX,endX;
 			if(index==0){
-				startX = 0;
-				endX = parents[0].getWidth()+parents[1].getWidth()-person.getWidth();
+				if(isFaceForwad){
+					startX = 0;
+					endX = parents[0].getWidth()+parents[1].getWidth()-person.getWidth();
+				}else{
+					startX = parents[0].getWidth()+parents[1].getWidth()-person.getWidth();
+					endX = 0;
+				}
 			}else{
-				startX = parents[0].getWidth()*-1;
-				endX = parents[1].getWidth()-person.getWidth();
+				if(isFaceForwad){
+					startX = parents[0].getWidth()*-1;
+					endX = parents[1].getWidth()-person.getWidth();
+				}else{
+					startX = parents[1].getWidth()-person.getWidth();
+					endX = -parents[0].getWidth();
+				}
 			}
+			if(isFaceForwad){
+				motion.motionRight.setMotionDistance((Math.abs(endX-startX))*distanceRatio);
+			}else{
+				motion.motionLeft.setMotionDistance((Math.abs(startX-endX))*distanceRatio);
+			}
+			
 			anims[1].setFloatValues(startX,endX);
-			motion.motionRight.setMotionDistance((Math.abs(endX-startX))*distanceRatio);
 			if(firstStart){
 				if(moveAnim!=null){
 					moveAnimList.add(moveAnim.getAnimation(person));
 				}
-				motion.motionRight.move(RatioFrameLayout.getTagChildXY(getViews(tag)[0])[0]*fraction);
+				//초기 위치 잡아주기
+				if(isFaceForwad){
+					motion.motionRight.move(RatioFrameLayout.getTagChildXY(getViews(tag)[0])[0]*fraction*distanceRatio);
+				}else{
+//					motion.motionLeft.move((1024-RatioFrameLayout.getTagChildXY(getViews(tag)[0])[0])*fraction*distanceRatio);
+					motion.motionLeft.move((1024-RatioFrameLayout.getTagChildXY(getViews(tag)[1])[0])*fraction*distanceRatio-person.getWidth()*distanceRatio);
+				}
+				
 				if(startPoint>0){
 					motion.motionDown.move(heightMargin);
 				}
@@ -93,14 +120,19 @@ public class FolioUnit extends MultiMotionAnimator{
 	
 	@Override
 	public void play(Propose motion, ObjectAnimator[] anims) {
-		anims[0].setDuration(personDuration);
+		anims[0].setDuration((long)(personDuration*distanceRatio));
 		anims[0].setInterpolator(null);
-		anims[1].setDuration(personDuration);
+		anims[1].setDuration((long)(personDuration*distanceRatio));
 		anims[1].setInterpolator(null);
 		motion.motionDown.play(anims[0]);
 		motion.motionDown.enableFling(false).enableTabUp(false).enableSingleTabUp(false);
-		motion.motionRight.play(anims[1]);
-		motion.motionRight.enableFling(false).enableTabUp(false);
+		if(isFaceForwad){
+			motion.motionRight.play(anims[1]);
+			motion.motionRight.enableFling(false).enableTabUp(false);
+		}else{
+			motion.motionLeft.play(anims[1]);
+			motion.motionLeft.enableFling(false).enableTabUp(false);
+		}
 		
 		motion.setOnMotionListener(new ProposeListener() {
 			long tempDuration=0;
@@ -119,23 +151,15 @@ public class FolioUnit extends MultiMotionAnimator{
 			
 			@Override
 			public void onScroll(int Direction, long currDuration, long totalDuration) {
-				if(Direction==Propose.DIRECTION_RIGHT){
+				if(Direction==Propose.DIRECTION_RIGHT || Direction==Propose.DIRECTION_LEFT){
 					if(!isFirst){
 						checkDuration = checkDuration+currDuration-tempDuration;
 						if(!forward && checkDuration>=5){
-							if(isFaceForwad){
-								backTurn();
-							}else{
-								frontTurn();
-							}
+							backTurn();
 							forward = true;
 							tempForward = forward;
 						}else if(forward && checkDuration<=-5){
-							if(isFaceForwad){
-								frontTurn();
-							}else{
-								backTurn();
-							}
+							frontTurn();
 							forward = false;
 							tempForward = forward;
 						}else{
@@ -161,16 +185,16 @@ public class FolioUnit extends MultiMotionAnimator{
 	public boolean isFaceForwad = true;
 	
 	public void frontTurn(){
-		turnRight.cancel();
-		turnLeft.start();
-		turnRight2.cancel();
-		turnLeft2.start();
+			turnRight.cancel();
+			turnLeft.start();
+			turnRight2.cancel();
+			turnLeft2.start();
 	}
 	public void backTurn(){
-		turnLeft.cancel();
-		turnRight.start();
-		turnLeft2.cancel();
-		turnRight2.start();
+			turnLeft.cancel();
+			turnRight.start();
+			turnLeft2.cancel();
+			turnRight2.start();
 	}
 	
 	

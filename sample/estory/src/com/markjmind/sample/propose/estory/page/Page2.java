@@ -3,6 +3,7 @@ package com.markjmind.sample.propose.estory.page;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -55,8 +56,8 @@ public class Page2 extends Page{
 		frog.setMoveAnimation(new UnitAnimation() {
 			@Override
 			public AnimatorSet getAnimation(View person) {
-		  		ObjectAnimator jump = ObjectAnimator.ofFloat(person.findViewById(R.id.anim_img), View.TRANSLATION_Y, 0,person.getHeight()/20,0,person.getHeight()/2*-1,person.getHeight()/20,0,person.getHeight()/2*-1,0,0);
-		  		jump.setDuration(1500);
+		  		ObjectAnimator jump = ObjectAnimator.ofFloat(person.findViewById(R.id.anim_img), View.TRANSLATION_Y, 0,person.getHeight()/20,0,person.getHeight()/2*-1,person.getHeight()/20,0,person.getHeight()/2*-1,0);
+		  		jump.setDuration(1000);
 		  		jump.setRepeatCount(ObjectAnimator.INFINITE);
 		  		AnimatorSet set = new AnimatorSet();
 		  		set.play(jump);
@@ -88,18 +89,40 @@ public class Page2 extends Page{
 		boy.setMoveAnimation(new UnitAnimation() {
 			@Override
 			public AnimatorSet getAnimation(View person) {
+//		  		ObjectAnimator shake = ObjectAnimator.ofFloat(person.findViewById(R.id.anim_img), 
+//		  				View.ROTATION, 0,20,0,-10,0);
+//		  		ObjectAnimator jump = ObjectAnimator.ofFloat(person.findViewById(R.id.anim_img), View.TRANSLATION_Y, 0,10,0);
+//		  		jump.setDuration(300);
+//		  		shake.setDuration(300);
+//		  		AnimatorSet walk = new AnimatorSet();
+//		  		jump.setRepeatCount(ObjectAnimator.INFINITE);
+//		  		shake.setRepeatCount(ObjectAnimator.INFINITE);
+//		  		walk.play(shake).with(jump);
+		  		View unit = person.findViewById(R.id.anim_img);
+				unit.setPivotX(unit.getWidth()/2);
+				unit.setPivotY(unit.getHeight()/2);
 		  		ObjectAnimator shake = ObjectAnimator.ofFloat(person.findViewById(R.id.anim_img), 
 		  				View.ROTATION, 0,20,0,-10,0);
-		  		ObjectAnimator jump = ObjectAnimator.ofFloat(person.findViewById(R.id.anim_img), View.TRANSLATION_Y, 0,10,0);
-		  		jump.setDuration(500);
-		  		shake.setDuration(500);
+		  		ObjectAnimator jump = ObjectAnimator.ofFloat(person.findViewById(R.id.anim_img),
+		  				View.TRANSLATION_Y, 0,10,0);
+		  		ObjectAnimator rotationY = ObjectAnimator.ofFloat(person.findViewById(R.id.anim_img), 
+		  				View.ROTATION_Y, 0,5,0,-5,0);
+		  		jump.setDuration(300);
+		  		shake.setDuration(300);
+		  		rotationY.setDuration(300);
 		  		AnimatorSet walk = new AnimatorSet();
 		  		jump.setRepeatCount(ObjectAnimator.INFINITE);
 		  		shake.setRepeatCount(ObjectAnimator.INFINITE);
-		  		walk.play(shake).with(jump);
+		  		rotationY.setRepeatCount(ObjectAnimator.INFINITE);
+		  		walk.play(shake).with(jump).with(rotationY);
+		  		
 		  		return walk;
 			}
 		});
+		
+	
+		
+		
 		boy.setWaitAnimation(new UnitAnimation() {
 			@Override
 			public AnimatorSet getAnimation(View person) {
@@ -122,6 +145,7 @@ public class Page2 extends Page{
 			int[] pageWidth ={0,0};
 			@Override
 			public void play(Propose motion, ObjectAnimator[] anims) {
+				anims[0].setDuration(2000);
 				motion.motionLeft.play(anims[0]);
 				motion.motionLeft.enableTabUp(false);
 			}

@@ -81,8 +81,8 @@ public class Page3 extends Page{
 		  		ObjectAnimator shake = ObjectAnimator.ofFloat(person.findViewById(R.id.anim_img), 
 		  				View.ROTATION, 0,20,0,-10,0);
 		  		ObjectAnimator jump = ObjectAnimator.ofFloat(person.findViewById(R.id.anim_img), View.TRANSLATION_Y, 0,10,0);
-		  		jump.setDuration(500);
-		  		shake.setDuration(500);
+		  		jump.setDuration(300);
+		  		shake.setDuration(300);
 		  		AnimatorSet walk = new AnimatorSet();
 		  		jump.setRepeatCount(ObjectAnimator.INFINITE);
 		  		shake.setRepeatCount(ObjectAnimator.INFINITE);

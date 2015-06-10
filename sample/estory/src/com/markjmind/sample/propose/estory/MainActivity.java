@@ -13,10 +13,14 @@ import com.markjmind.sample.propose.estory.page.Page3;
 import com.markjmind.sample.propose.estory.page.Page4;
 import com.markjmind.sample.propose.estory.page.Page5;
 import com.markjmind.sample.propose.estory.page.Page6;
+import com.markjmind.sample.propose.estory.sound.Music;
+import com.markjmind.sample.propose.estory.sound.Sound;
+import com.markjmind.sample.propose.estory.sound.Sound.AllLoadComplete;
 
 
 public class MainActivity extends Activity {
-
+	Music music;
+	Sound sound;
 	Book book;
 	LeftMenu leftMenu;
     @Override
@@ -24,18 +28,33 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
+        
         View book_layout = findViewById(R.id.book_layout);
         book = new Book(findViewById(R.id.book_layout));
-        initPage();
-        book.setFolio(0);
-        book.loadBook();
-        book_layout.post(new Runnable() {
+//        initPage();
+//        book.setFolio(0);
+//        book.loadBook();
+//        book_layout.post(new Runnable() {
+//			@Override
+//			public void run() {
+//				leftMenu.initLeftMenu();
+//			}
+//		});
+        leftMenu = new LeftMenu(book, (ViewGroup)findViewById(R.id.banner_lyt));
+        music = new Music();
+        music.setMusic(this,R.raw.back_music);
+        music.playMusic(true);
+        sound = new Sound(new AllLoadComplete() {
 			@Override
-			public void run() {
+			public void onAllComplete() {
+				initPage();
+		        book.setFolio(0);
+		        book.loadBook();
 				leftMenu.initLeftMenu();
 			}
 		});
-        leftMenu = new LeftMenu(book, (ViewGroup)findViewById(R.id.banner_lyt));
+        sound.addSound(R.raw.bells);
+        sound.load(this);
     }
     
     
@@ -61,9 +80,17 @@ public class MainActivity extends Activity {
    }
    
     @Override
+    protected void onResume() {
+    	sound.resume();
+    	music.playMusic(true);
+    	super.onResume();
+    }
+    @Override
     protected void onStop() {
-    	book.disposeAll();
     	super.onStop();
+    	sound.pause();
+    	music.stop();
+    	book.disposeAll();
     }
     
     @Override
@@ -73,6 +100,8 @@ public class MainActivity extends Activity {
     
     @Override
     protected void onDestroy() {
+    	sound.dispose();
+    	music.dispose();
     	book.disposeAll();
     	super.onDestroy();
     }

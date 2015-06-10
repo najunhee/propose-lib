@@ -95,17 +95,19 @@
                 android:tag="1024,1536" >
 
                 <LinearLayout
-                    android:id="@+id/lion"
+                    android:id="@+id/chicken"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:tag="473,473,1695,600" >
+                    android:tag="281,545,1767,530" >
 
                     <ImageView
                         android:id="@id/anim_img"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical|bottom"
-                        android:src="@drawable/lion" />
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/chicken" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -119,35 +121,41 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical|bottom"
+                        android:adjustViewBounds="true"
                         android:src="@drawable/duck" />
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/dog"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:tag="266,320,1792,920" >
+                    android:tag="166,220,1892,990" >
 
                     <ImageView
                         android:id="@id/anim_img"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical|bottom"
-                        android:src="@drawable/dog" />
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/mouse" />
+
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/chicken"
+                    android:id="@+id/lion"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:tag="281,345,1667,1050" >
+                    android:gravity="top"
+                    android:tag="423,383,1695,1050" >
 
                     <ImageView
                         android:id="@id/anim_img"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|bottom"
-                        android:src="@drawable/chicken" />
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/lion" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -161,7 +169,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical|bottom"
+                        android:adjustViewBounds="true"
                         android:src="@drawable/pig1" />
+
                 </LinearLayout>
             </com.markjmind.sample.propose.estory.book.RatioFrameLayout>
 
