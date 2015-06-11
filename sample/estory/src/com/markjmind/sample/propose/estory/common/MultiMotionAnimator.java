@@ -79,12 +79,13 @@ public abstract class MultiMotionAnimator extends MotionInitor implements OnTouc
 	protected void playMotion(){
 		for(int i=0;i<motion.length;i++){
 			motion[i].setMotionInitor(this);
-			play(motion[i],animList.get(i));
+			play(i, motion[i],animList.get(i));
 		}
 	}
-	public abstract void play(Propose motion, ObjectAnimator[] anims);
+	public abstract void play(int index, Propose motion, ObjectAnimator[] anims);
 	public abstract void touchDown(int index, ViewGroup[] parents, Propose motion, ObjectAnimator[] anims);
 	public abstract void touchUp(int index, ViewGroup[] parents, Propose motion, ObjectAnimator[] anims);
+	
 	
 	@Override
 	public void touchDown(Propose jwm) {

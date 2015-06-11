@@ -1,21 +1,15 @@
 package com.markjmind.sample.propose.estory.book;
 
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import android.animation.AnimatorSet;
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
 
-import com.markjmind.propose.Propose;
 import com.markjmind.propose.MotionInitor;
-import com.markjmind.sample.propose.estory.common.UnitAnimation;
+import com.markjmind.propose.Propose;
+import com.markjmind.sample.propose.estory.sound.Sound;
 
 /**
  * 
@@ -25,6 +19,7 @@ import com.markjmind.sample.propose.estory.common.UnitAnimation;
  * @date 2015. 4. 29.
  */
 public abstract class Page {
+	private Sound sound;
 	private Context context;
 	private int layout_id;
 	private ViewGroup page_view;
@@ -36,6 +31,10 @@ public abstract class Page {
 	public Page(Context context, int layout_id){
 		this.context = context;
 		this.layout_id = layout_id;
+	}
+	
+	protected void setSound(Sound sound){
+		this.sound = sound;
 	}
 	
 	public Context getContext(){
@@ -57,7 +56,6 @@ public abstract class Page {
 		motionPool.clear();
 		page_view = null;
 	}
-	
 	
 	public int getIndex() {
 		return index;
@@ -82,14 +80,25 @@ public abstract class Page {
 		}
 	}
 	
+	public void playSound(int raw_id,boolean loop){
+		if(sound!=null){
+			sound.play(raw_id, loop);
+		}
+	}
 	
-   protected void putPageMotion(Page page, Propose motion, String tag){
-   	 page.addInitorMotion(tag, motion);
+	public void stopSound(int raw_id){
+		if(sound!=null){
+			sound.stop(raw_id);
+		}
+	}
+	
+   protected void putPageMotion(Propose motion, String tag){
+   	 addInitorMotion(tag, motion);
    }
    
-   protected void putPageMotion(Page page, Propose motion[], String tag){
+   protected void putPageMotion(Propose motion[], String tag){
    	for(int i=0;i<motion.length;i++){
-   		page.addInitorMotion(tag+i, motion[i]);
+   		addInitorMotion(tag+i, motion[i]);
    	}
    }
    

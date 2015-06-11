@@ -35,14 +35,6 @@ public class FolioUnit extends MultiMotionAnimator{
 		super(parents);
 	}
 	
-	public void setWaitAnimation(UnitAnimation waitAnim){
-		this.waitAnim = waitAnim;
-	}
-	
-	public void setMoveAnimation(UnitAnimation moveAnim){
-		this.moveAnim = moveAnim;
-	}
-	
 	public void setDuration(long duration){
 		personDuration = duration;
 	}
@@ -96,14 +88,13 @@ public class FolioUnit extends MultiMotionAnimator{
 				}
 				//초기 위치 잡아주기
 				if(isFaceForwad){
-					motion.motionRight.move(RatioFrameLayout.getTagChildXY(getViews(tag)[0])[0]*fraction*distanceRatio);
+					motion.motionRight.move(RatioFrameLayout.getTagChildXY(getViews(tag)[0])[0]*fraction*distanceRatio, false);
 				}else{
-//					motion.motionLeft.move((1024-RatioFrameLayout.getTagChildXY(getViews(tag)[0])[0])*fraction*distanceRatio);
-					motion.motionLeft.move((1024-RatioFrameLayout.getTagChildXY(getViews(tag)[1])[0])*fraction*distanceRatio-person.getWidth()*distanceRatio);
+					motion.motionLeft.move((1024-RatioFrameLayout.getTagChildXY(getViews(tag)[1])[0])*fraction*distanceRatio-person.getWidth()*distanceRatio, false);
 				}
 				
 				if(startPoint>0){
-					motion.motionDown.move(heightMargin);
+					motion.motionDown.move(heightMargin, false);
 				}
 				if(index==parents.length-1){
 					firstStart = false;
@@ -119,7 +110,7 @@ public class FolioUnit extends MultiMotionAnimator{
 	}
 	
 	@Override
-	public void play(Propose motion, ObjectAnimator[] anims) {
+	public void play(int index, Propose motion, ObjectAnimator[] anims) {
 		anims[0].setDuration((long)(personDuration*distanceRatio));
 		anims[0].setInterpolator(null);
 		anims[1].setDuration((long)(personDuration*distanceRatio));
@@ -133,7 +124,6 @@ public class FolioUnit extends MultiMotionAnimator{
 			motion.motionLeft.play(anims[1]);
 			motion.motionLeft.enableFling(false).enableTabUp(false);
 		}
-		
 		motion.setOnMotionListener(new ProposeListener() {
 			long tempDuration=0;
 			long checkDuration=0;
@@ -148,7 +138,6 @@ public class FolioUnit extends MultiMotionAnimator{
 				startMoveAnimation();
 				stopWaitAnimation();
 			}
-			
 			@Override
 			public void onScroll(int Direction, long currDuration, long totalDuration) {
 				if(Direction==Propose.DIRECTION_RIGHT || Direction==Propose.DIRECTION_LEFT){
@@ -223,25 +212,40 @@ public class FolioUnit extends MultiMotionAnimator{
 		this.startPoint = point;
 	}
 	
-	private void startMoveAnimation(){
+	
+	
+	public void setMoveAnimation(UnitAnimation moveAnim){
+		this.moveAnim = moveAnim;
+	}
+	public void startMoveAnimation(){
 		if(moveAnimList.size()>0){
+			Log.e("move","move 애니메이션");
 			for(int i=0;i<moveAnimList.size();i++){
 				moveAnimList.get(i).start();
 			}
 		}
 	}
-	private void stopMoveAnimation(){
+	public void stopMoveAnimation(){
 		if(moveAnimList.size()>0){
 			for(int i=0;i<moveAnimList.size();i++){
 				for(Animator am : moveAnimList.get(i).getChildAnimations()){
-					am.end();	
+					if(am!=null){
+						am.end();	
+					}
 				}
 			}
 		}
 	}
 	
+	public void setWaitAnimation(UnitAnimation waitAnim){
+		this.waitAnim = waitAnim;
+		
+	}
+	
 	public void startWaitAnimation(){
 		if(waitAnim!=null){
+			stopWaitAnimation();
+			waitAnimList.clear();
 			View[] persons = getViews(tag);
 			for(int i=0;i<persons.length;i++){
 				waitAnimList.add(waitAnim.getAnimation(persons[i]));

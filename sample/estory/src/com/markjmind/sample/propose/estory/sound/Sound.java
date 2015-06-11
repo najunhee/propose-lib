@@ -7,7 +7,7 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.media.SoundPool.OnLoadCompleteListener;
-import android.os.AsyncTask;
+import android.util.Log;
 
 public class Sound implements OnLoadCompleteListener{
 	public interface AllLoadComplete{
@@ -22,10 +22,7 @@ public class Sound implements OnLoadCompleteListener{
 	public Sound(AllLoadComplete loadListener){
 		soundMap.clear();
 		loadSoundMap.clear();
-		soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
 		
-		
-		soundPool.setOnLoadCompleteListener(this);
 		this.completeListener = loadListener;
 	}
 	
@@ -35,6 +32,11 @@ public class Sound implements OnLoadCompleteListener{
 	}
 	
 	public void load(Context context){
+		if(soundPool!=null){
+			dispose();
+		}
+		soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+		soundPool.setOnLoadCompleteListener(this);
 		Iterator<Integer> iter = soundMap.keySet().iterator();
 		int i=0;
 		while(iter.hasNext()){
@@ -59,13 +61,17 @@ public class Sound implements OnLoadCompleteListener{
 			intLoop = -1;
 		}
 		SoundInfo sInfo = soundMap.get(raw_id);
-		soundPool.play(sInfo.getSoundId(), 1.0f, 1.0f, 10, intLoop, 1);
+		int streamId = soundPool.play(sInfo.getSoundId(), 1.0f, 1.0f, 10, intLoop, 1);
+		sInfo.setStreamId(streamId);
 	}
 	
 	public void stop(int raw_id){
 		SoundInfo info = soundMap.get(raw_id);
 		if(info.isComplete){
-			soundPool.stop(info.getSoundId());
+			if(info.getStreamId()!=null){
+				soundPool.stop(info.getStreamId());
+				info.setStreamId(null);
+			}
 		}
 	}
 	
@@ -78,10 +84,10 @@ public class Sound implements OnLoadCompleteListener{
 			i++;
 		}
 	}
-	
 	public void dispose(){
 		stopAll();
 		soundPool.release();
+		soundPool = null;
 	}
 	
 	@Override
@@ -107,6 +113,7 @@ public class Sound implements OnLoadCompleteListener{
 	private class SoundInfo{
 		private int soundId;
 		private boolean isComplete;
+		private Integer streamId;
 		
 		public SoundInfo(){
 			isComplete = false;
@@ -124,6 +131,13 @@ public class Sound implements OnLoadCompleteListener{
 		}
 		public boolean isComplete() {
 			return isComplete;
+		}
+		public void setStreamId(Integer streamId){
+			this.streamId = streamId;
+		}
+		
+		public Integer getStreamId(){
+			return this.streamId;
 		}
 	}
 }

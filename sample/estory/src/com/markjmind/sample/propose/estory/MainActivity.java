@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
         
         
         View book_layout = findViewById(R.id.book_layout);
-        book = new Book(findViewById(R.id.book_layout));
+        
 //        initPage();
 //        book.setFolio(0);
 //        book.loadBook();
@@ -40,10 +40,11 @@ public class MainActivity extends Activity {
 //				leftMenu.initLeftMenu();
 //			}
 //		});
+        book = new Book(findViewById(R.id.book_layout));
         leftMenu = new LeftMenu(book, (ViewGroup)findViewById(R.id.banner_lyt));
         music = new Music();
-        music.setMusic(this,R.raw.back_music);
-        music.playMusic(true);
+//        music.setMusic(this,R.raw.back_music);
+//        music.playMusic(true);
         sound = new Sound(new AllLoadComplete() {
 			@Override
 			public void onAllComplete() {
@@ -54,7 +55,11 @@ public class MainActivity extends Activity {
 			}
 		});
         sound.addSound(R.raw.bells);
+        sound.addSound(R.raw.car);
+        sound.addSound(R.raw.frog);
+        sound.addSound(R.raw.mouse);
         sound.load(this);
+        book.setSound(sound);
     }
     
     
@@ -82,14 +87,14 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
     	sound.resume();
-    	music.playMusic(true);
+//    	music.playMusic(true);
     	super.onResume();
     }
     @Override
     protected void onStop() {
     	super.onStop();
     	sound.pause();
-    	music.stop();
+//    	music.stop();
     	book.disposeAll();
     }
     
@@ -101,7 +106,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onDestroy() {
     	sound.dispose();
-    	music.dispose();
+//    	music.dispose();
     	book.disposeAll();
     	super.onDestroy();
     }

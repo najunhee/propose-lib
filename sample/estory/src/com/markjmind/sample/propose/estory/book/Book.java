@@ -18,6 +18,7 @@ import com.markjmind.propose.MotionInitor;
 import com.markjmind.propose.Propose;
 import com.markjmind.propose.Propose.ProposeListener;
 import com.markjmind.sample.propose.estory.R;
+import com.markjmind.sample.propose.estory.sound.Sound;
 
 /**
  * 
@@ -38,6 +39,7 @@ public class Book {
 	public Propose leftMotion, rightMotion, upDownMotoin;
 	private float cameraDistance;
 	PageManager pm=null;
+	private Sound sound = null;
 	
 	public Book(View bookLayout) {
 		this.bookLayout = (ViewGroup) bookLayout;
@@ -45,6 +47,10 @@ public class Book {
 		init();
 	}
 
+	public void setSound(Sound sound){
+		this.sound = sound;
+	}
+	
 	public View findViewById(int id) {
 		return this.bookLayout.findViewById(id);
 	}
@@ -97,6 +103,7 @@ public class Book {
 	}
 
 	public synchronized void addPage(Page page){
+		page.setSound(sound);
 		pm.addPage(page);
 	}
 	

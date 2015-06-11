@@ -89,7 +89,7 @@ public class FolioUnitRun extends MultiMotionAnimator{
 	}
 	
 	@Override
-	public void play(Propose motion, ObjectAnimator[] anims) {
+	public void play(int index, Propose motion, ObjectAnimator[] anims) {
 		anims[0].setDuration((long)(personDuration*distanceRatio));
 		anims[0].setInterpolator(null);
 		anims[1].setDuration((long)(personDuration*distanceRatio));
@@ -100,6 +100,7 @@ public class FolioUnitRun extends MultiMotionAnimator{
 		motion.setOnMotionListener(new ProposeListener() {
 			@Override
 			public void onStart() {
+				Log.e("test","온스타트");
 				startMoveAnimation();
 				stopWaitAnimation();
 			}
@@ -109,6 +110,7 @@ public class FolioUnitRun extends MultiMotionAnimator{
 			}
 			@Override
 			public void onEnd() {
+				Log.e("test","온엔드");
 				stopMoveAnimation();
 				startWaitAnimation();
 				endMotion.motionLeft.reset();

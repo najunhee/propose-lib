@@ -25,7 +25,7 @@ public class Page5 extends Page{
 		final RatioFrameLayout scale_layout2 = (RatioFrameLayout)page1.getView().findViewById(R.id.scale_layout);
 		//lion 애니메이션
 		FolioUnitRun lion = new FolioUnitRun(scale_layout2, scale_layout1);
-		putPageMotion(this,lion.getMotions(),"lion");
+		putPageMotion(lion.getMotions(),"lion");
 		lion.setDuration(2*1000);
 		lion.setAnimation("lion",R.id.lion, View.TRANSLATION_X, View.TRANSLATION_X);
 		lion.setMoveAnimation(new UnitAnimation() {
@@ -46,7 +46,7 @@ public class Page5 extends Page{
 		
 		//duck 애니메이션
 		FolioUnitRun duck = new FolioUnitRun(scale_layout2, scale_layout1);
-		putPageMotion(this,duck.getMotions(),"duck");
+		putPageMotion(duck.getMotions(),"duck");
 		duck.setDuration(8*1000);
 		duck.setAnimation("duck",R.id.duck, View.TRANSLATION_X, View.TRANSLATION_X);
 		duck.setMoveAnimation(new UnitAnimation() {
@@ -75,7 +75,7 @@ public class Page5 extends Page{
 		
 		//dog 애니메이션
 		FolioUnitRun dog = new FolioUnitRun(scale_layout2, scale_layout1);
-		putPageMotion(this,dog.getMotions(),"dog");
+		putPageMotion(dog.getMotions(),"dog");
 		dog.setDuration(2*1000+500);
 		dog.setAnimation("dog",R.id.dog, View.TRANSLATION_X, View.TRANSLATION_X);
 		dog.setMoveAnimation(new UnitAnimation() {
@@ -96,7 +96,7 @@ public class Page5 extends Page{
 		
 		//chicken 애니메이션
 		FolioUnitRun chicken = new FolioUnitRun(scale_layout2, scale_layout1);
-		putPageMotion(this,chicken.getMotions(),"chicken");
+		putPageMotion(chicken.getMotions(),"chicken");
 		chicken.setDuration(5*1000);
 		chicken.setAnimation("chicken",R.id.chicken, View.TRANSLATION_X, View.TRANSLATION_X);
 		chicken.setMoveAnimation(new UnitAnimation() {
@@ -117,7 +117,7 @@ public class Page5 extends Page{
 		
 		//pig 애니메이션
 		FolioUnitRun pig = new FolioUnitRun(scale_layout2, scale_layout1);
-		putPageMotion(this,pig.getMotions(),"pig");
+		putPageMotion(pig.getMotions(),"pig");
 		pig.setDuration(10*1000);
 		pig.setAnimation("pig",R.id.pig, View.TRANSLATION_X, View.TRANSLATION_X);
 		pig.setMoveAnimation(new UnitAnimation() {
