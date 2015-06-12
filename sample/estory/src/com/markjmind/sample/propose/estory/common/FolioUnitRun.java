@@ -1,12 +1,7 @@
 package com.markjmind.sample.propose.estory.common;
 
-import java.util.ArrayList;
-
-import android.animation.Animator;
-import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.util.Log;
-import android.util.Property;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -14,37 +9,10 @@ import com.markjmind.propose.Propose;
 import com.markjmind.propose.Propose.ProposeListener;
 import com.markjmind.sample.propose.estory.book.RatioFrameLayout;
 
-public class FolioUnitRun extends MultiMotionAnimator{
-	int[] pageWidth ={0,0};
-	int[] pageHeight ={0,0};
-	String tag;
-	ObjectAnimator turnRight,turnLeft,turnRight2,turnLeft2;
-	long personDuration = 3000;
-	long turnDuration = 300;
-	float startPoint = 0f;
-	boolean firstStart = true;
-	ArrayList<AnimatorSet> waitAnimList = new ArrayList<AnimatorSet>();
-	UnitAnimation waitAnim;
-	
-	ArrayList<AnimatorSet> moveAnimList = new ArrayList<AnimatorSet>();
-	UnitAnimation moveAnim;
-	
-	public float distanceRatio = 1.0f;
+public class FolioUnitRun extends FolioUnit{
 	
 	public FolioUnitRun(ViewGroup... parents){
 		super(parents);
-	}
-	
-	public void setWaitAnimation(UnitAnimation waitAnim){
-		this.waitAnim = waitAnim;
-	}
-	
-	public void setMoveAnimation(UnitAnimation moveAnim){
-		this.moveAnim = moveAnim;
-	}
-	
-	public void setDuration(long duration){
-		personDuration = duration;
 	}
 	
 	@Override
@@ -74,7 +42,7 @@ public class FolioUnitRun extends MultiMotionAnimator{
 			anims[1].setFloatValues(endX,startX);
 			if(firstStart){
 				if(moveAnim!=null){
-					moveAnimList.add(moveAnim.getAnimation(person));
+					moveAnimList.add(moveAnim.getAnimation(index,person));
 				}
 				if(index==parents.length-1){
 					firstStart = false;
@@ -118,66 +86,4 @@ public class FolioUnitRun extends MultiMotionAnimator{
 		});
 	}
 	
-	public void setAnimation(String tag,int id, Property<View, Float>... property){
-		this.tag = tag;
-		addView(tag,id);
-		View[] views = getViews(tag);
-		turnRight = ObjectAnimator.ofFloat(views[0], View.ROTATION_Y, 180,0);
-		turnLeft  = ObjectAnimator.ofFloat(views[0], View.ROTATION_Y, 0,180);
-		turnRight.setDuration(turnDuration);
-		turnLeft.setDuration(turnDuration);
-		turnRight.setInterpolator(null);
-		turnLeft.setInterpolator(null);
-		turnRight2 = ObjectAnimator.ofFloat(views[1], View.ROTATION_Y, 180,0);
-		turnLeft2  = ObjectAnimator.ofFloat(views[1], View.ROTATION_Y, 0,180);
-		turnRight2.setDuration(turnDuration);
-		turnLeft2.setDuration(turnDuration);
-		turnRight2.setInterpolator(null);
-		turnLeft2.setInterpolator(null);
-		loadOfFloat(tag, property);
-		setMultyOnTouch(tag);
-		
-	}
-	
-	public void setStartHeight(float point){
-		this.startPoint = point;
-	}
-	
-	private void startMoveAnimation(){
-		if(moveAnimList.size()>0){
-			for(int i=0;i<moveAnimList.size();i++){
-				moveAnimList.get(i).start();
-			}
-		}
-	}
-	private void stopMoveAnimation(){
-		if(moveAnimList.size()>0){
-			for(int i=0;i<moveAnimList.size();i++){
-				for(Animator am : moveAnimList.get(i).getChildAnimations()){
-					am.end();	
-				}
-			}
-		}
-	}
-	
-	public void startWaitAnimation(){
-		if(waitAnim!=null){
-			View[] persons = getViews(tag);
-			for(int i=0;i<persons.length;i++){
-				waitAnimList.add(waitAnim.getAnimation(persons[i]));
-				waitAnimList.get(i).start();
-			}
-		}
-	}
-	
-	public void stopWaitAnimation(){
-		if(waitAnimList.size()>0){
-			for(int i=0;i<waitAnimList.size();i++){
-				for(Animator am : waitAnimList.get(i).getChildAnimations()){
-					am.end();	
-				}
-			}
-		}
-	}
-
 }

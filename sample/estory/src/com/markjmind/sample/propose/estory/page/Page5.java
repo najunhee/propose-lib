@@ -30,10 +30,11 @@ public class Page5 extends Page{
 		lion.setAnimation("lion",R.id.lion, View.TRANSLATION_X, View.TRANSLATION_X);
 		lion.setMoveAnimation(new UnitAnimation() {
 			@Override
-			public AnimatorSet getAnimation(View person) {
-		  		ObjectAnimator shake = ObjectAnimator.ofFloat(person.findViewById(R.id.anim_img), 
+			public AnimatorSet getAnimation(int index, View person) {
+				View unit = person.findViewById(R.id.anim_img);
+		  		ObjectAnimator shake = ObjectAnimator.ofFloat(unit, 
 		  				View.ROTATION, 0,10,-20,-40,0);
-		  		ObjectAnimator jump = ObjectAnimator.ofFloat(person.findViewById(R.id.anim_img), View.TRANSLATION_Y, -20,30,0);
+		  		ObjectAnimator jump = ObjectAnimator.ofFloat(unit, View.TRANSLATION_Y, -20,30,0);
 		  		jump.setDuration(300);
 		  		shake.setDuration(300);
 		  		AnimatorSet walk = new AnimatorSet();
@@ -51,15 +52,13 @@ public class Page5 extends Page{
 		duck.setAnimation("duck",R.id.duck, View.TRANSLATION_X, View.TRANSLATION_X);
 		duck.setMoveAnimation(new UnitAnimation() {
 			@Override
-			public AnimatorSet getAnimation(View person) {
+			public AnimatorSet getAnimation(int index, View person) {
 				View unit = person.findViewById(R.id.anim_img);
-				unit.setPivotX(unit.getWidth()/2);
-				unit.setPivotY(unit.getHeight()/2);
-		  		ObjectAnimator shake = ObjectAnimator.ofFloat(person.findViewById(R.id.anim_img), 
+		  		ObjectAnimator shake = ObjectAnimator.ofFloat(unit, 
 		  				View.ROTATION, 0,-20,0,20,0);
-		  		ObjectAnimator jump = ObjectAnimator.ofFloat(person.findViewById(R.id.anim_img),
+		  		ObjectAnimator jump = ObjectAnimator.ofFloat(unit,
 		  				View.TRANSLATION_Y, 0,-10,0,-10,0);
-		  		ObjectAnimator rotationY = ObjectAnimator.ofFloat(person.findViewById(R.id.anim_img), 
+		  		ObjectAnimator rotationY = ObjectAnimator.ofFloat(unit, 
 		  				View.ROTATION_Y, 0,25,0,-25,0);
 		  		jump.setDuration(500);
 		  		shake.setDuration(500);
@@ -80,10 +79,11 @@ public class Page5 extends Page{
 		dog.setAnimation("dog",R.id.dog, View.TRANSLATION_X, View.TRANSLATION_X);
 		dog.setMoveAnimation(new UnitAnimation() {
 			@Override
-			public AnimatorSet getAnimation(View person) {
-		  		ObjectAnimator shake = ObjectAnimator.ofFloat(person.findViewById(R.id.anim_img), 
+			public AnimatorSet getAnimation(int index, View person) {
+				View unit = person.findViewById(R.id.anim_img);
+		  		ObjectAnimator shake = ObjectAnimator.ofFloat(unit, 
 		  				View.ROTATION, 0,10,-20,-40,0);
-		  		ObjectAnimator jump = ObjectAnimator.ofFloat(person.findViewById(R.id.anim_img), View.TRANSLATION_Y, 0,1,0);
+		  		ObjectAnimator jump = ObjectAnimator.ofFloat(unit, View.TRANSLATION_Y, 0,1,0);
 		  		jump.setDuration(100);
 		  		shake.setDuration(100);
 		  		AnimatorSet walk = new AnimatorSet();
@@ -101,10 +101,11 @@ public class Page5 extends Page{
 		chicken.setAnimation("chicken",R.id.chicken, View.TRANSLATION_X, View.TRANSLATION_X);
 		chicken.setMoveAnimation(new UnitAnimation() {
 			@Override
-			public AnimatorSet getAnimation(View person) {
-		  		ObjectAnimator shake = ObjectAnimator.ofFloat(person.findViewById(R.id.anim_img), 
+			public AnimatorSet getAnimation(int index, View person) {
+				View unit = person.findViewById(R.id.anim_img);
+		  		ObjectAnimator shake = ObjectAnimator.ofFloat(unit, 
 		  				View.ROTATION, 0,-20,-10,10,0);
-		  		ObjectAnimator jump = ObjectAnimator.ofFloat(person.findViewById(R.id.anim_img), View.TRANSLATION_Y, 0,-100,-40,-80,0);
+		  		ObjectAnimator jump = ObjectAnimator.ofFloat(unit, View.TRANSLATION_Y, 0,-100,-40,-80,0);
 		  		jump.setDuration(800);
 		  		shake.setDuration(800);
 		  		AnimatorSet walk = new AnimatorSet();
@@ -122,10 +123,12 @@ public class Page5 extends Page{
 		pig.setAnimation("pig",R.id.pig, View.TRANSLATION_X, View.TRANSLATION_X);
 		pig.setMoveAnimation(new UnitAnimation() {
 			@Override
-			public AnimatorSet getAnimation(View person) {
-		  		ObjectAnimator shake = ObjectAnimator.ofFloat(person.findViewById(R.id.anim_img), 
+			public AnimatorSet getAnimation(int index, View person) {
+				View unit = person.findViewById(R.id.anim_img);
+		  		ObjectAnimator shake = ObjectAnimator.ofFloat(unit, 
 		  				View.ROTATION, 0,20,0,-10,0);
-		  		ObjectAnimator jump = ObjectAnimator.ofFloat(person.findViewById(R.id.anim_img), View.TRANSLATION_Y, 0,20,0);
+		  		ObjectAnimator jump = ObjectAnimator.ofFloat(unit,
+		  				View.TRANSLATION_Y, 0,20,0);
 		  		jump.setDuration(500);
 		  		shake.setDuration(500);
 		  		AnimatorSet walk = new AnimatorSet();

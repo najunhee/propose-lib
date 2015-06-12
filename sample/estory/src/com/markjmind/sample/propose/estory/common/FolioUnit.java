@@ -11,25 +11,28 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.markjmind.propose.Propose;
+import com.markjmind.propose.ProposeTouchListener;
 import com.markjmind.propose.Propose.ProposeListener;
 import com.markjmind.sample.propose.estory.book.RatioFrameLayout;
 
 public class FolioUnit extends MultiMotionAnimator{
-	int[] pageWidth ={0,0};
-	int[] pageHeight ={0,0};
-	String tag;
-	ObjectAnimator turnRight,turnLeft,turnRight2,turnLeft2;
-	long personDuration = 3000;
-	long turnDuration = 300;
-	float startPoint = 0f;
-	boolean firstStart = true;
-	ArrayList<AnimatorSet> waitAnimList = new ArrayList<AnimatorSet>();
-	UnitAnimation waitAnim;
-	
-	ArrayList<AnimatorSet> moveAnimList = new ArrayList<AnimatorSet>();
-	UnitAnimation moveAnim;
-	
+	protected int[] pageWidth ={0,0};
+	protected int[] pageHeight ={0,0};
+	protected String tag;
+	protected ObjectAnimator turnRight,turnLeft,turnRight2,turnLeft2;
+	protected long personDuration = 3000;
+	protected long turnDuration = 300;
+	protected float startPoint = 0f;
+	protected boolean firstStart = true;
+	public boolean isFaceForwad = true;
+	protected ArrayList<AnimatorSet> waitAnimList = new ArrayList<AnimatorSet>();
+	protected UnitAnimation waitAnim;
+	protected ArrayList<AnimatorSet> moveAnimList = new ArrayList<AnimatorSet>();
+	protected UnitAnimation moveAnim;
+	protected ArrayList<AnimatorSet> touchAnimList = new ArrayList<AnimatorSet>();
+	protected UnitAnimation touchAnim;
 	public float distanceRatio = 1.0f;
+	protected FolioListener folioListener;
 	
 	public FolioUnit(ViewGroup... parents){
 		super(parents);
@@ -84,7 +87,7 @@ public class FolioUnit extends MultiMotionAnimator{
 			anims[1].setFloatValues(startX,endX);
 			if(firstStart){
 				if(moveAnim!=null){
-					moveAnimList.add(moveAnim.getAnimation(person));
+					moveAnimList.add(moveAnim.getAnimation(index,person));
 				}
 				//초기 위치 잡아주기
 				if(isFaceForwad){
@@ -124,6 +127,28 @@ public class FolioUnit extends MultiMotionAnimator{
 			motion.motionLeft.play(anims[1]);
 			motion.motionLeft.enableFling(false).enableTabUp(false);
 		}
+		motion.setProposeTouchListener(new ProposeTouchListener() {
+			@Override
+			public void actionDown(boolean isMotionStart) {
+				if(folioListener!=null){
+					folioListener.onTouch(isMotionStart);
+				}
+				stopWaitAnimation();
+			}
+			@Override
+			public void actionUp(boolean isMotionStart) {
+				if(folioListener!=null){
+					folioListener.onTouchUp(isMotionStart);
+				}
+				if(!isMotionStart){
+					startWaitAnimation();
+				}
+			}
+			@Override
+			public void actionMove(boolean isMotionStart) {
+			}
+		});
+		final int mIndex = index;
 		motion.setOnMotionListener(new ProposeListener() {
 			long tempDuration=0;
 			long checkDuration=0;
@@ -132,11 +157,15 @@ public class FolioUnit extends MultiMotionAnimator{
 			boolean tempForward = true;
 			@Override
 			public void onStart() {
+				if(mIndex==0){
+					if(folioListener!=null){
+						folioListener.onStart();
+					}
+				}
 				isFirst = true;
 				checkDuration=0;
 				tempDuration=0;
 				startMoveAnimation();
-				stopWaitAnimation();
 			}
 			@Override
 			public void onScroll(int Direction, long currDuration, long totalDuration) {
@@ -165,13 +194,16 @@ public class FolioUnit extends MultiMotionAnimator{
 			}
 			@Override
 			public void onEnd() {
+				if(mIndex==0){
+					if(folioListener!=null){
+						folioListener.onEnd();
+					}
+				}
 				stopMoveAnimation();
 				startWaitAnimation();
 			}
 		});
 	}
-	
-	public boolean isFaceForwad = true;
 	
 	public void frontTurn(){
 			turnRight.cancel();
@@ -248,7 +280,7 @@ public class FolioUnit extends MultiMotionAnimator{
 			waitAnimList.clear();
 			View[] persons = getViews(tag);
 			for(int i=0;i<persons.length;i++){
-				waitAnimList.add(waitAnim.getAnimation(persons[i]));
+				waitAnimList.add(waitAnim.getAnimation(i,persons[i]));
 				waitAnimList.get(i).start();
 			}
 		}
@@ -264,4 +296,35 @@ public class FolioUnit extends MultiMotionAnimator{
 		}
 	}
 
+	
+	public void setTouchAnimation(UnitAnimation touchAnim){
+		this.touchAnim = touchAnim;
+		
+	}
+	
+	public void startTouchAnimation(){
+		if(touchAnim!=null){
+			stopTouchAnimation();
+			touchAnimList.clear();
+			View[] persons = getViews(tag);
+			for(int i=0;i<persons.length;i++){
+				touchAnimList.add(touchAnim.getAnimation(i,persons[i]));
+				touchAnimList.get(i).start();
+			}
+		}
+	}
+	
+	public void stopTouchAnimation(){
+		if(touchAnimList.size()>0){
+			for(int i=0;i<touchAnimList.size();i++){
+				for(Animator am : touchAnimList.get(i).getChildAnimations()){
+					am.end();	
+				}
+			}
+		}
+	}
+	
+	public void setFolioListener(FolioListener listener){
+		this.folioListener = listener;
+	}
 }

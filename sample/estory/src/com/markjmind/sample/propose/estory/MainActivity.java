@@ -43,8 +43,8 @@ public class MainActivity extends Activity {
         book = new Book(findViewById(R.id.book_layout));
         leftMenu = new LeftMenu(book, (ViewGroup)findViewById(R.id.banner_lyt));
         music = new Music();
-//        music.setMusic(this,R.raw.back_music);
-//        music.playMusic(true);
+        music.setMusic(this,R.raw.back_music);
+        music.playMusic(true);
         sound = new Sound(new AllLoadComplete() {
 			@Override
 			public void onAllComplete() {
@@ -87,14 +87,14 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
     	sound.resume();
-//    	music.playMusic(true);
+    	music.playMusic(true);
     	super.onResume();
     }
     @Override
     protected void onStop() {
     	super.onStop();
     	sound.pause();
-//    	music.stop();
+    	music.stop();
     	book.disposeAll();
     }
     
@@ -106,7 +106,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onDestroy() {
     	sound.dispose();
-//    	music.dispose();
+    	music.dispose();
     	book.disposeAll();
     	super.onDestroy();
     }

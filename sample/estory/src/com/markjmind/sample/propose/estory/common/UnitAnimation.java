@@ -4,5 +4,5 @@ import android.animation.AnimatorSet;
 import android.view.View;
 
 public interface UnitAnimation{
-	public AnimatorSet getAnimation(View person);
+	public AnimatorSet getAnimation(int index, View person);
 }
