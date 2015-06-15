@@ -61,8 +61,12 @@ public class Sound implements OnLoadCompleteListener{
 			intLoop = -1;
 		}
 		SoundInfo sInfo = soundMap.get(raw_id);
-		int streamId = soundPool.play(sInfo.getSoundId(), 1.0f, 1.0f, 10, intLoop, 1);
-		sInfo.setStreamId(streamId);
+		try{
+			int streamId = soundPool.play(sInfo.getSoundId(), 1.0f, 1.0f, 10, intLoop, 1);
+			sInfo.setStreamId(streamId);
+		}catch(Exception e){
+			
+		}
 	}
 	
 	public void stop(int raw_id){

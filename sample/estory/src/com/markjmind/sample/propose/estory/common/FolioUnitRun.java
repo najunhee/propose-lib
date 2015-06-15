@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.markjmind.propose.Propose;
+import com.markjmind.propose.ProposeTouchListener;
 import com.markjmind.propose.Propose.ProposeListener;
 import com.markjmind.sample.propose.estory.book.RatioFrameLayout;
 
@@ -65,10 +66,42 @@ public class FolioUnitRun extends FolioUnit{
 		motion.motionLeft.play(anims[0]).next(turnLeft2).with(turnLeft).next(anims[1]).next(turnRight2).with(turnRight);
 		motion.motionLeft.enableMove(false);
 		final Propose endMotion = motion;
+		final int mIndex = index;
+		motion.setProposeTouchListener(new ProposeTouchListener() {
+			@Override
+			public void actionDown(boolean isMotionStart) {
+				if(mIndex==0){
+					if(folioListener!=null){
+						folioListener.onTouch(isMotionStart);
+					}
+				}
+				stopWaitAnimation();
+				startTouchAnimation();
+			}
+			@Override
+			public void actionUp(boolean isMotionStart) {
+				if(mIndex==0){
+					if(folioListener!=null){
+						folioListener.onTouchUp(isMotionStart);
+					}
+				}
+				if(!isMotionStart){
+					startWaitAnimation();
+				}
+				stopTouchAnimation();
+			}
+			@Override
+			public void actionMove(boolean isMotionStart) {
+			}
+		});
 		motion.setOnMotionListener(new ProposeListener() {
 			@Override
 			public void onStart() {
-				Log.e("test","온스타트");
+				if(mIndex==0){
+					if(folioListener!=null){
+						folioListener.onStart();
+					}
+				}
 				startMoveAnimation();
 				stopWaitAnimation();
 			}
@@ -84,6 +117,8 @@ public class FolioUnitRun extends FolioUnit{
 				endMotion.motionLeft.reset();
 			}
 		});
+		
+		
 	}
 	
 }

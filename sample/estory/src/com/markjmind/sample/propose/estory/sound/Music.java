@@ -34,4 +34,8 @@ public class Music {
 			media = null;
 		}
 	}
+	
+	public void setVolume(float leftVolume, float rightVolume){
+		media.setVolume(leftVolume, rightVolume);
+	}
 }

@@ -25,6 +25,9 @@ public class FolioUnit extends MultiMotionAnimator{
 	protected float startPoint = 0f;
 	protected boolean firstStart = true;
 	public boolean isFaceForwad = true;
+	public boolean isMotionDown = true;
+	public boolean enableFling = false;
+	public boolean enableTabUp = false;
 	protected ArrayList<AnimatorSet> waitAnimList = new ArrayList<AnimatorSet>();
 	protected UnitAnimation waitAnim;
 	protected ArrayList<AnimatorSet> moveAnimList = new ArrayList<AnimatorSet>();
@@ -33,6 +36,7 @@ public class FolioUnit extends MultiMotionAnimator{
 	protected UnitAnimation touchAnim;
 	public float distanceRatio = 1.0f;
 	protected FolioListener folioListener;
+	
 	
 	public FolioUnit(ViewGroup... parents){
 		super(parents);
@@ -56,7 +60,9 @@ public class FolioUnit extends MultiMotionAnimator{
 			//상하 움직임
 			float startY = RatioFrameLayout.getTagChildXY(person)[1]*fraction-heightMargin;
 			anims[0].setFloatValues(startY,pageHeight[index]-person.getHeight());
-			motion.motionDown.setMotionDistance((pageHeight[index]-startY-person.getHeight())*distanceRatio);
+			if(isMotionDown){
+				motion.motionDown.setMotionDistance((pageHeight[index]-startY-person.getHeight())*distanceRatio);
+			}
 			
 //			//좌우 움직임
 			fraction = ((RatioFrameLayout)parents[0]).getFractionX();
@@ -97,7 +103,9 @@ public class FolioUnit extends MultiMotionAnimator{
 				}
 				
 				if(startPoint>0){
-					motion.motionDown.move(heightMargin, false);
+					if(isMotionDown){
+						motion.motionDown.move(heightMargin, false);
+					}
 				}
 				if(index==parents.length-1){
 					firstStart = false;
@@ -118,37 +126,47 @@ public class FolioUnit extends MultiMotionAnimator{
 		anims[0].setInterpolator(null);
 		anims[1].setDuration((long)(personDuration*distanceRatio));
 		anims[1].setInterpolator(null);
-		motion.motionDown.play(anims[0]);
-		motion.motionDown.enableFling(false).enableTabUp(false).enableSingleTabUp(false);
+		if(isMotionDown){
+			motion.motionDown.play(anims[0]);
+			motion.motionDown.enableFling(false).enableTabUp(false).enableSingleTabUp(false);
+		}
 		if(isFaceForwad){
 			motion.motionRight.play(anims[1]);
-			motion.motionRight.enableFling(false).enableTabUp(false);
+			motion.motionRight.enableFling(enableFling).enableTabUp(enableTabUp);
 		}else{
 			motion.motionLeft.play(anims[1]);
-			motion.motionLeft.enableFling(false).enableTabUp(false);
+			motion.motionLeft.enableFling(enableFling).enableTabUp(enableTabUp);
 		}
+		
+		final int mIndex = index;
 		motion.setProposeTouchListener(new ProposeTouchListener() {
 			@Override
 			public void actionDown(boolean isMotionStart) {
-				if(folioListener!=null){
-					folioListener.onTouch(isMotionStart);
+				if(mIndex==0){
+					if(folioListener!=null){
+						folioListener.onTouch(isMotionStart);
+					}
 				}
 				stopWaitAnimation();
+				startTouchAnimation();
 			}
 			@Override
 			public void actionUp(boolean isMotionStart) {
-				if(folioListener!=null){
-					folioListener.onTouchUp(isMotionStart);
+				if(mIndex==0){
+					if(folioListener!=null){
+						folioListener.onTouchUp(isMotionStart);
+					}
 				}
 				if(!isMotionStart){
 					startWaitAnimation();
 				}
+				stopTouchAnimation();
 			}
 			@Override
 			public void actionMove(boolean isMotionStart) {
 			}
 		});
-		final int mIndex = index;
+		
 		motion.setOnMotionListener(new ProposeListener() {
 			long tempDuration=0;
 			long checkDuration=0;
@@ -166,6 +184,7 @@ public class FolioUnit extends MultiMotionAnimator{
 				checkDuration=0;
 				tempDuration=0;
 				startMoveAnimation();
+				stopTouchAnimation();
 			}
 			@Override
 			public void onScroll(int Direction, long currDuration, long totalDuration) {

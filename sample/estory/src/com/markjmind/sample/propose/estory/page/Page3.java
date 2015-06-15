@@ -22,6 +22,8 @@ import com.markjmind.sample.propose.estory.common.UnitAnimation;
 
 public class Page3 extends Page{
 	FolioUnit girl;
+	FolioUnit car;
+	FolioUnit mouse;
 	
 	public Page3(Context context, int layout_id) {
 		super(context, layout_id);
@@ -50,11 +52,24 @@ public class Page3 extends Page{
 			}
 		});
 		motion_door.motionLeft.play(door_anim);
+		motion_door.setOnMotionListener(new ProposeListener() {
+			@Override
+			public void onStart() {
+				playSound(R.raw.door, false);
+			}
+			
+			@Override
+			public void onScroll(int Direction, long currDuration, long totalDuration) {
+			}
+			@Override
+			public void onEnd() {
+			}
+		});
 		putPageMotion(motion_door,"door2");
 		door.setOnTouchListener(motion_door);
 		
 		//mouse 애니메이션
-		FolioUnit mouse = new FolioUnit(scale_layout2, scale_layout1);
+		mouse = new FolioUnit(scale_layout2, scale_layout1);
 		mouse.isFaceForwad = false;
 		mouse.distanceRatio = 0.5f;
 		putPageMotion(mouse.getMotions(),"mouse");
@@ -74,10 +89,22 @@ public class Page3 extends Page{
 		  		return walk;
 			}
 		});
+		mouse.setTouchAnimation(new UnitAnimation() {
+			@Override
+			public AnimatorSet getAnimation(int index, View person) {
+				View unit = person.findViewById(R.id.anim_img);
+		  		ObjectAnimator jump = ObjectAnimator.ofFloat(unit,
+		  				View.TRANSLATION_Y, 0,-20,0);
+		  		jump.setDuration(200);
+		  		AnimatorSet walk = new AnimatorSet();
+		  		walk.play(jump);
+		  		return walk;
+			}
+		});
 		mouse.setFolioListener(new FolioListener() {
 			@Override
 			public void onTouch(boolean isMotionStart) {
-				
+				playSound(R.raw.squeaky, false);
 			}
 			@Override
 			public void onTouchUp(boolean isMotionStart) {
@@ -92,65 +119,72 @@ public class Page3 extends Page{
 		});
 		
 		
-		//자동차 애니메이션
-		MultiMotionAnimator carAnim = new MultiMotionAnimator(scale_layout2,scale_layout1) {
-			int[] pageWidth ={0,0};
-			@Override
-			public void play(int index, Propose motion, ObjectAnimator[] anims) {
-				anims[0].setDuration(2000);
-				motion.motionLeft.play(anims[0]);
-				motion.motionLeft.enableTabUp(false);
-				if(index==0){
-					motion.setProposeTouchListener(new ProposeTouchListener() {
-						@Override
-						public void actionDown(boolean isMotionStart) {
-							Log.e("test","soundPlay!!");
-							playSound(R.raw.car, false);
-						}
-						@Override
-						public void actionMove(boolean isMotionStart) {
-						}
-						@Override
-						public void actionUp(boolean isMotionStart) {
-						}
-						
-					});
-					motion.setOnMotionListener(new ProposeListener() {
-						@Override
-						public void onStart() {
-						}
-						@Override
-						public void onScroll(int Direction, long currDuration, long totalDuration) {
-						}
-						@Override
-						public void onEnd() {
-						}
-					});
-				}
-			}
-			@Override
-			public void touchDown(int index, ViewGroup[] parents, Propose motion, ObjectAnimator[] anims) {
-				if(pageWidth[index]!=parents[0].getWidth()+parents[1].getWidth()){
-					pageWidth[index] = parents[0].getWidth()+parents[1].getWidth();
-					View cars = getViews("car")[index];
-					float start = RatioFrameLayout.getTagChildXY(cars)[0]*((RatioFrameLayout)parents[0]).getFractionX();
-					float 	end = 0f;
-					if(index==1){
-						end = parents[0].getWidth()*-1;
-					}
-					anims[0].setFloatValues(start,end);
-					motion.motionLeft.setMotionDistance(Math.abs(start-end));
-				}
-			}
-			@Override
-			public void touchUp(int index, ViewGroup[] parents, Propose motion, ObjectAnimator[] anims) {
-			}
-		};
-		carAnim.addView("car",R.id.car);
-		carAnim.loadOfFloat("car", View.TRANSLATION_X);
-		carAnim.setMultyOnTouch("car");
-		putPageMotion(carAnim.getMotions(),"car");
 		
+		//car 애니메이션
+		car = new FolioUnit(scale_layout2, scale_layout1);
+		car.isFaceForwad = false;
+		car.isMotionDown = false;
+		car.enableFling = true;
+		car.setDuration(2000);
+		putPageMotion(car.getMotions(),"car");
+		car.setAnimation("car",R.id.car, View.TRANSLATION_Y, View.TRANSLATION_X);
+		car.setMoveAnimation(new UnitAnimation() {
+			@Override
+			public AnimatorSet getAnimation(int index, View person) {
+				View unit = person.findViewById(R.id.anim_img);
+		  		ObjectAnimator shake = ObjectAnimator.ofFloat(unit, 
+		  				View.ROTATION, 0,-1.5f,0.5f,0);
+		  		shake.setDuration(100);
+		  		AnimatorSet walk = new AnimatorSet();
+		  		shake.setRepeatCount(ObjectAnimator.INFINITE);
+		  		walk.play(shake);
+		  		return walk;
+			}
+		});
+		car.setWaitAnimation(new UnitAnimation() {
+			@Override
+			public AnimatorSet getAnimation(int index, View person) {
+				View unit = person.findViewById(R.id.anim_img);
+		  		ObjectAnimator shake = ObjectAnimator.ofFloat(unit, 
+		  				View.ROTATION, 0,-1.5f,0.5f,0);
+		  		shake.setDuration(150);
+		  		AnimatorSet walk = new AnimatorSet();
+		  		shake.setRepeatCount(ObjectAnimator.INFINITE);
+		  		walk.play(shake);
+		  		return walk;
+			}
+		});
+		car.setTouchAnimation(new UnitAnimation() {
+			@Override
+			public AnimatorSet getAnimation(int index, View person) {
+				View unit = person.findViewById(R.id.anim_img);
+		  		ObjectAnimator jump = ObjectAnimator.ofFloat(unit,
+		  				View.TRANSLATION_Y, 0,-20,0);
+		  		jump.setDuration(200);
+		  		AnimatorSet walk = new AnimatorSet();
+		  		walk.play(jump);
+		  		return walk;
+			}
+		});
+		car.setFolioListener(new FolioListener() {
+			@Override
+			public void onTouch(boolean isMotionStart) {
+				playSound(R.raw.car, false);
+			}
+			@Override
+			public void onTouchUp(boolean isMotionStart) {
+			}
+			@Override
+			public void onStart() {
+				playSound(R.raw.car_start, false);
+			}
+			@Override
+			public void onEnd() {
+				playSound(R.raw.car_beep, false);
+				stopSound(R.raw.car_start);
+			}
+		});
+		car.startWaitAnimation();
 		
 		//girl 애니메이션
 		girl = new FolioUnit(scale_layout2, scale_layout1);
@@ -163,7 +197,7 @@ public class Page3 extends Page{
 			@Override
 			public AnimatorSet getAnimation(int index, View person) {
 				View unit = person.findViewById(R.id.anim_img);
-				Log.e("test","무부");
+				View unit2 = person.findViewById(R.id.anim_img2);
 		  		ObjectAnimator shake = ObjectAnimator.ofFloat(unit, 
 		  				View.ROTATION, 0,-10,0,10,0);
 		  		ObjectAnimator jump = ObjectAnimator.ofFloat(unit,
@@ -173,7 +207,16 @@ public class Page3 extends Page{
 		  		AnimatorSet walk = new AnimatorSet();
 		  		jump.setRepeatCount(ObjectAnimator.INFINITE);
 		  		shake.setRepeatCount(ObjectAnimator.INFINITE);
-		  		walk.play(shake).with(jump);
+		  		
+		  		ObjectAnimator shake2 = ObjectAnimator.ofFloat(unit2, 
+		  				View.ROTATION, 0,-10,0,10,0);
+		  		ObjectAnimator jump2 = ObjectAnimator.ofFloat(unit2,
+		  				View.TRANSLATION_Y, 0,-10,0);
+		  		jump2.setDuration(250);
+		  		shake2.setDuration(250);
+		  		jump2.setRepeatCount(ObjectAnimator.INFINITE);
+		  		shake2.setRepeatCount(ObjectAnimator.INFINITE);
+		  		walk.play(shake).with(jump).with(shake2).with(jump2);
 		  		return walk;
 			}
 		});
@@ -181,31 +224,60 @@ public class Page3 extends Page{
 			@Override
 			public AnimatorSet getAnimation(int index, View person) {
 				View unit = person.findViewById(R.id.anim_img);
-				float startRotation = unit.getRotationY();
+				View unit2 = person.findViewById(R.id.anim_img2);
 				ObjectAnimator rotation = ObjectAnimator.ofFloat(unit, View.ROTATION_Y, 0,30,0,-30,0);
 	            rotation.setDuration(2000);
+	            
+		  		ObjectAnimator jump2 = ObjectAnimator.ofFloat(unit2,
+		  				View.TRANSLATION_Y, 0,-10,0);
+		  		jump2.setDuration(250);
+		  		jump2.setRepeatCount(ObjectAnimator.INFINITE);
+	            
 	            AnimatorSet set = new AnimatorSet();
-	            set.play(rotation);
+	            set.play(rotation).with(jump2);
 	            rotation.setRepeatCount(ObjectAnimator.INFINITE);
 				return set;
+			}
+		});
+		girl.setTouchAnimation(new UnitAnimation() {
+			@Override
+			public AnimatorSet getAnimation(int index, View person) {
+				View unit = person.findViewById(R.id.anim_img);
+				View unit2 = person.findViewById(R.id.anim_img2);
+		  		ObjectAnimator jump = ObjectAnimator.ofFloat(unit,
+		  				View.TRANSLATION_Y, 0,-20,0);
+		  		jump.setDuration(200);
+		  		AnimatorSet walk = new AnimatorSet();
+		  		
+		  		ObjectAnimator shake2 = ObjectAnimator.ofFloat(unit2, 
+		  				View.ROTATION, 0,360);
+		  		ObjectAnimator jump2 = ObjectAnimator.ofFloat(unit2,
+		  				View.TRANSLATION_Y, 0,-50,0);
+		  		jump2.setDuration(250);
+		  		shake2.setDuration(250);
+		  		
+		  		walk.play(jump).with(shake2).with(jump2);
+		  		return walk;
 			}
 		});
 		girl.setFolioListener(new FolioListener() {
 			@Override
 			public void onTouch(boolean isMotionStart) {
-				playSound(R.raw.bells, false);
+				playSound(R.raw.girl_hello, false);
 			}
 			@Override
 			public void onTouchUp(boolean isMotionStart) {
 			}
 			@Override
 			public void onStart() {
+				playSound(R.raw.dog, true);
 			}
 			@Override
 			public void onEnd() {
+				playSound(R.raw.gril_oopsi, false);
+				stopSound(R.raw.dog);
 			}
 		});
-		
 		girl.startWaitAnimation();
 		
 		
@@ -215,6 +287,8 @@ public class Page3 extends Page{
 	public void dispose() {
 		if(girl!=null){
 			girl.stopWaitAnimation();
+			car.stopWaitAnimation();
+			mouse.stopWaitAnimation();
 		}
 	}
 }

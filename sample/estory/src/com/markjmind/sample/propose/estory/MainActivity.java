@@ -55,9 +55,25 @@ public class MainActivity extends Activity {
 			}
 		});
         sound.addSound(R.raw.bells);
-        sound.addSound(R.raw.car);
+        sound.addSound(R.raw.door);
         sound.addSound(R.raw.frog);
         sound.addSound(R.raw.mouse);
+        sound.addSound(R.raw.squeaky);
+        sound.addSound(R.raw.car);
+        sound.addSound(R.raw.car_start);
+        sound.addSound(R.raw.car_beep);
+        sound.addSound(R.raw.male_hello);
+        sound.addSound(R.raw.whistle1);
+        sound.addSound(R.raw.whistle2);
+        sound.addSound(R.raw.girl_hello);
+        sound.addSound(R.raw.gril_oopsi);
+        sound.addSound(R.raw.dog);
+        sound.addSound(R.raw.pig);
+        sound.addSound(R.raw.lion);
+        sound.addSound(R.raw.mouse);
+        sound.addSound(R.raw.duck);
+        sound.addSound(R.raw.chicken);
+        
         sound.load(this);
         book.setSound(sound);
     }

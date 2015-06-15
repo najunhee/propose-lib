@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.markjmind.sample.propose.estory.R;
 import com.markjmind.sample.propose.estory.book.Page;
 import com.markjmind.sample.propose.estory.book.RatioFrameLayout;
+import com.markjmind.sample.propose.estory.common.FolioListener;
 import com.markjmind.sample.propose.estory.common.FolioUnitRun;
 import com.markjmind.sample.propose.estory.common.UnitAnimation;
 
@@ -44,6 +45,22 @@ public class Page5 extends Page{
 		  		return walk;
 			}
 		});
+		lion.setFolioListener(new FolioListener() {
+			@Override
+			public void onTouch(boolean isMotionStart) {
+				stopSound(R.raw.lion);
+			}
+			@Override
+			public void onTouchUp(boolean isMotionStart) {
+			}
+			@Override
+			public void onStart() {
+				playSound(R.raw.lion, false);
+			}
+			@Override
+			public void onEnd() {
+			}
+		});
 		
 		//duck 애니메이션
 		FolioUnitRun duck = new FolioUnitRun(scale_layout2, scale_layout1);
@@ -71,6 +88,23 @@ public class Page5 extends Page{
 		  		return walk;
 			}
 		});
+		duck.setFolioListener(new FolioListener() {
+			@Override
+			public void onTouch(boolean isMotionStart) {
+				stopSound(R.raw.duck);
+			}
+			@Override
+			public void onTouchUp(boolean isMotionStart) {
+			}
+			@Override
+			public void onStart() {
+				playSound(R.raw.duck, false);
+			}
+			@Override
+			public void onEnd() {
+			}
+		});
+		
 		
 		//dog 애니메이션
 		FolioUnitRun dog = new FolioUnitRun(scale_layout2, scale_layout1);
@@ -93,6 +127,23 @@ public class Page5 extends Page{
 		  		return walk;
 			}
 		});
+		dog.setFolioListener(new FolioListener() {
+			@Override
+			public void onTouch(boolean isMotionStart) {
+				stopSound(R.raw.squeaky);
+			}
+			@Override
+			public void onTouchUp(boolean isMotionStart) {
+			}
+			@Override
+			public void onStart() {
+				playSound(R.raw.squeaky, false);
+			}
+			@Override
+			public void onEnd() {
+			}
+		});
+		
 		
 		//chicken 애니메이션
 		FolioUnitRun chicken = new FolioUnitRun(scale_layout2, scale_layout1);
@@ -115,6 +166,23 @@ public class Page5 extends Page{
 		  		return walk;
 			}
 		});
+		chicken.setFolioListener(new FolioListener() {
+			@Override
+			public void onTouch(boolean isMotionStart) {
+				stopSound(R.raw.chicken);
+			}
+			@Override
+			public void onTouchUp(boolean isMotionStart) {
+			}
+			@Override
+			public void onStart() {
+				playSound(R.raw.chicken, false);
+			}
+			@Override
+			public void onEnd() {
+			}
+		});
+		
 		
 		//pig 애니메이션
 		FolioUnitRun pig = new FolioUnitRun(scale_layout2, scale_layout1);
@@ -138,7 +206,22 @@ public class Page5 extends Page{
 		  		return walk;
 			}
 		});
-		
+		pig.setFolioListener(new FolioListener() {
+			@Override
+			public void onTouch(boolean isMotionStart) {
+				stopSound(R.raw.pig);
+			}
+			@Override
+			public void onTouchUp(boolean isMotionStart) {
+			}
+			@Override
+			public void onStart() {
+				playSound(R.raw.pig, false);
+			}
+			@Override
+			public void onEnd() {
+			}
+		});
 		
 	}
 

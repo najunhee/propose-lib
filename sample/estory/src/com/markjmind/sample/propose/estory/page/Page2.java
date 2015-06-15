@@ -49,6 +49,20 @@ public class Page2 extends Page{
 			public void touchUp(Propose jwm) {
 			}
 		});
+		motion_door1.setOnMotionListener(new ProposeListener() {
+			@Override
+			public void onStart() {
+				stopSound(R.raw.door);
+				playSound(R.raw.door, false);
+			}
+			
+			@Override
+			public void onScroll(int Direction, long currDuration, long totalDuration) {
+			}
+			@Override
+			public void onEnd() {
+			}
+		});
 		motion_door1.motionLeft.play(door_anim);
 		putPageMotion(motion_door1,"door1");
 		door1.setOnTouchListener(motion_door1);
@@ -83,6 +97,19 @@ public class Page2 extends Page{
 
 			}
 		});
+		frog.setTouchAnimation(new UnitAnimation() {
+			@Override
+			public AnimatorSet getAnimation(int index, View person) {
+				View unit = person.findViewById(R.id.anim_img);
+		  		ObjectAnimator jump = ObjectAnimator.ofFloat(unit,
+		  				View.TRANSLATION_Y, 0,-20,0);
+		  		jump.setDuration(200);
+		  		AnimatorSet walk = new AnimatorSet();
+		  		walk.play(jump);
+		  		return walk;
+			}
+		});
+		
 		frog.setFolioListener(new FolioListener() {
 			@Override
 			public void onTouch(boolean isMotionStart) {
@@ -136,19 +163,34 @@ public class Page2 extends Page{
 
 			}
 		});
+		boy.setTouchAnimation(new UnitAnimation() {
+			@Override
+			public AnimatorSet getAnimation(int index, View person) {
+				View unit = person.findViewById(R.id.anim_img);
+		  		ObjectAnimator jump = ObjectAnimator.ofFloat(unit,
+		  				View.TRANSLATION_Y, 0,-20,0);
+		  		jump.setDuration(200);
+		  		AnimatorSet walk = new AnimatorSet();
+		  		walk.play(jump);
+		  		return walk;
+			}
+		});
 		boy.setFolioListener(new FolioListener() {
 			@Override
 			public void onTouch(boolean isMotionStart) {
-				playSound(R.raw.bells, false);
+				playSound(R.raw.male_hello, false);
 			}
 			@Override
 			public void onTouchUp(boolean isMotionStart) {
 			}
 			@Override
 			public void onStart() {
+				playSound(R.raw.whistle1, false);
 			}
 			@Override
 			public void onEnd() {
+				playSound(R.raw.whistle2, false);
+				stopSound(R.raw.whistle1);
 			}
 		});
 		boy.startWaitAnimation();
