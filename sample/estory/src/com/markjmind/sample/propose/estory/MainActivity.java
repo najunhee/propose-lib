@@ -45,6 +45,7 @@ public class MainActivity extends Activity {
         music = new Music();
         music.setMusic(this,R.raw.back_music);
         music.playMusic(true);
+        music.setVolume(0.35f, 0.35f);
         sound = new Sound(new AllLoadComplete() {
 			@Override
 			public void onAllComplete() {
@@ -54,7 +55,6 @@ public class MainActivity extends Activity {
 				leftMenu.initLeftMenu();
 			}
 		});
-        sound.addSound(R.raw.bells);
         sound.addSound(R.raw.door);
         sound.addSound(R.raw.frog);
         sound.addSound(R.raw.mouse);

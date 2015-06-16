@@ -1,6 +1,5 @@
 package com.markjmind.sample.propose.estory.book;
 
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -59,6 +58,11 @@ public class Paper {
 		return backPage;
 	}
 	
+	/**
+	 * 페이지를 넘김
+	 * @param frontPage
+	 * @param backPage
+	 */
 	protected void flip(Page frontPage, Page backPage){
 		this.frontPage = frontPage;
 		this.backPage = backPage;
@@ -66,6 +70,9 @@ public class Paper {
 		back.addView(this.backPage.getView());
 	}
 	
+	/**
+	 * 넘기는 페이퍼의 앞페이지를 보여줌
+	 */
 	protected void showFront(){
 		front.setVisibility(View.VISIBLE);
 		back.setVisibility(View.GONE);
@@ -79,6 +86,9 @@ public class Paper {
 		}
 	}
 	
+	/**
+	 * 넘기는 페이퍼의 뒤페이지를 보여줌
+	 */
 	protected void showBack(){
 		front.setVisibility(View.GONE);
 		back.setVisibility(View.VISIBLE);
