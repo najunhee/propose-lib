@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
         music = new Music();
         music.setMusic(this,R.raw.back_music);
         music.playMusic(true);
-        music.setVolume(0.35f, 0.35f);
+        music.setVolume(0.3f, 0.3f);
         sound = new Sound(new AllLoadComplete() {
 			@Override
 			public void onAllComplete() {
