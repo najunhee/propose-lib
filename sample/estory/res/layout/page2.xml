@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="255"
                     android:src="@drawable/door1"
-                    android:tag="255,377,722,377" />
+                    android:tag="255,377,724,377" />
 
                 <FrameLayout
                     android:id="@+id/car"
