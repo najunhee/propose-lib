@@ -11,8 +11,9 @@ import com.markjmind.propose.Propose;
 import com.markjmind.propose.Propose.ProposeListener;
 
 public class MainActivity extends Activity{
+	
 	private LinearLayout sliding_lyt;
-	Propose propose;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -21,7 +22,6 @@ public class MainActivity extends Activity{
 		sliding_lyt = (LinearLayout)findViewById(R.id.sliding_lyt);
 		sliding_lyt.setClickable(true);
 		
-		 
 		/** Animator create **/
 		float start = -200*Propose.getDensity(this);
 		float end = 0;
@@ -30,7 +30,7 @@ public class MainActivity extends Activity{
 		rightAnimator.setDuration(500); /** "duration" use to onClick **/
 		
 		/** Propose create **/
-		propose = new Propose(this); 
+		Propose propose = new Propose(this); 
 		propose.motionRight.play(rightAnimator); /** set Animator **/
 		sliding_lyt.setOnTouchListener(propose); /** set touch listener **/
 		
