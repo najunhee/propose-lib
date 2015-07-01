@@ -42,8 +42,8 @@ public class MainActivity extends Activity{
 			public void onStart() {}
 			@Override
 			public void onScroll(int Direction, long currDuration, long totalDuration) {
-				float alpha = (float)currDuration/totalDuration/2;
-				findViewById(R.id.alpha_lyt).setAlpha(alpha); // max 0.5
+				float alpha = (float)currDuration/totalDuration/2; // max 0.5
+				findViewById(R.id.alpha_lyt).setAlpha(alpha); 
 			}
 			@Override
 			public void onEnd() {}
