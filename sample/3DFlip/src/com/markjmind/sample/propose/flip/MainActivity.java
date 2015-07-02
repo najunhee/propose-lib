@@ -22,6 +22,7 @@ public class MainActivity extends Activity{
 		setContentView(R.layout.main_layout);
 		
 		flip_lyt = (FrameLayout)findViewById(R.id.flip_lyt);
+		flip_lyt.setCameraDistance(Propose.getCameraDistanceX(this)*2);
 		boy_img =  (ImageView)findViewById(R.id.boy_img);
 		girl_img =  (ImageView)findViewById(R.id.girl_img);
 		
