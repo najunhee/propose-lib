@@ -21,12 +21,6 @@ public class MainActivity extends Activity{
 	private TextView text;
 	private ImageView bg1;
 	
-	private ViewGroup lyt1,lyt2;
-	private TextView test; 
-	int a =0;
-	Propose jwm;
-	Pm pm;
-	Paper paper;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,18 +28,21 @@ public class MainActivity extends Activity{
 		lyt = (FrameLayout)findViewById(R.id.sling_framelayout);
 		text = (TextView)findViewById(R.id.text);
 		bg1 = (ImageView)findViewById(R.id.bg1);  
+		
+		
 		bg1.post(new Runnable() {
 			@Override
 			public void run() {
 				text.setVisibility(View.GONE);
-				jwm = new Propose(MainActivity.this);
-				float height = lyt.getHeight()-50*jwm.density;
+				float height = lyt.getHeight()-50*Propose.getDensity(getApplicationContext());
 				ObjectAnimator rightAnimator = ObjectAnimator.ofFloat(lyt,View.TRANSLATION_Y, 0,height);
 				rightAnimator.setDuration(1000);
-				jwm.motionDown.play(rightAnimator,(int)height);
-				lyt.setOnTouchListener(jwm);
+				
+				Propose propose = new Propose(getApplicationContext());
+				propose.motionDown.play(rightAnimator,(int)height);
+				lyt.setOnTouchListener(propose);
 				 
-				jwm.setOnMotionListener(new ProposeListener() {
+				propose.setOnMotionListener(new ProposeListener() {
 					@Override
 					public void onStart() {
 						text.setVisibility(View.VISIBLE);
@@ -65,46 +62,7 @@ public class MainActivity extends Activity{
 				});
 			}
 		});
+	}
 		
-		lyt1 = (ViewGroup)findViewById(R.id.lyt1);
-		lyt2 = (ViewGroup)findViewById(R.id.lyt2);
-		test = (TextView)findViewById(R.id.test);
-		pm = new Pm();
-		pm.page = new Page(test);
-		paper = new Paper();
-		test.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				a++;
-				if(a%2==0){
-					pm.page = paper.page;
-					paper = null;
-					paper = new Paper();
-					lyt2.removeAllViews();
-					lyt1.addView(pm.page.tx);
-				}else{
-					paper.page = pm.page;
-					pm = null;
-					pm = new Pm();
-					lyt1.removeAllViews();
-					lyt2.addView(paper.page.tx);
-				}
-			}
-		});
-	}
-	
-	class Pm{
-		Page page;
-	}
-	
-	class Paper{
-		Page page;
-	}
-	
-	class Page{
-		public TextView tx=null;
-		public Page(TextView tx){
-			this.tx = tx;
-		}
-	}
+		
 }
