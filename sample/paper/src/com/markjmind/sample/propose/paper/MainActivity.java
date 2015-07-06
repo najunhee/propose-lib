@@ -20,8 +20,8 @@ public class MainActivity extends Activity{
 		ObjectAnimator paperAnim = ObjectAnimator.ofFloat(move_lyt, View.ROTATION_Y, 0,180);
 		ObjectAnimator paperUpDown = ObjectAnimator.ofFloat(move_lyt, View.ROTATION_X, -50,50);
 		ObjectAnimator bookUpDown = ObjectAnimator.ofFloat(book_lyt, View.ROTATION_X, -50,50);
-		move_lyt.setCameraDistance(Propose.getCameraDistanceY(this)*4);
-		book_lyt.setCameraDistance(Propose.getCameraDistanceY(this)*4);
+		move_lyt.setCameraDistance(Propose.getCameraDistanceY(this)*5);
+		book_lyt.setCameraDistance(Propose.getCameraDistanceY(this)*5);
 		
 		Propose propose = new Propose(this);
 		propose.motionRight.play(paperAnim);
