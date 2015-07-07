@@ -27,19 +27,23 @@ public class MainActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_layout);
+		
+		/** Layout init **/
 		lyt = (FrameLayout)findViewById(R.id.sling_framelayout);
 		text = (TextView)findViewById(R.id.text);
 		bg1 = (ImageView)findViewById(R.id.bg1);  
-		
 		text.setVisibility(View.GONE);
+		
+		/** create animator **/
 		rightAnimator = ObjectAnimator.ofFloat(lyt,View.TRANSLATION_Y,0,0);
 		rightAnimator.setDuration(1000);
 		
+		/** create propose **/
 		Propose propose = new Propose(getApplicationContext());
-		propose.motionDown.play(rightAnimator);
-		lyt.setOnTouchListener(propose);
+		propose.motionDown.play(rightAnimator); /** set down move animator **/ 
+		lyt.setOnTouchListener(propose); /** set touch listener **/
 		
-		
+		/**set MotionInitor for get ViewSize**/
 		propose.setMotionInitor(new MotionInitor() {
 			@Override
 			public void touchDown(Propose propose) {
@@ -51,6 +55,7 @@ public class MainActivity extends Activity{
 			public void touchUp(Propose arg0) {}
 		});
 		 
+		/** set MotionListener for blur **/
 		propose.setOnMotionListener(new ProposeListener() {
 			@Override
 			public void onStart() {

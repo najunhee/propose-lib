@@ -36,18 +36,18 @@ public class MainActivity extends Activity{
 		
 		/** create propose **/
 		Propose propose = new Propose(this);
-		propose.motionRight.play(rightMove,(int)(end)).with(shake);
-		propose.motionRight.enableTabUp(false);
-		propose.motionDown.play(rightDown,(int)(end));
-		propose.motionDown.enableSingleTabUp(false).enableFling(false).enableTabUp(false);
-		moving_lyt.setOnTouchListener(propose);
+		propose.motionRight.play(rightMove,(int)(end)).with(shake); /** set right move Animator**/
+		propose.motionRight.enableTabUp(false); 					/** right move option**/
+		propose.motionDown.play(rightDown,(int)(end));				/** set down move Animator**/
+		propose.motionDown.enableSingleTabUp(false).enableFling(false).enableTabUp(false); /** right move option**/
+		moving_lyt.setOnTouchListener(propose); 					/** set touch listener **/
 		
-		/** set sound **/
+		/** set MotionListener for sound **/
 		propose.setOnMotionListener(new ProposeListener() {
 			SoundPool soundPool;
 			int soundId,playId;
 			@Override
-			public void onStart() {
+			public void onStart() { // animation start 
 				if(soundPool==null){
 					soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
 					soundId = soundPool.load(MainActivity.this, R.raw.lion, 1);

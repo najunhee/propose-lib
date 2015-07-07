@@ -31,12 +31,11 @@ public class MainActivity extends Activity{
 		
 		/** Propose create **/
 		Propose propose = new Propose(this); 
-		propose.motionRight.play(rightAnimator); /** set Animator **/
-		sliding_lyt.setOnTouchListener(propose); /** set touch listener **/
+		propose.motionRight.play(rightAnimator);		 /** set right move Animator **/
+		sliding_lyt.setOnTouchListener(propose); 		 /** set touch listener **/
+		propose.motionRight.setMotionDistance(-start); 	 /** set Drag Distance **/		
 		
-		propose.motionRight.setMotionDistance(-start); /** set Drag Distance **/		
-		
-		/**black Alpha**/
+		/**set MotionListener for black Alpha**/
 		propose.setOnMotionListener(new ProposeListener() {
 			@Override
 			public void onStart() {}

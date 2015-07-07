@@ -21,23 +21,25 @@ public class MainActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_layout);
 		
+		/** Layout init **/
 		flip_lyt = (FrameLayout)findViewById(R.id.flip_lyt);
 		flip_lyt.setCameraDistance(Propose.getCameraDistanceX(this)*2);
 		boy_img =  (ImageView)findViewById(R.id.boy_img);
 		girl_img =  (ImageView)findViewById(R.id.girl_img);
 		
+		/** create animator **/
 		ObjectAnimator font = ObjectAnimator.ofFloat(flip_lyt, View.ROTATION_Y, 0,90);
-		font.setDuration(500);
+		font.setDuration(500);  /** "duration" use to onClick **/
 		ObjectAnimator back= ObjectAnimator.ofFloat(flip_lyt, View.ROTATION_Y, -90,0);
-		back.setDuration(500);
+		back.setDuration(500);  /** "duration" use to onClick **/
 		
+		/** Propose create **/
+		Propose propose = new Propose(this); 
+		propose.motionRight.play(font).next(back); /** set right move Animator **/
+		propose.motionRight.setMotionDistance(200*Propose.getDensity(this)); /** set Drag Distance **/	
+		flip_lyt.setOnTouchListener(propose);	  /** set touch listener **/
 		
-		
-		Propose propose = new Propose(this);
-		propose.motionRight.play(font).next(back);
-		propose.motionRight.setMotionDistance(200*Propose.getDensity(this));
-		flip_lyt.setOnTouchListener(propose);
-		
+		/** set AnimatorListener for flip **/
 		font.addListener(new JwAnimatorListener() {
 			@Override
 			public void onStart(Animator arg0) {}
@@ -57,7 +59,7 @@ public class MainActivity extends Activity{
 			public void onReverseEnd(Animator arg0) {}
 		});
 		
-		
+		/** set Down Motion **/
 		ObjectAnimator down = ObjectAnimator.ofFloat(flip_lyt, View.ROTATION_X, 0,-180);
 		down.setDuration(500);
 		propose.motionDown.play(down);
