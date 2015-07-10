@@ -1,4 +1,5 @@
-# propose-lib
+# Propose Live GUI
+
 > ####Propose introduction video<br>
 <a href="https://youtu.be/FpXSwXSbTYE" target="_blank">
 <img src="https://raw.githubusercontent.com/JaeWoongOh/jaewoongoh.github.com/master/gist/images/propose/story book.png" 
