@@ -56,7 +56,7 @@ Android Property Animation에 눈길을 돌렸다.<br>
 
 **Property Animation과 Propose의 모션모듈의 조합은 큰 이점을 얻을수 있었다.**
 - **```Animation의 Thread와 라이프 사이클을 Android에서 관리하여 안정성을 보장받는다.```**<br>
-Propose는 모션 변환만 할뿐 모든 Thread와 라이프 사이클을 Property Animation이 알아서 처리해주므로 매우 안전하다.
+Propose는 모션 변환만 할뿐 모든 Thread와 라이프 사이클을 Property Animation이 알아서 처리해준다.
 <br><br>
 - **```Android 표준 Animation으로 개발자의 접근성이 높다.```**<br>
 Android Animation을 사용함으로 개발자는 쉽고 익숙한 방법으로 개발이 가능하다.
