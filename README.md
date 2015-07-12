@@ -1,5 +1,5 @@
 # Android Live GUI - Propose
-**당신의 View에 Interection이 필요합니까?**<br>br>
+**당신의 View에 Interection이 필요합니까?**<br><br>
 Propose는 Android 표준 Property Animation에 Interection을 부여 해줍니다.<br>
 Property Animation에 Click, Drag, Fling, TapUp 등 Touch관련 제스처를 쉽게 연결할수 있습니다.<br>
 당신은 이제 Propose를 사용하여 Live GUI를 실현할수 있습니다.<br>
