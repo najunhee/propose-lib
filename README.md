@@ -6,7 +6,7 @@ Property Animation에 Click, Drag, Fling, TapUp 등 Touch관련 제스처를 쉽
 
 > ####[Click introduction video](https://youtu.be/FpXSwXSbTYE)
 [![Android Propose Story book](https://raw.githubusercontent.com/JaeWoongOh/jaewoongoh.github.com/master/gist/images/propose/book flip.png)](http://youtu.be/FpXSwXSbTYE)<br>
-**This used Translation,Rotation,Scale. Believe it?**
+**Only used Translation,Rotation,Scale.  Believe it?**
 
 
 ## Android Property Animation
