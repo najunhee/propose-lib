@@ -1,5 +1,4 @@
-# Android Live GUI
-##Propose 소개
+# Android Live GUI - Propose
 **당신의 View에 Interection이 필요합니까?**<br>
 Propose는 Android 표준 Property Animation에 Interection을 부여 해줍니다.<br>
 Property Animation에 Click, Drag, Fling, TapUp 등 Touch관련 제스처를 쉽게 연결할수 있습니다.<br>
@@ -9,7 +8,8 @@ Property Animation에 Click, Drag, Fling, TapUp 등 Touch관련 제스처를 쉽
 [![Android Propose Story book](https://raw.githubusercontent.com/JaeWoongOh/jaewoongoh.github.com/master/gist/images/propose/book flip.png)](http://youtu.be/FpXSwXSbTYE)
 
 ## Android Property Animation
-안드로이드 3.0 이후 **Property Animation(ValueAnimator,ObjectAnimator..)**이라는 강력한 애니메이션 클래스들이 추가되었다.<br>
+안드로이드 3.0 이후 **Property Animation(ValueAnimator,ObjectAnimator..)**이라는<br>
+강력한 애니메이션 클래스들이 추가되었다.<br>
 Google에서 ValueAnimator 소개 영상을 처음 접했을때 실로 놀랐웠다.<br>
 - [Honeycomb Animations 영상](https://youtu.be/-9nxx066eHE)<br>
 - [DevBytes 영상](https://youtu.be/8sG3bAPOhyw?list=PLWENVpyNjgdFKwgBWj75IKQdM-DjvcPzx)<br>
