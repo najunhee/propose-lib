@@ -51,7 +51,7 @@ CustomView를 재활용하기 위해 애니메이션 영역과 모션영역을 �
 하지만 CustomView 형식의 애니메이션모듈은 제작하기 힘들었고 제공되는 종류가 적었다.<br>
 또한 애니메이션의 필수 구현요소인 Thread는 안정성을 위해 많은 테스트를 거쳐야했다.<br><br>
 이 문제들을 해결하기 위해 애니메이션 모듈의 개선이 필요했고 기존에 잘쓰고 있던<br>
-Android Property Animation에 눈길을 돌렸다.<br>
+Android의 Property Animation에 눈길을 돌렸다.<br>
 무엇보다도 Property Animation은 Android 표준이며 애니메이션의 다양한 종류와 구현이 매우 쉬웠다.<br>
 
 **Property Animation과 Propose의 모션모듈의 조합은 큰 이점을 얻을수 있었다.**
