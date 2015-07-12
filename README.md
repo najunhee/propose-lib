@@ -61,7 +61,7 @@ Propose는 모션 변환만 할뿐 모든 Thread와 라이프 사이클을 Prope
 - **```Android 표준 Animation으로 개발자의 접근성이 높다.```**<br>
 Android Animation을 사용함으로 개발자는 쉽고 익숙한 방법으로 개발이 가능하다.
 <br><br>
-- **```Animation들 간의 조합에 Motion들을 복합조합함으로 자유도가 Interaction을 구현할수 있다.```**<br>
+- **```Animation들 간의 조합과 Motion을 복합조합함으로 자유도 높은 Interaction을 구현할수 있다.```**<br>
 Translation과 Rotation만을 사용해 StoryBook을 만들수 있을 정도로 고품질의 표현이 조합만으로 가능하다.<br>
 
 
