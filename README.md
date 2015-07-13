@@ -1,6 +1,6 @@
 # Android Live GUI - Propose
-**당신의 View에 Interection이 필요합니까?**<br><br>
-Propose는 Android 표준 Property Animation에 Interection을 부여 해줍니다.<br>
+**당신의 View에 Interaction이 필요합니까?**<br><br>
+Propose는 Android 표준 Property Animation에 Interaction을 부여 해줍니다.<br>
 Property Animation에 Click, Drag, Fling, TapUp 등 Touch관련 제스처를 쉽게 연결할수 있습니다.<br>
 당신은 이제 Propose를 사용하여 Live GUI를 실현할수 있습니다.<br>
 
@@ -47,7 +47,7 @@ Hell에서 벗어나기 위해 많은 오픈소스로 눈을 돌렸지만 이것
 물론 청혼도 Hell이 되어버렸다.<br><br>
 Propose 초창기 버전의 시작은 CustomView의 재활용이라는 컨셉으로 시작되었다.<br>
 CustomView를 재활용하기 위해 애니메이션 영역과 모션영역을 분리했다.<br>
-모듈을 분리함으로써 새로운 interaction을 만들고 재활용했다.<br>
+모듈을 분리함으로써 새로운 Interaction을 만들고 재활용했다.<br>
 하지만 CustomView 형식의 애니메이션모듈은 제작하기 힘들었고 제공되는 종류가 적었다.<br>
 또한 애니메이션의 필수 구현요소인 Thread는 안정성을 위해 많은 테스트를 거쳐야했다.<br><br>
 이 문제들을 해결하기 위해 애니메이션 모듈의 개선이 필요했고 기존에 잘쓰고 있던<br>
@@ -66,4 +66,4 @@ Translation과 Rotation만을 사용해 StoryBook을 만들수 있을 정도로 
 
 
 이렇게 Proposes는 View의 customize 한계를 극복하기 위해 시작되었고<br>
-안전하고, 쉽고, 익숙한 방법으로 고품질의 Interection을 구현할수 있게 도와준다.<br><br>
+안전하고, 쉽고, 익숙한 방법으로 고품질의 Interaction을 구현할수 있게 도와준다.<br><br>
