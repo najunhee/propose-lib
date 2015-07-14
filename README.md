@@ -1,4 +1,5 @@
 # Android Live GUI - Propose
+<i class="icon-cog"></i> 
 **당신의 View에 Interaction이 필요합니까?**<br><br>
 Propose는 Android 표준 Property Animation에 Interaction을 부여 해줍니다.<br>
 Property Animation에 Click, Drag, Fling, TapUp 등 Touch관련 제스처를 쉽게 연결할수 있습니다.<br>
