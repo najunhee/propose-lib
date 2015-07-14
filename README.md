@@ -5,7 +5,7 @@ Property Animation에 Click, Drag, Fling, TapUp 등 Touch관련 제스처를 쉽
 당신은 이제 Propose를 사용하여 Live GUI를 실현할수 있습니다.<br>
 
 > ####[Click introduction video](https://youtu.be/FpXSwXSbTYE)
-[![Android Propose Story book](https://raw.githubusercontent.com/JaeWoongOh/jaewoongoh.github.com/master/gist/images/propose/book flip.png)(https://raw.githubusercontent.com/JaeWoongOh/jaewoongoh.github.com/master/gist/images/propose/play_img.png)](http://youtu.be/FpXSwXSbTYE)<br>
+[![Android Propose Story book](https://raw.githubusercontent.com/JaeWoongOh/jaewoongoh.github.com/master/gist/images/propose/book flip.png)](http://youtu.be/FpXSwXSbTYE)<br>
 **Only used Translation,Rotation,Scale.  Believe it?**
 
 
