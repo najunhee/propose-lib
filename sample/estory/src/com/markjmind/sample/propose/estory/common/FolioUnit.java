@@ -10,9 +10,9 @@ import android.util.Property;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.markjmind.propose.GestureListener;
 import com.markjmind.propose.Propose;
-import com.markjmind.propose.ProposeTouchListener;
-import com.markjmind.propose.Propose.ProposeListener;
+import com.markjmind.propose.ProposeListener;
 import com.markjmind.sample.propose.estory.book.RatioFrameLayout;
 
 public class FolioUnit extends MultiMotionAnimator{
@@ -139,7 +139,7 @@ public class FolioUnit extends MultiMotionAnimator{
 		}
 		
 		final int mIndex = index;
-		motion.setProposeTouchListener(new ProposeTouchListener() {
+		motion.setOnGestureListener(new GestureListener() {
 			@Override
 			public void actionDown(boolean isMotionStart) {
 				if(mIndex==0){
@@ -167,7 +167,7 @@ public class FolioUnit extends MultiMotionAnimator{
 			}
 		});
 		
-		motion.setOnMotionListener(new ProposeListener() {
+		motion.setOnProposeListener(new ProposeListener() {
 			long tempDuration=0;
 			long checkDuration=0;
 			boolean isFirst = true;

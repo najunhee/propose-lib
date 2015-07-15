@@ -4,11 +4,10 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.markjmind.propose.MotionListener;
 import com.markjmind.propose.Propose;
-import com.markjmind.propose.Propose.ProposeListener;
 
 public class MainActivity extends Activity{
 	
@@ -36,16 +35,16 @@ public class MainActivity extends Activity{
 		propose.motionRight.setMotionDistance(-start); 	 /** set Drag Distance **/		
 		
 		/**set MotionListener for black Alpha**/
-		propose.setOnMotionListener(new ProposeListener() {
+		propose.motionRight.setOnMotionListener(new MotionListener() {
 			@Override
-			public void onStart() {}
+			public void onStart(boolean isForward) {}
 			@Override
-			public void onScroll(int Direction, long currDuration, long totalDuration) {
+			public void onScroll(long currDuration, long totalDuration, boolean isForward) {
 				float alpha = (float)currDuration/totalDuration/2; // max 0.5
 				findViewById(R.id.alpha_lyt).setAlpha(alpha); 
 			}
 			@Override
-			public void onEnd() {}
+			public void onEnd(boolean isForward) {}
 		});
 	}
 	

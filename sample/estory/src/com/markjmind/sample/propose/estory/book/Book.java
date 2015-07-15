@@ -16,7 +16,7 @@ import com.markjmind.propose.JwAnimatorListener;
 import com.markjmind.propose.Motion;
 import com.markjmind.propose.MotionInitor;
 import com.markjmind.propose.Propose;
-import com.markjmind.propose.Propose.ProposeListener;
+import com.markjmind.propose.ProposeListener;
 import com.markjmind.sample.propose.estory.R;
 import com.markjmind.sample.propose.estory.sound.Sound;
 
@@ -70,7 +70,7 @@ public class Book {
 		
 		leftMotion = new Propose(context);
 		rightMotion = new Propose(context);
-		leftMotion.setMotionInitor(new MotionInitor() {
+		leftMotion.setOnMotionInitor(new MotionInitor() {
 			@Override
 			public void touchUp(Propose jwm) {}
 			@Override
@@ -84,7 +84,7 @@ public class Book {
 				Log.e("sfdf","left touchDown");
 			}
 		}.addParam("direction", LEFT));
-		rightMotion.setMotionInitor(new MotionInitor() {
+		rightMotion.setOnMotionInitor(new MotionInitor() {
 			@Override
 			public void touchUp(Propose jwm) {}
 			@Override
@@ -195,7 +195,7 @@ public class Book {
 			}
 		});
 
-		motion.setOnMotionListener(new ProposeListener() {
+		motion.setOnProposeListener(new ProposeListener() {
 			@Override
 			public void onStart() {
 				pm.flip(dir);

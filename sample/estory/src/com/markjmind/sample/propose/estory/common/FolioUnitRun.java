@@ -5,9 +5,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.markjmind.propose.GestureListener;
 import com.markjmind.propose.Propose;
-import com.markjmind.propose.ProposeTouchListener;
-import com.markjmind.propose.Propose.ProposeListener;
+import com.markjmind.propose.ProposeListener;
 import com.markjmind.sample.propose.estory.book.RatioFrameLayout;
 
 public class FolioUnitRun extends FolioUnit{
@@ -67,7 +67,7 @@ public class FolioUnitRun extends FolioUnit{
 		motion.motionLeft.enableMove(false);
 		final Propose endMotion = motion;
 		final int mIndex = index;
-		motion.setProposeTouchListener(new ProposeTouchListener() {
+		motion.setOnGestureListener(new GestureListener() {
 			@Override
 			public void actionDown(boolean isMotionStart) {
 				if(mIndex==0){
@@ -94,7 +94,7 @@ public class FolioUnitRun extends FolioUnit{
 			public void actionMove(boolean isMotionStart) {
 			}
 		});
-		motion.setOnMotionListener(new ProposeListener() {
+		motion.setOnProposeListener(new ProposeListener() {
 			@Override
 			public void onStart() {
 				if(mIndex==0){

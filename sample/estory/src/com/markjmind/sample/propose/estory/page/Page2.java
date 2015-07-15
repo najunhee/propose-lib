@@ -3,21 +3,18 @@ package com.markjmind.sample.propose.estory.page;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.markjmind.propose.MotionInitor;
 import com.markjmind.propose.Propose;
-import com.markjmind.propose.ProposeTouchListener;
-import com.markjmind.propose.Propose.ProposeListener;
+import com.markjmind.propose.ProposeListener;
 import com.markjmind.sample.propose.estory.R;
 import com.markjmind.sample.propose.estory.book.Page;
 import com.markjmind.sample.propose.estory.book.RatioFrameLayout;
 import com.markjmind.sample.propose.estory.common.FolioListener;
 import com.markjmind.sample.propose.estory.common.FolioUnit;
-import com.markjmind.sample.propose.estory.common.MultiMotionAnimator;
 import com.markjmind.sample.propose.estory.common.UnitAnimation;
 
 public class Page2 extends Page{
@@ -39,7 +36,7 @@ public class Page2 extends Page{
 		door1.setPivotX(0f);
 		door1.setCameraDistance(3000 * Propose.getDensity(getContext()));
 		door_anim.setDuration(700);
-		motion_door1.setMotionInitor(new MotionInitor() {
+		motion_door1.setOnMotionInitor(new MotionInitor() {
 			@Override
 			public void touchDown(Propose jwm) {
 				int distance = door1.getWidth()*2;
@@ -49,7 +46,7 @@ public class Page2 extends Page{
 			public void touchUp(Propose jwm) {
 			}
 		});
-		motion_door1.setOnMotionListener(new ProposeListener() {
+		motion_door1.setOnProposeListener(new ProposeListener() {
 			@Override
 			public void onStart() {
 				stopSound(R.raw.door);

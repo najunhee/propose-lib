@@ -5,16 +5,15 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.markjmind.propose.MotionInitor;
+import com.markjmind.propose.MotionListener;
 import com.markjmind.propose.Propose;
-import com.markjmind.propose.Propose.ProposeListener;
+import com.markjmind.propose.ProposeListener;
 
 @SuppressLint("NewApi")
 public class MainActivity extends Activity{
@@ -44,7 +43,7 @@ public class MainActivity extends Activity{
 		lyt.setOnTouchListener(propose); /** set touch listener **/
 		
 		/**set MotionInitor for get ViewSize**/
-		propose.setMotionInitor(new MotionInitor() {
+		propose.setOnMotionInitor(new MotionInitor() {
 			@Override
 			public void touchDown(Propose propose) {
 				float height = lyt.getHeight()-50*Propose.getDensity(getApplicationContext());
@@ -56,25 +55,23 @@ public class MainActivity extends Activity{
 		});
 		 
 		/** set MotionListener for blur **/
-		propose.setOnMotionListener(new ProposeListener() {
+		propose.motionDown.setOnMotionListener(new MotionListener() {
 			@Override
-			public void onStart() {
+			public void onStart(boolean isForward) {
 				text.setVisibility(View.VISIBLE);
 				text.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.fade_in));
 			}
 			@Override
-			public void onScroll(int Direction, long currDuration, long totalDuration) {
+			public void onScroll(long currDuration, long totalDuration, boolean isForward) {
 				text.setText(currDuration*100/totalDuration+"%");
 				float alpha = (float)(totalDuration-currDuration*2)/(float)totalDuration; 
 				bg1.setAlpha(alpha);
 			}
 			@Override
-			public void onEnd() {
+			public void onEnd(boolean isForward) {
 				text.setVisibility(View.GONE);
 				text.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.fade_out));
 			}
 		});
 	}
-		
-		
 }

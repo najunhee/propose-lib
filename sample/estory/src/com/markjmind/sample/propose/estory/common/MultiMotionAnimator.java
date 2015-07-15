@@ -78,7 +78,7 @@ public abstract class MultiMotionAnimator extends MotionInitor implements OnTouc
 	
 	protected void playMotion(){
 		for(int i=0;i<motion.length;i++){
-			motion[i].setMotionInitor(this);
+			motion[i].setOnMotionInitor(this);
 			play(i, motion[i],animList.get(i));
 		}
 	}

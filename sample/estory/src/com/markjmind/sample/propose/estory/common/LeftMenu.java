@@ -3,10 +3,9 @@ package com.markjmind.sample.propose.estory.common;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.markjmind.propose.Propose;
-import com.markjmind.propose.Propose.ProposeListener;
+import com.markjmind.propose.ProposeListener;
 import com.markjmind.sample.propose.estory.R;
 import com.markjmind.sample.propose.estory.book.Book;
 
@@ -48,7 +47,7 @@ public class LeftMenu {
 		rightAnimator.setInterpolator(null);
 		leftMenuMotion.motionRight.play(menu_lyt, rightAnimator, leftMenuMotion.getWindowWidth() / 2 - menu_lyt.getWidth());
 		menu_lyt.setOnTouchListener(leftMenuMotion);
-		leftMenuMotion.setOnMotionListener(new ProposeListener() {
+		leftMenuMotion.setOnProposeListener(new ProposeListener() {
 			@Override
 			public void onStart() {
 				book.leftMotion.enableMotion(false);

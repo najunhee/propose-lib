@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.markjmind.propose.Propose;
-import com.markjmind.propose.Propose.ProposeListener;
+import com.markjmind.propose.ProposeListener;
 
 public class MainActivity extends Activity{
 	
@@ -43,7 +43,7 @@ public class MainActivity extends Activity{
 		moving_lyt.setOnTouchListener(propose); 					/** set touch listener **/
 		
 		/** set MotionListener for sound **/
-		propose.setOnMotionListener(new ProposeListener() {
+		propose.setOnProposeListener(new ProposeListener() {
 			SoundPool soundPool;
 			int soundId,playId;
 			@Override
