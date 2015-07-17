@@ -26,7 +26,7 @@ public class MainActivity extends Activity{
 		/** create propose for all motion **/
 		Propose pro = new Propose(this);
 		pro.motionRight.play(rightMove);
-		pro.motionRight.setMotionDistance(move); //set Distance
+		pro.motionRight.setMotionDistance(move); //set Drag Distance
 		textView1.setOnTouchListener(pro);
 	}
 }
