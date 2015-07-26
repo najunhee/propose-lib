@@ -11,7 +11,7 @@ Propose는 Property Animation에 Interaction을 부여해 줍니다.<br>
 ---
 - 기존에 익숙하게 사용하던 Animation을 이용해 Interaction을 구현할수 있습니다.
 - 복잡한 수식을 사용하지 않고 쉽게 Animation을 구현할수 있습니다.
-- 모든 Thread는 Property Animation이 대신 처리해주고 있어 안전합니다.
+- 모든 Thread를 Property Animation이 대신 처리하여 안전합니다.
 
 <br>
 #### 당신의 소스코드 수정없이 Interaction 적용이 가능합니다.
