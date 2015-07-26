@@ -15,8 +15,8 @@ Propose는 Android 표준 Property Animation을 사용합니다.
 - 모든 Thread는 Property Animation이 처리하므로 안전합니다.
 
 <br>
-기존 프로젝트의 소스코드의 수정없이 Interaction 적용이 가능합니다.
------
+당신의 소스코드 수정없이 Interaction 적용이 가능합니다.
+---------
 - 단순히 Property Animation에 Interaction을 부여 해줍니다.
 - Propose는 CustomView처럼 의존성을 가지지 않습니다.
 - LinearLayout,FrameLayout같은 Viewgroup을 포함해 모든 View에 적용가능 합니다.
