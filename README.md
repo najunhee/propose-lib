@@ -10,7 +10,7 @@ Propose는 Property Animation에 Interaction을 부여해 줍니다.<br>
 #### Propose는 Android 표준 Property Animation을 사용합니다.
 ---
 - 기존에 익숙하게 사용하던 Animation을 이용해 Interaction을 구현할수 있습니다.
-- 복잡한 수식을 사용하지 않고 쉽게 Animation을 구현할수 있습니다.
+- 복잡한 수식을 사용하지 않고 쉽게 Interaction을 구현할수 있습니다.
 - 모든 Thread를 Property Animation이 대신 처리하여 안전합니다.
 
 <br>
