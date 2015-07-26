@@ -1,7 +1,7 @@
 # Android Live GUI - Propose
 <i class="icon-cog"></i> 
 ### 당신의 View에 Interaction이 필요합니까?<br><br>
-
+Propose는 Property Animation에 Motion을 부여해 줍니다.<br>
 > ####[Click introduction video](https://youtu.be/FpXSwXSbTYE)
 [![Android Propose Story book](https://raw.githubusercontent.com/JaeWoongOh/jaewoongoh.github.com/master/gist/images/propose/book flip.png)](http://youtu.be/FpXSwXSbTYE)<br>
 **Only used Translation,Rotation,Scale.  Believe it?**
@@ -21,10 +21,6 @@
 - LinearLayout,FrameLayout같은 Viewgroup을 포함해 모든 View에 적용가능 합니다.
 
 <br>
-Propose는 Property Animation에 Click, Drag, Fling, TapUp 등 Touch관련 제스처를 부여해 줍니다.<br>
-당신은 이제 Propose를 사용하여 Live GUI를 실현할수 있습니다.<br>
-
-
 #### Download Library
 - propose1.0.jar
 
