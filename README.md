@@ -21,8 +21,8 @@ Propose는 Property Animation에 Interaction을 부여해 줍니다.<br>
 - LinearLayout,FrameLayout같은 Viewgroup을 포함해 모든 View에 적용가능 합니다.
 
 <br>
-#### Download Library
-- propose1.0.jar
+#### Download
+- propose-1.0.jar
 
 <br>
 #### Getting Started
