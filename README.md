@@ -1,4 +1,4 @@
-# Android Live GUI - Propose
+# Android Propose - Live GUI
 <i class="icon-cog"></i> 
 **당신의 View에 Interaction이 필요합니까?**<br><br>
 Propose는 Property Animation에 Interaction을 부여해 줍니다.<br>
