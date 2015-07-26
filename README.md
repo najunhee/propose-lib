@@ -26,12 +26,10 @@ Propose는 Property Animation에 Click, Drag, Fling, TapUp 등 Touch관련 제�
 
 
 #### Download Library
----
 - propose1.0.jar
 
 
 #### Getting Started
----
 1. 1
 2. 2
 3. 3
