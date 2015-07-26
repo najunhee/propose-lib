@@ -26,13 +26,14 @@ Propose는 Property Animation에 Interaction을 부여해 줍니다.<br>
 
 <br>
 #### Getting Started
-1. 1
-2. 2
-3. 3
-4. 4
-5. 5
-6. 6
-7. 7
+[1. What's Propose](https://github.com/JaeWoongOh/propose-lib/wiki/1.-What's-Propose)<br>
+[2. Basic](https://github.com/JaeWoongOh/propose-lib/wiki/2.-Basic)<br>
+[3. Motion](https://github.com/JaeWoongOh/propose-lib/wiki/3.-Motion)<br>
+[4. Animation 조합](https://github.com/JaeWoongOh/propose-lib/wiki/4.-Animation-%EC%A1%B0%ED%95%A9)<br>
+[5. Motion 조합](https://github.com/JaeWoongOh/propose-lib/wiki/5.-Motion-%EC%A1%B0%ED%95%A9)<br>
+[6. Propose와 Motion 속성](https://github.com/JaeWoongOh/propose-lib/wiki/6.-Propose%EC%99%80-Motion-%EC%86%8D%EC%84%B1)<br>
+[7. Event](https://github.com/JaeWoongOh/propose-lib/wiki/7.-Event)<br>
 
 
-<br><br><br><br>
+
+<br><br><br>
