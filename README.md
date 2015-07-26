@@ -1,7 +1,7 @@
 # Android Live GUI - Propose
 <i class="icon-cog"></i> 
-### 당신의 View에 Interaction이 필요합니까?<br><br>
-Propose는 Property Animation에 Motion을 부여해 줍니다.<br>
+**당신의 View에 Interaction이 필요합니까?&&<br><br>
+Propose는 Property Animation에 Interaction을 부여해 줍니다.<br>
 > ####[Click introduction video](https://youtu.be/FpXSwXSbTYE)
 [![Android Propose Story book](https://raw.githubusercontent.com/JaeWoongOh/jaewoongoh.github.com/master/gist/images/propose/book flip.png)](http://youtu.be/FpXSwXSbTYE)<br>
 **Only used Translation,Rotation,Scale.  Believe it?**
