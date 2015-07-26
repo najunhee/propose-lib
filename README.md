@@ -5,6 +5,7 @@
 [![Android Propose Story book](https://raw.githubusercontent.com/JaeWoongOh/jaewoongoh.github.com/master/gist/images/propose/book flip.png)](http://youtu.be/FpXSwXSbTYE)<br>
 **Only used Translation,Rotation,Scale.  Believe it?**
 
+<br>
 #### Propose는 Android 표준 Property Animation을 사용합니다.
 ---
 - 기존에 익숙하게 사용하던 Animation을 이용해 Interaction을 구현할수 있습니다.
