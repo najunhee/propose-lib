@@ -27,7 +27,6 @@ public class MainActivity extends Activity{
 		propose1.motionLeft.enableTabUp(false).enableFling(false);
 		left_txt.setOnTouchListener(propose1);
 		
-		
 		/** create alpha ObjectAnimator**/
 		ObjectAnimator anim2 = ObjectAnimator.ofFloat(right_txt, View.ALPHA, 1f,0f);
 		
