@@ -3,7 +3,7 @@
 **당신의 View에 Interaction이 필요합니까?**<br><br>
 Android에서 사용되고 있는 [**Property Animation**](http://developer.android.com/reference/android/animation/ValueAnimator.html)을 작성합니다.<br>
 Propose에서 원하는 모션을 선택하세요.<br>
-Animation에 Interaction을 부여될것 입니다.
+놀랍게도 Animation에 Interaction을 부여될것 입니다.
 > ####[Click introduction video](https://youtu.be/FpXSwXSbTYE)
 [![Android Propose Story book](https://raw.githubusercontent.com/JaeWoongOh/jaewoongoh.github.com/master/gist/images/propose/book flip.png)](http://youtu.be/FpXSwXSbTYE)<br>
 **Only used Translation,Rotation,Scale.  Believe it?**
