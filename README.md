@@ -1,7 +1,7 @@
 # Android Propose
 <i class="icon-cog"></i> 
 **당신의 View에 Interaction이 필요합니까?**<br><br>
-Android에서 기본적으로 제공하는 Property Animation을 작성합니다.<br>
+Android에서 사용되고 있는 [Property Animation](http://developer.android.com/reference/android/animation/ValueAnimator.html)을 작성합니다.<br>
 그리고 원하는 Interaction을 선택하세요.<br>
 Propose가 Animation에 Interaction을 부여해 줄것 입니다.
 > ####[Click introduction video](https://youtu.be/FpXSwXSbTYE)
