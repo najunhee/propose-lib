@@ -16,30 +16,30 @@ public class MainActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_layout);
 		
-		TextView textView1 = (TextView)findViewById(R.id.textView1);
+		TextView move_txt = (TextView)findViewById(R.id.move_txt);
 		float moveWidth = Propose.getWindowWidth(this)-100*Propose.getDensity(this);
 		
 		/** create move ObjectAnimator**/
-		ObjectAnimator move_anim = ObjectAnimator.ofFloat(textView1, View.TRANSLATION_X, 0f,moveWidth);
+		ObjectAnimator move_anim = ObjectAnimator.ofFloat(move_txt, View.TRANSLATION_X, 0f,moveWidth);
 		move_anim.setDuration(2000); // PlayTime 100%
 		/** create rotation ObjectAnimator**/
-		ObjectAnimator rotation_anim = ObjectAnimator.ofFloat(textView1, View.ROTATION_X, 0,360);
+		ObjectAnimator rotation_anim = ObjectAnimator.ofFloat(move_txt, View.ROTATION_X, 0,360);
 		rotation_anim.setDuration(1000); // PlayTime 50%
 		
 		/** create propose, use Right motion **/
 		Propose propose = new Propose(this); 
-		propose.motionRight.play(move_anim).with(rotation_anim); //Left set play animator
-		textView1.setOnTouchListener(propose);
+		propose.motionRight.play(move_anim).with(rotation_anim); //Right set play animator
+		move_txt.setOnTouchListener(propose);
 		
 		
 		/************* Current Duration display *************/
-		final TextView textView2 = (TextView)findViewById(R.id.textView2);
+		final TextView duration_txt = (TextView)findViewById(R.id.duration_txt);
 		propose.motionRight.setOnMotionListener(new MotionListener() {
 			@Override
 			public void onStart(boolean isForward) {}
 			@Override
 			public void onScroll(long currDuration, long totalDuration, boolean isForward) {
-				textView2.setText("duration "+currDuration+"/"+totalDuration);
+				duration_txt.setText("duration "+currDuration+"/"+totalDuration);
 			}
 			@Override
 			public void onEnd(boolean isForward) {}

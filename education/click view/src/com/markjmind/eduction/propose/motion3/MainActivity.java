@@ -1,4 +1,4 @@
-package com.markjmind.eduction.propose.motion2;
+package com.markjmind.eduction.propose.motion3;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
@@ -14,9 +14,10 @@ import com.markjmind.propose.Propose;
 
 public class MainActivity extends Activity{
 	private float density;
-	private TextView move_txt,distance_txt;
+	private TextView move_txt,duration_txt;
+	private ObjectAnimator move_anim;
 	private Propose propose;
-	private Button dp100,dp200;
+	private Button dur500,dur1000;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -27,48 +28,48 @@ public class MainActivity extends Activity{
 		float moveWidth = Propose.getWindowWidth(this)-100*density;
 		
 		/** create move ObjectAnimator**/
-		ObjectAnimator move_anim = ObjectAnimator.ofFloat(move_txt, View.TRANSLATION_X, 0f,moveWidth);
+		move_anim = ObjectAnimator.ofFloat(move_txt, View.TRANSLATION_X, 0f,moveWidth);
 		move_anim.setDuration(2000); 
 				
 		/** create propose, use Right motion **/
 		propose = new Propose(this); 
-		propose.motionRight.play(move_anim).with(move_anim); //Right set play animator
+		propose.motionRight.play(move_anim); //Right set play animator
 		move_txt.setOnTouchListener(propose);
 		
 		
 		
 		/************* Change motionDistance *************/
-		dp100 = (Button)findViewById(R.id.dp100);
-		dp200 = (Button)findViewById(R.id.dp200);
-		dp100.setOnClickListener(new OnClickListener() {
+		dur500 = (Button)findViewById(R.id.dur500);
+		dur1000 = (Button)findViewById(R.id.dur1000);
+		dur500.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				propose.motionRight.setMotionDistance(100*density);
-				move_txt.setText("Distance\n100dp");
-				dp100.setTextColor(Color.RED);
-				dp200.setTextColor(Color.BLACK);
+				move_anim.setDuration(500);
+				propose.motionRight.play(move_anim); //Right set play animator
+				move_txt.setText("Duration\n500");
+				dur500.setTextColor(Color.RED);
+				dur1000.setTextColor(Color.BLACK);
 			}
 		});
-		dp200.setOnClickListener(new OnClickListener() {
+		dur1000.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				propose.motionRight.setMotionDistance(200*density);
-				move_txt.setText("Distance\n200dp");
-				dp100.setTextColor(Color.BLACK);
-				dp200.setTextColor(Color.RED);
+				move_anim.setDuration(1000);
+				propose.motionRight.play(move_anim); //Right set play animator
+				move_txt.setText("Duration\n1000");
+				dur500.setTextColor(Color.BLACK);
+				dur1000.setTextColor(Color.RED);
 			}
 		});
 		
-		/************* Current Distance display *************/
-		distance_txt = (TextView)findViewById(R.id.distance_txt);
+		/************* Current Duration display *************/
+		duration_txt = (TextView)findViewById(R.id.duration_txt);
 		propose.motionRight.setOnMotionListener(new MotionListener() {
 			@Override
 			public void onStart(boolean isForward) {}
 			@Override
 			public void onScroll(long currDuration, long totalDuration, boolean isForward) {
-				int currDistance = (int)(propose.motionRight.getCurrDistance()/density);
-				int totalDistance = (int)(propose.motionRight.getMotionDistance()/density);
-				distance_txt.setText("Distance "+currDistance+"/"+totalDistance);
+				duration_txt.setText("Duration "+currDuration+"/"+totalDuration);
 			}
 			@Override
 			public void onEnd(boolean isForward) {}
