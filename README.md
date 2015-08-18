@@ -6,7 +6,7 @@ Animation은 Touch 입력같은 동적인 조작을 할수 없기 때문입니�
 
 **Propose는 놀랍게도 [Property animation](http://developer.android.com/guide/topics/graphics/prop-animation.html)에 Touch 조작을 할수있게 해줍니다.<br>
 또한 여러가지 Animation과 모션을 합성하여 고차원적인 Interaction을 만들수 있습니다.<br>
-필요한 모션을 선택하는 간단한 방법으로 View에 Interaction이 부여 됩니다.**
+필요한 모션을 선택하는 간단한 방법으로 View에 Interaction이 부여 됩니다.**<br><br>
 
 
 > ####[Click introduction video](https://youtu.be/FpXSwXSbTYE)
