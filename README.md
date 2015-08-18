@@ -1,10 +1,11 @@
 # Android Propose
 <i class="icon-cog"></i> 
-Android에서 제공하는 Animation은 쉽고 간편함에도 불구하고<br>
+**Android에서 제공하는 Animation은 쉽고 간편함에도 불구하고<br>
 우리는 힘들게 CustomView를 만들어 사용합니다.<br>
 Animation은 Touch 입력같은 동적인 조작을 할수 없기 때문입니다.<br>
 Propose는 [**Property animation**](http://developer.android.com/guide/topics/graphics/prop-animation.html)에 Touch 조작을 할수있게 해줍니다.<br>
-원하는 모션 선택만으로 놀랍게도 Interaction이 부여 됩니다.
+원하는 모션 선택만으로 놀랍게도 Interaction이 부여 됩니다.<br>**
+
 
 > ####[Click introduction video](https://youtu.be/FpXSwXSbTYE)
 [![Android Propose Story book](https://raw.githubusercontent.com/JaeWoongOh/jaewoongoh.github.com/master/gist/images/propose/book flip.png)](http://youtu.be/FpXSwXSbTYE)<br>
