@@ -37,10 +37,6 @@ Animation은 Touch 입력같은 동적인 조작을 할수 없기 때문입니�
 [2. Basic](https://github.com/JaeWoongOh/propose-lib/wiki/2.-Basic)<br>
 [3. Motion](https://github.com/JaeWoongOh/propose-lib/wiki/3.-Motion)<br>
 [4. Options and attributes](https://github.com/JaeWoongOh/propose-lib/wiki/4.-Options-and-attributes)<br>
-[5. Combining animation](https://github.com/JaeWoongOh/propose-lib/wiki/5.-Combining-animation)<br>
-[6. Event](https://github.com/JaeWoongOh/propose-lib/wiki/6.-Event)<br>
-[7. Samples](https://github.com/JaeWoongOh/propose-lib/wiki/7.-Samples)<br>
-
-
+[5. Event](https://github.com/JaeWoongOh/propose-lib/wiki/5.-Event)<br>
 
 <br><br><br>
